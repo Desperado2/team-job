@@ -1,0 +1,24 @@
+.index-el-header{
+    background-color: white;
+    height: 60px;
+    line-height: 60px;
+    text-align: right;
+    font-size: 12px;
+    background-color: white;
+    border-bottom: 5px solid #f0f5ff;
+}
+
+.index-el-main{
+    background-color: #f0f2f5;
+}
+.index-el-row{
+    margin-bottom: 24px;
+}
+
+.item {
+    margin-top: -20px;
+}
+
+.grid-content{
+    text-align: center;
+}
