@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <link rel="stylesheet" href="./style/index.css">
+    <script src="./echarts/echarts.common.min.js"></script>
+</head>
+<body>
+
+<el-container style="height: 100%;" id="app">
+    <el-aside width="256px" style="background-color: rgb(0,21,41)">
+        <div style="height: 60px;text-align: center;background-color: rgb(0,33,64)">
+            <div style="display: inline-block;width: 60px;text-align: center">
+                <img src="./image/default.jpg" style="width: 32px;">
+            </div>
+            <div style="display: inline-block;width: 130px;text-align: left">
+                <h1 style="color: white">Bai Cai</h1>
+            </div>
+        </div>
+        <el-menu :default-openeds="['1']" default-active="1" background-color="#001529"
+                 text-color="#eeeeee" active-text-color="#409EFF" unique-opened="true">
+            <el-submenu index="1">
+                <template slot="title"><i class="el-icon-message"></i>dashboard</template>
+                <el-menu-item index="1-1">工作台</el-menu-item>
+                <el-menu-item index="1-2">周报</el-menu-item>
+            </el-submenu>
+            <el-submenu index="2">
+                <template slot="title"><i class="el-icon-menu"></i>应用</template>
+                <el-menu-item index="2-1">应用管理</el-menu-item>
+                <el-menu-item index="2-2">代码质量</el-menu-item>
+            </el-submenu>
+            <el-submenu index="3">
+                <template slot="title"><i class="el-icon-setting"></i>模板</template>
+                <el-menu-item index="3-1">项目排期</el-menu-item>
+            </el-submenu>
+            <el-submenu index="4">
+                <template slot="title"><i class="el-icon-setting"></i>关于</template>
+                <el-menu-item index="3-1">关于我们</el-menu-item>
+            </el-submenu>
+        </el-menu>
+    </el-aside>
+
+    <el-container>
+        <el-header class="index-el-header">
+            <img src="./image/tip.png" style="width: 16px">
+            <el-badge is-dot class="item">
+
+            </el-badge>
+
+            <img src="./image/default.jpg" style="width: 24px;margin-left: 30px">
+            <span style="font-size: 18px;margin-left: 10px">王小虎</span>
+        </el-header>
+        <el-header style="height: 80px">
+            <div style="background-color: white;height: 140px;margin-top: 10px">
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item>代码质量</el-breadcrumb-item>
+                </el-breadcrumb>
+                <div style="height: 30px;width: 100%;margin-top: 30px">
+                    <h3>代码质量</h3>
+                </div>
+            </div>
+        </el-header>
+        <el-main class="index-el-main">
+            <el-row :gutter="20" v-for="i in 6" style="margin-bottom: 20px">
+                <el-col :span="8">
+                    <el-card class="box-card">
+                        <div >
+                            <el-container>
+                                <el-aside width="60px">
+                                    <img src="./image/sonar.png" style="width: 48px">
+                                </el-aside>
+                                <el-main style="padding:0">
+                                    <div>缺陷数</div>
+                                    <div style="font-size: 20px">55</div>
+                                </el-main>
+                                <el-aside width="60px" style="text-align: right">
+                                    <img style="width: 14px" src="./image/tip-4.png" >
+                                </el-aside>
+                            </el-container>
+
+                            <el-row :gutter="20" style="margin-top: 10px;border-bottom: 1px solid gainsboro">
+                                <el-col :span="12"><div style="text-align: left"><img src="./image/bad_taste.png" style="width: 14px">坏味道:123个</div></el-col>
+                                <el-col :span="12"><div style="text-align: left"><img src="./image/repeat_row.png" style="width: 14px">重复行数:2345行</div></el-col>
+                            </el-row>
+                         <div style="margin-top: 10px">客户管理系统</div>
+                        </div>
+                    </el-card>
+                </el-col>
+                <el-col :span="8">
+                    <el-card class="box-card">
+                        <div >
+                            <el-container>
+                                <el-aside width="60px">
+                                    <img src="./image/sonar.png" style="width: 48px">
+                                </el-aside>
+                                <el-main style="padding:0">
+                                    <div>缺陷数</div>
+                                    <div>55</div>
+                                </el-main>
+                                <el-aside width="60px" style="text-align: right">
+                                    <img style="width: 14px" src="./image/tip-4.png" >
+                                </el-aside>
+                            </el-container>
+                            <el-row :gutter="20" style="margin-top: 10px;border-bottom: 1px solid gainsboro">
+                                <el-col :span="12"><div style="text-align: left"><img src="./image/bad_taste.png" style="width: 14px">坏味道:123个</div></el-col>
+                                <el-col :span="12"><div style="text-align: left"><img src="./image/repeat_row.png" style="width: 14px">重复行数:2345行</div></el-col>
+                            </el-row>
+                            <div style="margin-top: 10px">客户管理系统</div>
+                        </div>
+                    </el-card>
+                </el-col>
+                <el-col :span="8">
+                    <el-card class="box-card">
+                        <div >
+                            <el-container>
+                                <el-aside width="60px">
+                                    <img src="./image/sonar.png" style="width: 48px">
+                                </el-aside>
+                                <el-main style="padding:0">
+                                    <div>缺陷数</div>
+                                    <div>55</div>
+                                </el-main>
+                                <el-aside width="60px" style="text-align: right">
+                                    <img style="width: 14px" src="./image/tip-4.png" >
+                                </el-aside>
+                            </el-container>
+                            <el-row :gutter="20" style="margin-top: 10px;border-bottom: 1px solid gainsboro">
+                                <el-col :span="12"><div style="text-align: left"><img src="./image/bad_taste.png" style="width: 14px">坏味道:123个</div></el-col>
+                                <el-col :span="12"><div style="text-align: left"><img src="./image/repeat_row.png" style="width: 14px">重复行数:2345行</div></el-col>
+                            </el-row>
+                            <div style="margin-top: 10px">客户管理系统</div>
+                        </div>
+                    </el-card>
+                </el-col>
+            </el-row>
+        </el-main>
+
+    </el-container>
+</el-container>
+
+
+<script src="./vue/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        mounted:function(){
+            this.tableData = this.tableData_onlyme
+        },
+        data: {
+
+        },
+        methods: {
+
+        },
+
+    })
+</script>
+</body>
+</html>

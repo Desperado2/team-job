@@ -1,3 +1,12 @@
+html,body{
+    height: 100%;
+    margin: 0;
+}
+
+a{
+    text-decoration:none;
+    color: black;
+}
 .index-el-header{
     background-color: white;
     height: 60px;
@@ -21,4 +30,8 @@
 
 .grid-content{
     text-align: center;
+}
+
+.btn-selected{
+    background-color: #40a9ff;
 }

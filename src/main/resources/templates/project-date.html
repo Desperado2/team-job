@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <link rel="stylesheet" href="./style/index.css">
+    <script src="./echarts/echarts.common.min.js"></script>
+</head>
+<body>
+
+<el-container style="height: 100%;" id="app">
+    <el-aside width="256px" style="background-color: rgb(0,21,41)">
+        <div style="height: 60px;text-align: center;background-color: rgb(0,33,64)">
+            <div style="display: inline-block;width: 60px;text-align: center">
+                <img src="./image/default.jpg" style="width: 32px;">
+            </div>
+            <div style="display: inline-block;width: 130px;text-align: left">
+                <h1 style="color: white">Bai Cai</h1>
+            </div>
+        </div>
+        <el-menu :default-openeds="['1']" default-active="1" background-color="#001529"
+                 text-color="#eeeeee" active-text-color="#409EFF" unique-opened="true">
+            <el-submenu index="1">
+                <template slot="title"><i class="el-icon-message"></i>dashboard</template>
+                <el-menu-item index="1-1">工作台</el-menu-item>
+                <el-menu-item index="1-2">周报</el-menu-item>
+            </el-submenu>
+            <el-submenu index="2">
+                <template slot="title"><i class="el-icon-menu"></i>应用</template>
+                <el-menu-item index="2-1">应用管理</el-menu-item>
+                <el-menu-item index="2-2">代码质量</el-menu-item>
+            </el-submenu>
+            <el-submenu index="3">
+                <template slot="title"><i class="el-icon-setting"></i>模板</template>
+                <el-menu-item index="3-1">项目排期</el-menu-item>
+            </el-submenu>
+            <el-submenu index="4">
+                <template slot="title"><i class="el-icon-setting"></i>关于</template>
+                <el-menu-item index="3-1">关于我们</el-menu-item>
+            </el-submenu>
+        </el-menu>
+    </el-aside>
+
+    <el-container>
+        <el-header class="index-el-header">
+            <img src="./image/tip.png" style="width: 16px">
+            <el-badge is-dot class="item">
+
+            </el-badge>
+
+            <img src="./image/default.jpg" style="width: 24px;margin-left: 30px">
+            <span style="font-size: 18px;margin-left: 10px">王小虎</span>
+        </el-header>
+        <el-header style="height: 140px">
+            <div style="background-color: white;height: 160px;margin-top: 10px">
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item>项目排期</el-breadcrumb-item>
+                </el-breadcrumb>
+                <div style="height: 90px;width: 100%;margin-top: 30px">
+                    <h3>项目排期</h3>
+                    <span>每个有意义的项目都应该有个特别的代号。
+                        <a href="#" style="color: #ef9b6c">创建项目排期  </a>
+                        <a href="#" style="color: #ef9b6c">创建日常需求  </a>
+                        <a href="#" style="color: #ef9b6c">预览项目排期</a>    </span>
+                </div>
+            </div>
+        </el-header>
+        <el-main class="index-el-main">
+            <el-card class="box-card" style="margin-bottom: 20px">
+                <div slot="header" class="clearfix">
+                    <span>客户管理系统</span>
+                    <el-button style="float: right; " type="success" @click="next(0)" plain>下一步</el-button>
+                    <el-button style="float: right; " type="success" plain>编辑</el-button>
+                </div>
+                <el-steps :active="actives[0]" align-center finish-status="success">
+                    <el-step title="需求评审" description="2019-02-18"></el-step>
+                    <el-step title="接口评审" description="2019-02-28"></el-step>
+                    <el-step title="测试" description="2019-03-23"></el-step>
+                    <el-step title="预发" description="2019-04-28"></el-step>
+                    <el-step title="发布" description="2019-05-28"></el-step>
+                </el-steps>
+            </el-card>
+
+            <el-card class="box-card" style="margin-bottom: 20px">
+                <div slot="header" class="clearfix">
+                    <span>订单管理系统</span>
+                    <el-button style="float: right; " type="success" @click="next(1)" plain>下一步</el-button>
+                    <el-button style="float: right; " type="success"  plain>编辑</el-button>
+                </div>
+                <el-steps :active="actives[1]" align-center finish-status="success">
+                    <el-step title="需求评审" description="2019-02-18"></el-step>
+                    <el-step title="接口评审" description="2019-02-28"></el-step>
+                    <el-step title="测试" description="2019-03-23"></el-step>
+                    <el-step title="预发" description="2019-04-28"></el-step>
+                    <el-step title="发布" description="2019-05-28"></el-step>
+                </el-steps>
+            </el-card>
+
+            <el-card class="box-card" style="margin-bottom: 20px">
+                <div slot="header" class="clearfix">
+                    <span>客户营销系统</span>
+                    <el-button style="float: right; " type="success" @click="next(2)" plain>下一步</el-button>
+                    <el-button style="float: right; " type="success" plain>编辑</el-button>
+                </div>
+                <el-steps :active="actives[2]" align-center finish-status="success">
+                    <el-step title="需求评审" description="2019-02-18"></el-step>
+                    <el-step title="接口评审" description="2019-02-28"></el-step>
+                    <el-step title="测试" description="2019-03-23"></el-step>
+                    <el-step title="预发" description="2019-04-28"></el-step>
+                    <el-step title="发布" description="2019-05-28"></el-step>
+                </el-steps>
+            </el-card>
+        </el-main>
+
+    </el-container>
+</el-container>
+
+
+<script src="./vue/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            actives: [3,1,4]
+        },
+        methods: {
+            next:function(item) {
+                if (this.actives[item]++ > 4) {
+                    Vue.set(this.actives, item, 0)
+                }else{
+                    Vue.set(this.actives, item, this.actives[item])
+                };
+            }
+        },
+
+    })
+</script>
+</body>
+</html>
