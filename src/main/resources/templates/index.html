@@ -57,6 +57,7 @@
         </el-header>
 
         <index-comp v-show="activeMenuIndex == '1-1'"></index-comp>
+        <week-report v-show="activeMenuIndex == '1-2'"></week-report>
         <app-manger v-show="activeMenuIndex == '2-1'"></app-manger>
         <code-sonar v-show="activeMenuIndex == '2-2'"></code-sonar>
         <project-date v-show="activeMenuIndex == '3-1'"></project-date>
@@ -92,7 +93,8 @@
             'about-ours':abour_ours,
             'app-manger':app_manager,
             'code-sonar':code_sonar,
-            'project-date':project_date
+            'project-date':project_date,
+            'week-report':week_report
         }
     })
 </script>

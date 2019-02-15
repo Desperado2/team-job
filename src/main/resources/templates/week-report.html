@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <link rel="stylesheet" href="./style/index.css">
+    <script src="./echarts/echarts.common.min.js"></script>
+</head>
+<body>
+
+<el-container style="height: 100%;" id="app">
+    <el-aside width="200px" style="background-color: rgb(0,21,41)">
+        <div style="height: 60px;text-align: center;background-color: rgb(0,33,64)">
+            <div style="display: inline-block;width: 60px;text-align: center">
+                <img src="./image/default.jpg" style="width: 32px;">
+            </div>
+            <div style="display: inline-block;width: 130px;text-align: left">
+                <h1 style="color: white">Bai Cai</h1>
+            </div>
+        </div>
+        <el-menu :default-openeds="['1']" default-active="1" background-color="#001529"
+                 text-color="#eeeeee" active-text-color="#409EFF" unique-opened="true">
+            <el-submenu index="1">
+                <template slot="title"><i class="el-icon-message"></i>dashboard</template>
+                <el-menu-item index="1-1">工作台</el-menu-item>
+                <el-menu-item index="1-2">周报</el-menu-item>
+            </el-submenu>
+            <el-submenu index="2">
+                <template slot="title"><i class="el-icon-menu"></i>应用</template>
+                <el-menu-item index="2-1">应用管理</el-menu-item>
+                <el-menu-item index="2-2">代码质量</el-menu-item>
+            </el-submenu>
+            <el-submenu index="3">
+                <template slot="title"><i class="el-icon-setting"></i>模板</template>
+                <el-menu-item index="3-1">项目排期</el-menu-item>
+            </el-submenu>
+            <el-submenu index="4">
+                <template slot="title"><i class="el-icon-setting"></i>关于</template>
+                <el-menu-item index="3-1">关于我们</el-menu-item>
+            </el-submenu>
+        </el-menu>
+    </el-aside>
+
+    <el-container>
+        <el-header class="index-el-header">
+            <img src="./image/tip.png" style="width: 16px">
+            <el-badge is-dot class="item">
+
+            </el-badge>
+
+            <img src="./image/default.jpg" style="width: 24px;margin-left: 30px">
+            <span style="font-size: 18px;margin-left: 10px">王小虎</span>
+        </el-header>
+        <el-header style="height: 120px">
+            <div style="background-color: white;height: 140px;margin-top: 10px">
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item>周报</el-breadcrumb-item>
+                </el-breadcrumb>
+                <el-tabs v-model="activeName" @tab-click="handleClick" style="height: 70px;width: 100%;margin-top: 60px">
+                    <el-tab-pane label="写周报" name="first"></el-tab-pane>
+                    <el-tab-pane label="团队周报" name="second"></el-tab-pane>
+                </el-tabs>
+            </div>
+        </el-header>
+        <el-main class="index-el-main">
+            <el-card class="box-card" style="padding: 0px 300px">
+                <el-form ref="form" :model="form" label-width="80px">
+                    <el-form-item label="本周工作:">
+                        <el-row :gutter="20" style="border: 1px solid darkgray;margin-left: 0;margin-right: 0">
+                            <el-col :span="6">
+                                <el-button type="text"><i class="el-icon-edit"></i>导入上周周报</el-button>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button type="text"><i class="el-icon-edit"></i>导入Git记录</el-button>
+                            </el-col>
+                            <el-col :span="6">
+                                <el-button type="text" disabled><i class="el-icon-edit"></i>导入会议记录</el-button>
+                            </el-col>
+                        </el-row>
+                        <el-input type="textarea" rows="10" ></el-input>
+                    </el-form-item>
+                    <el-form-item label="下周工作:">
+                        <el-input type="textarea" rows="6"></el-input>
+                    </el-form-item>
+                    <el-form-item label="感想(选填):">
+                        <el-input type="textarea" rows="4" ></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" >提交</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-card>
+        </el-main>
+
+    </el-container>
+</el-container>
+
+
+<script src="./vue/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            activeName: 'first',
+            form:{}
+        },
+        methods: {
+            handleClick:function (tab, event) {
+                console.log(tab.name)
+            }
+        },
+
+    })
+</script>
+</body>
+</html>
