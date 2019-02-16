@@ -14,8 +14,8 @@ var week_report = Vue.component('week-report',{
             </div>
         </el-header>
         <el-main class="index-el-main">
-            <el-card class="box-card" style="padding: 0px 300px">
-                <el-form ref="form" :model="form" label-width="80px">
+            <el-card class="box-card" style="padding: 0px 22%">
+                <el-form ref="form" :model="form" label-width="100px">
                     <el-form-item label="本周工作:">
                         <el-row :gutter="20" style="border: 1px solid darkgray;margin-left: 0;margin-right: 0">
                             <el-col :span="6">
@@ -28,13 +28,13 @@ var week_report = Vue.component('week-report',{
                                 <el-button type="text" disabled><i class="el-icon-edit"></i>导入会议记录</el-button>
                             </el-col>
                         </el-row>
-                        <el-input type="textarea" rows="10" ></el-input>
+                        <el-input type="textarea" rows="10" v-model="form.lastweek"></el-input>
                     </el-form-item>
                     <el-form-item label="下周工作:">
-                        <el-input type="textarea" rows="6"></el-input>
+                        <el-input type="textarea" rows="6" v-model="form.nextweek"></el-input>
                     </el-form-item>
                     <el-form-item label="感想(选填):">
-                        <el-input type="textarea" rows="4" ></el-input>
+                        <el-input type="textarea" rows="4" v-model="form.feeling"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" >提交</el-button>
@@ -47,7 +47,11 @@ var week_report = Vue.component('week-report',{
     data(){
         return{
             activeName: 'first',
-            form:{}
+            form:{
+                lastweek:'',
+                nextweek:'',
+                feeling:''
+            }
         }
     },
     methods:{

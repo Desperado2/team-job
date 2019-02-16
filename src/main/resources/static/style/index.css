@@ -3,6 +3,12 @@ html,body{
     margin: 0;
 }
 
+.index-el-side{
+    width: 64px !important;
+}
+.index-el-side1{
+    width: 256px !important;
+}
 a{
     text-decoration:none;
     color: black;
@@ -11,7 +17,7 @@ a{
     background-color: white;
     height: 60px;
     line-height: 60px;
-    text-align: right;
+   /* text-align: right;*/
     font-size: 12px;
     background-color: white;
     border-bottom: 5px solid #f0f5ff;
@@ -34,4 +40,13 @@ a{
 
 .btn-selected{
     background-color: #40a9ff;
+}
+
+.el-menu-item.is-active {
+    background-color: rgb(239,155,108) !important;
+}
+
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 256px;
+    min-height: 100%;
 }

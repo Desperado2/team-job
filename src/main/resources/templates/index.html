@@ -13,17 +13,27 @@
 <body>
 
 <el-container style="height: 100%;" id="app">
-    <el-aside width="256px" style="background-color: rgb(0,21,41)">
-        <div style="height: 60px;text-align: center;background-color: rgb(0,33,64)">
-            <div style="display: inline-block;width: 60px;text-align: center">
-                <img src="./image/default.jpg" style="width: 32px;">
-            </div>
-            <div style="display: inline-block;width: 130px;text-align: left">
-                <h1 style="color: white">Bai Cai</h1>
-            </div>
-        </div>
-        <el-menu :default-openeds="['1']" default-active="1" background-color="#001529"
-                 text-color="#eeeeee" active-text-color="#409EFF" unique-opened="true"  @select="handleSelect">
+    <el-aside :class="[{'index-el-side': (isCollapse == true)},{'index-el-side1':(isCollapse == false)}]" style="background-color: rgb(0,21,41)">
+
+        <el-menu :default-openeds="openIndex" default-active="1-1" background-color="#001529" :collapse="isCollapse"
+                 text-color="#eeeeee" active-text-color="#eeeeee" unique-opened="true"
+                 class="el-menu-vertical-demo" @select="handleSelect">
+            <el-menu-item index="0" style="padding: 0;height: 60px">
+                <span slot="title">
+
+                    <div style="height: 60px;text-align: center;background-color: rgb(0,33,64)">
+                        <el-row>
+                          <el-col :span="8">
+                              <img src="./image/default.jpg" style="width: 50px;">
+                          </el-col>
+                          <el-col :span="16" style="text-align: left">
+                              <h1 style="color: white;margin: 0;font-size: 40px;font-family: monospace">Bai Cai</h1>
+                          </el-col>
+                        </el-row>
+                    </div>
+                </div>
+                </span>
+            </el-menu-item>
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-message"></i>dashboard</template>
                 <el-menu-item index="1-1">工作台</el-menu-item>
@@ -31,12 +41,12 @@
             </el-submenu>
             <el-submenu index="2">
                 <template slot="title"><i class="el-icon-menu"></i>应用</template>
-                <el-menu-item index="2-1">应用管理</el-menu-item>
-                <el-menu-item index="2-2">代码质量</el-menu-item>
+                <el-menu-item index="2-1" >应用管理</el-menu-item>
+                <el-menu-item index="2-2" >代码质量</el-menu-item>
             </el-submenu>
             <el-submenu index="3">
                 <template slot="title"><i class="el-icon-setting"></i>模板</template>
-                <el-menu-item index="3-1">项目排期</el-menu-item>
+                <el-menu-item index="3-1" >项目排期</el-menu-item>
             </el-submenu>
             <el-submenu index="4">
                 <template slot="title"><i class="el-icon-setting"></i>关于</template>
@@ -47,13 +57,21 @@
 
     <el-container>
         <el-header class="index-el-header">
-            <img src="./image/tip.png" style="width: 16px">
-            <el-badge is-dot class="item">
+            <el-row>
+                <el-col :span="12" style="line-height: 60px">
+                    <img src="./image/close.png" style="width: 24px" @click="switchMenuStatus">
+                </el-col>
+                <el-col :span="12" style="text-align: right">
+                    <img src="./image/tip.png" style="width: 16px">
+                    <el-badge is-dot class="item">
 
-            </el-badge>
+                    </el-badge>
 
-            <img src="./image/default.jpg" style="width: 24px;margin-left: 30px">
-            <span style="font-size: 18px;margin-left: 10px">王小虎</span>
+                    <img src="./image/default.jpg" style="width: 24px;margin-left: 30px">
+                    <span style="font-size: 18px;margin-left: 10px">王小虎</span>
+                </el-col>
+            </el-row>
+
         </el-header>
 
         <index-comp v-show="activeMenuIndex == '1-1'"></index-comp>
@@ -79,15 +97,22 @@
     new Vue({
         el: '#app',
         data: {
-            activeMenuIndex: '1-1'
+            openIndex:['1'],
+            activeMenuIndex: '1-1',
+            isCollapse:false
         },
         methods: {
             handleClick(tab, event) {
                 console.log(tab, event);
             },
             handleSelect:function(key,keypath){
+                Vue.set(this.openIndex, 0,keypath[0])
                 this.activeMenuIndex = key
+            },
+            switchMenuStatus:function () {
+                this.isCollapse = !this.isCollapse
             }
+
         },
         components:{
             'index-comp':index_comp,

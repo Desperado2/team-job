@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        html,body{
+            height: 100%;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<el-container id="app" style="height: 100%">
+    <el-header style="height: 30%;text-align: center;line-height: 30%;margin-top: 5%">
+        <h4>《网页走丢了》温馨提示您:</h4><br><br>
+        <h1>网站千万个，  &nbsp;&nbsp;  网址第一个。</h1><br>
+        <h1>你若输不对，  &nbsp;&nbsp;  只能两行泪。</h1>
+    </el-header>
+    <el-main style="text-align: center">
+        <img src="./image/error.gif">
+    </el-main>
+</el-container>
+
+<script src="./vue/vue.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+
+        },
+        methods: {
+
+        }
+    })
+</script>
+</body>
+</html>
