@@ -3,10 +3,6 @@ var week_report = Vue.component('week-report',{
         <el-container>
           <el-header style="height: 120px">
             <div style="background-color: white;height: 140px;margin-top: 10px">
-                <el-breadcrumb separator="/">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>周报</el-breadcrumb-item>
-                </el-breadcrumb>
                 <el-tabs v-model="activeName" @tab-click="handleClick" style="height: 70px;width: 100%;margin-top: 60px">
                     <el-tab-pane label="写周报" name="first"></el-tab-pane>
                     <el-tab-pane label="团队周报" name="second"></el-tab-pane>

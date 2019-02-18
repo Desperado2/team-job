@@ -3,10 +3,7 @@ var index_comp = Vue.component('index-comp',{
         <el-container>
          <el-header style="height: 150px">
             <div style="background-color: white;height: 140px;margin-top: 10px">
-                <el-breadcrumb separator="/">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>工作台</el-breadcrumb-item>
-                </el-breadcrumb>
+            
                 <div style="height: 80px;width: 100%;margin-top: 30px">
                     <el-row :gutter="20">
                         <el-col :span="4" style="text-align: center"><img src="./image/default.jpg" style="width: 60px">

@@ -3,12 +3,8 @@ var abour_ours = Vue.component('about-ours',{
         <el-container>
             <el-header style="height: 80px">
             <div style="background-color: white;height: 140px;margin-top: 10px">
-                <el-breadcrumb separator="/">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>关于我们</el-breadcrumb-item>
-                </el-breadcrumb>
                 <div style="height: 30px;width: 100%;margin-top: 30px">
-                    <a href="#" @click=""><h4 style="color: #ef9b6c">+添加成员</h4></a>
+                    <a href="#" @click="addUser"><h4 style="color: #ef9b6c">+添加成员</h4></a>
                 </div>
             </div>
         </el-header>
@@ -119,11 +115,19 @@ var abour_ours = Vue.component('about-ours',{
         </el-container>
     `,
     data(){
-
+        return{
+            typeSelect:this.optionsCode
+        }
     },
+    props:['optionsCode'],
     methods:{
         lookUserInfo(name){
-            alert(name)
+            this.typeSelect = 'memberInfo'
+            Bus.$emit("optionsCode",this.typeSelect);
+        },
+        addUser:function () {
+            this.typeSelect = 'addUser'
+            Bus.$emit("optionsCode",this.typeSelect);
         }
     },
 

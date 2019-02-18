@@ -3,14 +3,11 @@ var app_manager = Vue.component('app-manager',{
         <el-container>
           <el-header style="height: 120px">
             <div style="background-color: white;height: 140px;margin-top: 10px">
-                <el-breadcrumb separator="/">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>应用管理</el-breadcrumb-item>
-                </el-breadcrumb>
-                <div style="height: 70px;width: 100%;margin-top: 30px">
+            <div style="height: 90px;width: 100%;margin-top: 30px">
                     <h3>应用列表</h3>
-                    <span>XXXXXXXXXXXXXXXX</span>
-                </div>
+                    <span>每个有意义的项目都应该有个特别的代号。
+                    <a href="#" @click="createApp" style="color: #ef9b6c">创建新应用</a> </span>
+            </div>
             </div>
         </el-header>
         <el-main class="index-el-main">
@@ -258,9 +255,11 @@ var app_manager = Vue.component('app-manager',{
                     './image/tx/czm.jpg',
                     './image/tx/hb.jpg'
                 ],
-            }]
+            }],
+            typeSelect:this.optionsCode,
         }
     },
+    props:['optionsCode'],
     mounted:function(){
         this.tableData = this.tableData_onlyme
     },
@@ -272,6 +271,10 @@ var app_manager = Vue.component('app-manager',{
             }else{
                 this.tableData = this.tableData_all
             }
+        },
+        createApp:function () {
+            this.typeSelect = 'createApp'
+            Bus.$emit("optionsCode",this.typeSelect);
         }
     },
 

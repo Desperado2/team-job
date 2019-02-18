@@ -3,10 +3,6 @@ var code_sonar = Vue.component('code-sonar',{
         <el-container>
             <el-header style="height: 80px">
             <div style="background-color: white;height: 140px;margin-top: 10px">
-                <el-breadcrumb separator="/">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>代码质量</el-breadcrumb-item>
-                </el-breadcrumb>
                 <div style="height: 30px;width: 100%;margin-top: 30px">
                     <h3>代码质量</h3>
                 </div>

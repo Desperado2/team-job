@@ -15,8 +15,8 @@
 <el-container style="height: 100%;" id="app">
     <el-aside :class="[{'index-el-side': (isCollapse == true)},{'index-el-side1':(isCollapse == false)}]" style="background-color: rgb(0,21,41)">
 
-        <el-menu :default-openeds="openIndex" default-active="1-1" background-color="#001529" :collapse="isCollapse"
-                 text-color="#eeeeee" active-text-color="#eeeeee" unique-opened="true"
+        <el-menu :default-openeds="openIndex" default-active="activeMenuIndex" background-color="#001529" :collapse="isCollapse"
+                 text-color="#eeeeee" active-text-color="#eeeeee" unique-opened="uniqueOpened"
                  class="el-menu-vertical-demo" @select="handleSelect">
             <el-menu-item index="0" style="padding: 0;height: 60px">
                 <span slot="title">
@@ -71,15 +71,31 @@
                     <span style="font-size: 18px;margin-left: 10px">王小虎</span>
                 </el-col>
             </el-row>
-
+            <div style="background-color: white;height: 140px;margin-top: 10px">
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item> <a href="#" @click="toIndex">首页</a></el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="activeMenuIndex == '1-1'">工作台</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="activeMenuIndex == '1-2'">周报</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="activeMenuIndex == '2-1'">应用管理</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="optionsCode == 'createApp'">创建应用</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="activeMenuIndex == '2-2'">代码质量</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="activeMenuIndex == '3-1'">项目排期</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="activeMenuIndex == '4-1'">关于我们</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="optionsCode == 'memberInfo'">成员信息</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="optionsCode == 'addUser'">添加成员</el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
         </el-header>
 
         <index-comp v-show="activeMenuIndex == '1-1'"></index-comp>
         <week-report v-show="activeMenuIndex == '1-2'"></week-report>
-        <app-manger v-show="activeMenuIndex == '2-1'"></app-manger>
+        <app-manger v-show="(activeMenuIndex == '2-1' && optionsCode == '')" :options-code.sync=optionsCode></app-manger>
         <code-sonar v-show="activeMenuIndex == '2-2'"></code-sonar>
         <project-date v-show="activeMenuIndex == '3-1'"></project-date>
-        <about-ours v-show="activeMenuIndex == '4-1'"></about-ours>
+        <about-ours v-show="(activeMenuIndex == '4-1' && optionsCode == '')" :options-code.sync=optionsCode></about-ours>
+        <member-info v-show="(activeMenuIndex == '4-1' && optionsCode=='memberInfo')"></member-info>
+        <add-user v-show="(activeMenuIndex == '4-1' && optionsCode=='addUser')"></add-user>
+        <create-app v-show="(activeMenuIndex == '2-1' && optionsCode=='createApp')"></create-app>
 
     </el-container>
 </el-container>
@@ -93,21 +109,38 @@
 <script src="./compoents/codeSonar.js"></script>
 <script src="./compoents/projectDate.js"></script>
 <script src="./compoents/weekReport.js"></script>
+<script src="./compoents/memberInfo.js"></script>
+<script src="./compoents/bus.js"></script>
+<script src="./compoents/addUser.js"></script>
+<script src="./compoents/createApp.js"></script>
 <script>
     new Vue({
         el: '#app',
         data: {
             openIndex:['1'],
             activeMenuIndex: '1-1',
-            isCollapse:false
+            isCollapse:false,
+            uniqueOpened:true,
+            optionsCode:''
+        },
+        mounted:function(){
+            Bus.$on("optionsCode",(optionsCode) =>{//子组件数据改变之后传递给父组件
+                this.optionsCode = optionsCode;
+            });
         },
         methods: {
             handleClick(tab, event) {
                 console.log(tab, event);
             },
+            toIndex:function(){
+                Vue.set(this.openIndex, 0,'1');
+                this.activeMenuIndex = '1-1';
+                this.optionsCode = ''
+            },
             handleSelect:function(key,keypath){
-                Vue.set(this.openIndex, 0,keypath[0])
-                this.activeMenuIndex = key
+                Vue.set(this.openIndex, 0,keypath[0]);
+                this.activeMenuIndex = key;
+                this.optionsCode = ''
             },
             switchMenuStatus:function () {
                 this.isCollapse = !this.isCollapse
@@ -120,7 +153,10 @@
             'app-manger':app_manager,
             'code-sonar':code_sonar,
             'project-date':project_date,
-            'week-report':week_report
+            'week-report':week_report,
+            'member-info':member_info,
+            'add-user':add_user,
+            'create-app':create_app
         }
     })
 </script>

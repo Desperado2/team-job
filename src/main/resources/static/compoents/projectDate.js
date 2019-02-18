@@ -3,10 +3,6 @@ var project_date = Vue.component('project-date',{
         <el-container>
            <el-header style="height: 140px">
             <div style="background-color: white;height: 160px;margin-top: 10px">
-                <el-breadcrumb separator="/">
-                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-                    <el-breadcrumb-item>项目排期</el-breadcrumb-item>
-                </el-breadcrumb>
                 <div style="height: 90px;width: 100%;margin-top: 30px">
                     <h3>项目排期</h3>
                     <span>每个有意义的项目都应该有个特别的代号。
