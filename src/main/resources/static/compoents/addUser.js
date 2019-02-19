@@ -32,7 +32,7 @@ var add_user = Vue.component('add-user',{
                    </el-form-item>
                    <el-form-item label="生日" prop="birthday">
                        <div>
-                           <el-radio-group v-model="ruleForm.birth_type" size="small">
+                           <el-radio-group v-model="ruleForm.birthType" size="small">
                                <el-radio-button label="农历"></el-radio-button>
                                <el-radio-button label="阳历" ></el-radio-button>
                            </el-radio-group>
@@ -65,7 +65,7 @@ var add_user = Vue.component('add-user',{
                 password: '',
                 phone : '',
                 birthday: '',
-                birth_type: '',
+                birthType: '',
                 department: '',
                 position: '',
                 headUrl:''

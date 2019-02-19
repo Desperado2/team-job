@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.desperado.teamjob.dao.WeeklyDao">
+
+    <insert id="addWeek" parameterType="com.desperado.teamjob.domain.Weekly">
+        INSERT INTO `weekly`(
+                id,user_id,week,this_week_report,next_week_report,feeling,date_create,date_update
+        ) VALUES (#{id},#{userId},#{week},#{thisWeekReport},#{nextWeekReport},#{feeling},#{dateCreate},#{dateUpdate})
+    </insert>
+
+    <select id="getAllWeeklyByWeek" resultType="com.desperado.teamjob.domain.Weekly">
+        select * from weekly where week = #{week};
+    </select>
+
+    <select id="getWeeklyById" resultType="com.desperado.teamjob.domain.Weekly">
+        select * from weekly where id=#{id};
+    </select>
+
+    <select id="getWeeklyByIdAndWeek"  resultType="com.desperado.teamjob.domain.Weekly">
+        select * from weekly where id=#{id} and week = #{week};
+    </select>
+
+</mapper>

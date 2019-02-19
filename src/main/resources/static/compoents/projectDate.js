@@ -6,9 +6,9 @@ var project_date = Vue.component('project-date',{
                 <div style="height: 90px;width: 100%;margin-top: 30px">
                     <h3>项目排期</h3>
                     <span>每个有意义的项目都应该有个特别的代号。
-                        <a href="#" style="color: #ef9b6c">创建项目排期  </a>
-                        <a href="#" style="color: #ef9b6c">创建日常需求  </a>
-                        <a href="#" style="color: #ef9b6c">预览项目排期</a>    </span>
+                        <a href="#" style="color: #ef9b6c" @click="createProject('pro')">创建项目排期  </a>
+                        <a href="#" style="color: #ef9b6c" @click="createProject('dem')">创建日常需求  </a>
+                       </span>
                 </div>
             </div>
         </el-header>
@@ -66,7 +66,16 @@ var project_date = Vue.component('project-date',{
             actives: [3,1,4]
         }
     },
+    props:['optionsCode'],
     methods:{
+        createProject:function(type){
+            if (type == 'pro'){
+                this.typeSelect = 'createProject'
+            }else if(type == 'dem'){
+                this.typeSelect = 'createDemand'
+            }
+            Bus.$emit("optionsCode",this.typeSelect);
+        },
         next:function(item) {
             if (this.actives[item]++ > 4) {
                 Vue.set(this.actives, item, 0)
