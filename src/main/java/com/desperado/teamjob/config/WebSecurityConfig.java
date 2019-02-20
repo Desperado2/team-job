@@ -39,7 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests().
-                antMatchers("/global/**").permitAll().anyRequest().authenticated()
+                antMatchers("/global/**","/*.ico").permitAll().anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll().successHandler(loginSuccessHandler())
                 .and().logout().permitAll().invalidateHttpSession(true)
         .deleteCookies("JSESSIONID").logoutSuccessHandler(logoutSuccessHandler())
