@@ -18,7 +18,7 @@
                 <div >
                     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
                         <el-form-item>
-                            <img src="./image/default.jpg" style="width: 50px;">
+                            <img src="./global/image/default.jpg" style="width: 50px;">
                             <h1 style="color: black;margin: 0;font-size: 40px;font-family: monospace">Bai Cai</h1>
                         </el-form-item>
                         <el-form-item prop="username">
@@ -57,8 +57,8 @@
         el: '#app',
         data: {
             form: {
-                username: '111@qq.com',
-                password: 'admin',
+                username: '',
+                password: '',
             },
             rules: {
                 username: [
