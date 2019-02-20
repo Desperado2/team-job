@@ -1,6 +1,7 @@
 package com.desperado.teamjob.json;
 
 import com.desperado.teamjob.domain.User;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,10 +18,15 @@ import javax.servlet.http.HttpServletRequest;
 public class Login {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        return "login";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(auth instanceof AnonymousAuthenticationToken){
+            return "login";
+        }else{
+            return "index";
+        }
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String root() {
         return "index";
     }

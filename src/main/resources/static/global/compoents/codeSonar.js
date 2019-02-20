@@ -15,20 +15,20 @@ var code_sonar = Vue.component('code-sonar',{
                         <div >
                             <el-container>
                                 <el-aside width="60px">
-                                    <img src="./image/sonar.png" style="width: 48px">
+                                    <img src="./global/image/sonar.png" style="width: 48px">
                                 </el-aside>
                                 <el-main style="padding:0">
                                     <div>缺陷数</div>
                                     <div style="font-size: 20px">55</div>
                                 </el-main>
                                 <el-aside width="60px" style="text-align: right">
-                                    <img style="width: 14px" src="./image/tip-4.png" >
+                                    <img style="width: 14px" src="./global/image/tip-4.png" >
                                 </el-aside>
                             </el-container>
 
                             <el-row :gutter="20" style="margin-top: 10px;border-bottom: 1px solid gainsboro">
-                                <el-col :span="12"><div style="text-align: left"><img src="./image/bad_taste.png" style="width: 14px">坏味道:123个</div></el-col>
-                                <el-col :span="12"><div style="text-align: left"><img src="./image/repeat_row.png" style="width: 14px">重复行数:2345行</div></el-col>
+                                <el-col :span="12"><div style="text-align: left"><img src="./global/image/bad_taste.png" style="width: 14px">坏味道:123个</div></el-col>
+                                <el-col :span="12"><div style="text-align: left"><img src="./global/image/repeat_row.png" style="width: 14px">重复行数:2345行</div></el-col>
                             </el-row>
                          <div style="margin-top: 10px">客户管理系统</div>
                         </div>
@@ -39,19 +39,19 @@ var code_sonar = Vue.component('code-sonar',{
                         <div >
                             <el-container>
                                 <el-aside width="60px">
-                                    <img src="./image/sonar.png" style="width: 48px">
+                                    <img src="./global/image/sonar.png" style="width: 48px">
                                 </el-aside>
                                 <el-main style="padding:0">
                                     <div>缺陷数</div>
                                     <div>55</div>
                                 </el-main>
                                 <el-aside width="60px" style="text-align: right">
-                                    <img style="width: 14px" src="./image/tip-4.png" >
+                                    <img style="width: 14px" src="./global/image/tip-4.png" >
                                 </el-aside>
                             </el-container>
                             <el-row :gutter="20" style="margin-top: 10px;border-bottom: 1px solid gainsboro">
-                                <el-col :span="12"><div style="text-align: left"><img src="./image/bad_taste.png" style="width: 14px">坏味道:123个</div></el-col>
-                                <el-col :span="12"><div style="text-align: left"><img src="./image/repeat_row.png" style="width: 14px">重复行数:2345行</div></el-col>
+                                <el-col :span="12"><div style="text-align: left"><img src="./global/image/bad_taste.png" style="width: 14px">坏味道:123个</div></el-col>
+                                <el-col :span="12"><div style="text-align: left"><img src="./global/image/repeat_row.png" style="width: 14px">重复行数:2345行</div></el-col>
                             </el-row>
                             <div style="margin-top: 10px">客户管理系统</div>
                         </div>
@@ -62,19 +62,19 @@ var code_sonar = Vue.component('code-sonar',{
                         <div >
                             <el-container>
                                 <el-aside width="60px">
-                                    <img src="./image/sonar.png" style="width: 48px">
+                                    <img src="./global/image/sonar.png" style="width: 48px">
                                 </el-aside>
                                 <el-main style="padding:0">
                                     <div>缺陷数</div>
                                     <div>55</div>
                                 </el-main>
                                 <el-aside width="60px" style="text-align: right">
-                                    <img style="width: 14px" src="./image/tip-4.png" >
+                                    <img style="width: 14px" src="./global/image/tip-4.png" >
                                 </el-aside>
                             </el-container>
                             <el-row :gutter="20" style="margin-top: 10px;border-bottom: 1px solid gainsboro">
-                                <el-col :span="12"><div style="text-align: left"><img src="./image/bad_taste.png" style="width: 14px">坏味道:123个</div></el-col>
-                                <el-col :span="12"><div style="text-align: left"><img src="./image/repeat_row.png" style="width: 14px">重复行数:2345行</div></el-col>
+                                <el-col :span="12"><div style="text-align: left"><img src="./global/image/bad_taste.png" style="width: 14px">坏味道:123个</div></el-col>
+                                <el-col :span="12"><div style="text-align: left"><img src="./global/image/repeat_row.png" style="width: 14px">重复行数:2345行</div></el-col>
                             </el-row>
                             <div style="margin-top: 10px">客户管理系统</div>
                         </div>

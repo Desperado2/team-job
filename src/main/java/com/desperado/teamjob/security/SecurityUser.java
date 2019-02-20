@@ -33,11 +33,6 @@ public class SecurityUser extends User implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return this.getPassword();
-    }
-
-    @Override
     public String getUsername() {
         return this.getEmail();
     }

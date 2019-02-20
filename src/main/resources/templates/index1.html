@@ -17,14 +17,14 @@
 
         <el-menu :default-openeds="openIndex" default-active="activeMenuIndex" background-color="#001529" :collapse="isCollapse"
                  text-color="#eeeeee" active-text-color="#eeeeee" unique-opened="uniqueOpened"
-                 class="el-menu-vertical-demo" @select="handleSelect">
+                 class="el-menu-vertical-demo" @select="handleSelect" :router="true">
             <el-menu-item index="0" style="padding: 0;height: 60px">
                 <span slot="title">
 
                     <div style="height: 60px;text-align: center;background-color: rgb(0,33,64)">
                         <el-row>
                           <el-col :span="8">
-                              <img src="./global/image/default.jpg" style="width: 50px;">
+                              <img src="./image/default.jpg" style="width: 50px;">
                           </el-col>
                           <el-col :span="16" style="text-align: left">
                               <h1 style="color: white;margin: 0;font-size: 40px;font-family: monospace">Bai Cai</h1>
@@ -36,21 +36,21 @@
             </el-menu-item>
             <el-submenu index="1">
                 <template slot="title"><i class="el-icon-message"></i>dashboard</template>
-                <el-menu-item index="1-1">工作台</el-menu-item>
-                <el-menu-item index="1-2">周报</el-menu-item>
+                <el-menu-item index="indexComp">工作台</el-menu-item>
+                <el-menu-item index="week-report">周报</el-menu-item>
             </el-submenu>
             <el-submenu index="2">
                 <template slot="title"><i class="el-icon-menu"></i>应用</template>
-                <el-menu-item index="2-1" >应用管理</el-menu-item>
-                <el-menu-item index="2-2" >代码质量</el-menu-item>
+                <el-menu-item index="/app-manager" >应用管理</el-menu-item>
+                <el-menu-item index="/code-sonar" >代码质量</el-menu-item>
             </el-submenu>
             <el-submenu index="3">
                 <template slot="title"><i class="el-icon-setting"></i>模板</template>
-                <el-menu-item index="3-1" >项目排期</el-menu-item>
+                <el-menu-item index="/project-date" >项目排期</el-menu-item>
             </el-submenu>
             <el-submenu index="4">
                 <template slot="title"><i class="el-icon-setting"></i>关于</template>
-                <el-menu-item index="4-1">关于我们</el-menu-item>
+                <el-menu-item index="/about-ours">关于我们</el-menu-item>
             </el-submenu>
         </el-menu>
     </el-aside>
@@ -59,22 +59,22 @@
         <el-header class="index-el-header">
             <el-row>
                 <el-col :span="12" style="line-height: 60px">
-                    <img src="./global/image/close.png" style="width: 24px" @click="switchMenuStatus">
+                    <img src="./image/close.png" style="width: 24px" @click="switchMenuStatus">
                 </el-col>
                 <el-col :span="12" style="text-align: right">
-                    <img src="./global/image/tip.png" style="width: 16px">
+                    <img src="./image/tip.png" style="width: 16px">
                     <el-badge is-dot class="item">
 
                     </el-badge>
 
-                    <img src="./global/image/default.jpg" style="width: 24px;margin-left: 30px">
+                    <img src="./image/default.jpg" style="width: 24px;margin-left: 30px">
                     <span style="font-size: 18px;margin-left: 10px">王小虎</span>
                 </el-col>
             </el-row>
             <div style="background-color: white;height: 140px;margin-top: 10px">
                 <el-breadcrumb separator="/">
-                    <el-breadcrumb-item> <a href="#" @click="toIndex">首页</a></el-breadcrumb-item>
-                    <el-breadcrumb-item v-show="activeMenuIndex == '1-1'">工作台</el-breadcrumb-item>
+                    <el-breadcrumb-item :to="{path:'/indexComp'}"> 首页</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="activeMenuIndex == 'indexComp'">工作台</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="activeMenuIndex == '1-2'">周报</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="activeMenuIndex == '2-1'">应用管理</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="optionsCode == 'createApp'">创建应用</el-breadcrumb-item>
@@ -90,23 +90,14 @@
             </div>
         </el-header>
 
-        <index-comp v-show="activeMenuIndex == '1-1'"></index-comp>
-        <week-report v-show="activeMenuIndex == '1-2'"></week-report>
-        <app-manger v-show="(activeMenuIndex == '2-1' && optionsCode == '')" :options-code.sync=optionsCode></app-manger>
-        <code-sonar v-show="activeMenuIndex == '2-2'"></code-sonar>
-        <project-date v-show="(activeMenuIndex == '3-1' && optionsCode == '')" :options-code.sync=optionsCode></project-date>
-        <about-ours v-show="(activeMenuIndex == '4-1' && optionsCode == '')" :options-code.sync=optionsCode></about-ours>
-        <member-info v-show="(activeMenuIndex == '4-1' && optionsCode=='memberInfo')"></member-info>
-        <add-user v-show="(activeMenuIndex == '4-1' && optionsCode=='addUser')"></add-user>
-        <create-app v-show="(activeMenuIndex == '2-1' && optionsCode=='createApp')"></create-app>
-        <create-project v-show="(activeMenuIndex == '3-1' && optionsCode=='createProject')"></create-project>
-        <create-demand v-show="(activeMenuIndex == '3-1' && optionsCode=='createDemand')"></create-demand>
+        <router-view></router-view>
 
     </el-container>
 </el-container>
 
 
 <script src="./global/vue/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 <script src="./global/compoents/index.js"></script>
 <script src="./global/compoents/aboutOurs.js"></script>
@@ -120,12 +111,14 @@
 <script src="./global/compoents/createApp.js"></script>
 <script src="./global/compoents/createProject.js"></script>
 <script src="./global/compoents/createDemand.js"></script>
+<script src="./global/compoents/router.js"></script>
 <script>
     new Vue({
         el: '#app',
+        router:router,
         data: {
             openIndex:['1'],
-            activeMenuIndex: '1-1',
+            activeMenuIndex: 'indexComp',
             isCollapse:false,
             uniqueOpened:true,
             optionsCode:''
@@ -141,31 +134,22 @@
             },
             toIndex:function(){
                 Vue.set(this.openIndex, 0,'1');
-                this.activeMenuIndex = '1-1';
+                this.activeMenuIndex = 'indexComp';
                 this.optionsCode = ''
             },
             handleSelect:function(key,keypath){
                 Vue.set(this.openIndex, 0,keypath[0]);
                 this.activeMenuIndex = key;
-                this.optionsCode = ''
+                this.optionsCode = '';
+                console.log(key)
+                router.push(key)
             },
             switchMenuStatus:function () {
                 this.isCollapse = !this.isCollapse
             }
-
         },
         components:{
-            'index-comp':index_comp,
-            'about-ours':abour_ours,
-            'app-manger':app_manager,
-            'code-sonar':code_sonar,
-            'project-date':project_date,
-            'week-report':week_report,
-            'member-info':member_info,
-            'add-user':add_user,
-            'create-app':create_app,
-            'create-project':create_project,
-            'create-demand':create_demand
+
         }
     })
 </script>

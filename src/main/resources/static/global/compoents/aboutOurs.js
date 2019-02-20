@@ -14,7 +14,7 @@ var abour_ours = Vue.component('about-ours',{
                     <el-col :span="6">
                         <a href="#" @click="lookUserInfo('zz')">
                             <div style="text-align: center">
-                                <img src="./image/tx/czm.jpg" style="width: 100px;border-radius: 10px">
+                                <img src="./global/image/tx/czm.jpg" style="width: 100px;border-radius: 10px">
                                 <div>小陈</div>
                             </div>
                         </a>
@@ -22,7 +22,7 @@ var abour_ours = Vue.component('about-ours',{
                     <el-col :span="6">
                         <a href="#" @click="lookUserInfo('zz')">
                         <div style="text-align: center">
-                            <img src="./image/tx/hb.jpg" style="width: 100px;border-radius: 10px">
+                            <img src="./global/image/tx/hb.jpg" style="width: 100px;border-radius: 10px">
                             <div>大黄</div>
                         </div>
                         </a>
@@ -30,7 +30,7 @@ var abour_ours = Vue.component('about-ours',{
                     <el-col :span="6">
                         <a href="#" @click="lookUserInfo('zz')">
                         <div style="text-align: center">
-                            <img src="./image/tx/hj.png" style="width: 100px;border-radius: 10px">
+                            <img src="./global/image/tx/hj.png" style="width: 100px;border-radius: 10px">
                             <div>大军</div>
                         </div>
                         </a>
@@ -38,7 +38,7 @@ var abour_ours = Vue.component('about-ours',{
                     <el-col :span="6">
                         <a href="#" @click="lookUserInfo('zz')">
                         <div style="text-align: center">
-                            <img src="./image/tx/hxj.jpg" style="width: 100px;border-radius: 10px">
+                            <img src="./global/image/tx/hxj.jpg" style="width: 100px;border-radius: 10px">
                             <div>郝建</div>
                         </div>
                         </a>
@@ -48,7 +48,7 @@ var abour_ours = Vue.component('about-ours',{
                     <el-col :span="6">
                         <a href="#" @click="lookUserInfo('zz')">
                         <div style="text-align: center">
-                            <img src="./image/tx/xjk.jpg" style="width: 100px;border-radius: 10px">
+                            <img src="./global/image/tx/xjk.jpg" style="width: 100px;border-radius: 10px">
                             <div>小胖</div>
                         </div>
                         </a>
@@ -56,7 +56,7 @@ var abour_ours = Vue.component('about-ours',{
                     <el-col :span="6">
                         <a href="#" @click="lookUserInfo('zz')">
                         <div style="text-align: center">
-                            <img src="./image/tx/zyt.jpg" style="width: 100px;border-radius: 10px">
+                            <img src="./global/image/tx/zyt.jpg" style="width: 100px;border-radius: 10px">
                             <div>大佬</div>
                         </div>
                         </a>
@@ -71,7 +71,7 @@ var abour_ours = Vue.component('about-ours',{
                     </el-col>
                     <el-col :span="6">
                         <div style="text-align: center">
-                            <img src="./image/default.jpg" style="width: 100px;border-radius: 10px">
+                            <img src="./global/image/default.jpg" style="width: 100px;border-radius: 10px">
                             <div>张三</div>
                         </div>
                     </el-col>
@@ -80,7 +80,7 @@ var abour_ours = Vue.component('about-ours',{
                     <el-col :span="6">
                         <a href="#" @click="lookUserInfo('zz')">
                         <div style="text-align: center">
-                            <img src="./image/tx/xjk.jpg" style="width: 100px;border-radius: 10px">
+                            <img src="./global/image/tx/xjk.jpg" style="width: 100px;border-radius: 10px">
                             <div>小胖</div>
                         </div>
                         </a>
@@ -88,7 +88,7 @@ var abour_ours = Vue.component('about-ours',{
                     <el-col :span="6">
                         <a href="#" @click="lookUserInfo('zz')">
                         <div style="text-align: center">
-                            <img src="./image/tx/zyt.jpg" style="width: 100px;border-radius: 10px">
+                            <img src="./global/image/tx/zyt.jpg" style="width: 100px;border-radius: 10px">
                             <div>大佬</div>
                         </div>
                         </a>
@@ -104,7 +104,7 @@ var abour_ours = Vue.component('about-ours',{
                     <el-col :span="6">
                         <a href="#" @click="lookUserInfo('zz')">
                         <div style="text-align: center">
-                            <img src="./image/default.jpg" style="width: 100px;border-radius: 10px">
+                            <img src="./global/image/default.jpg" style="width: 100px;border-radius: 10px">
                             <div>张三</div>
                         </div>
                         </a>

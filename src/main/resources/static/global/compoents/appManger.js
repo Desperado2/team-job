@@ -68,9 +68,9 @@ var app_manager = Vue.component('app-manager',{
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
 
             }, {
@@ -78,28 +78,28 @@ var app_manager = Vue.component('app-manager',{
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg'
+                    './global/image/default.jpg'
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
             }],
 
@@ -108,9 +108,9 @@ var app_manager = Vue.component('app-manager',{
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
 
             }, {
@@ -118,37 +118,37 @@ var app_manager = Vue.component('app-manager',{
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg'
+                    './global/image/default.jpg'
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
             },{
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
 
             }, {
@@ -156,37 +156,37 @@ var app_manager = Vue.component('app-manager',{
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg'
+                    './global/image/default.jpg'
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
             },{
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
 
             }, {
@@ -194,37 +194,37 @@ var app_manager = Vue.component('app-manager',{
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg'
+                    './global/image/default.jpg'
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
             },{
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
 
             }, {
@@ -232,28 +232,28 @@ var app_manager = Vue.component('app-manager',{
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg'
+                    './global/image/default.jpg'
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg',
                 ],
             }, {
                 app: '2016-05-02',
                 swagger: '王小虎',
                 gitlab: '上海市普陀区金沙江路 1518 弄',
                 owners:[
-                    './image/default.jpg',
-                    './image/tx/czm.jpg',
-                    './image/tx/hb.jpg'
+                    './global/image/default.jpg',
+                    './global/image/tx/czm.jpg',
+                    './global/image/tx/hb.jpg'
                 ],
             }],
             typeSelect:this.optionsCode,

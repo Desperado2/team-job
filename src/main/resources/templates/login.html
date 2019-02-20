@@ -40,7 +40,7 @@
                         </el-form-item>
 
                         <el-form-item size="large">
-                            <el-button type="primary" @click="onSubmit" style="width: 320px">登录</el-button>
+                            <el-button type="primary" @click="submitForm('form')" style="width: 320px">登录</el-button>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -49,15 +49,16 @@
 
 </el-container>
 
-<script src="./vue/vue.js"></script>
+<script src="./global/vue/vue.js"></script>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     new Vue({
         el: '#app',
         data: {
             form: {
-                username: '',
-                password: ''
+                username: '111@qq.com',
+                password: 'admin',
             },
             rules: {
                 username: [
@@ -70,9 +71,27 @@
         },
         methods: {
             submitForm(formName) {
+                let _this = this;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        alert('submit!');
+                        axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                        let params = new URLSearchParams();
+                        params.append('username', _this.form.username);       //你要传给后台的参数值 key/value
+                        params.append('password', _this.form.password);
+                        axios({
+                            method: 'post',
+                            url: '/login',
+                            data:params
+                        }).then(function (result) {
+                            if (result.data == 'success'){
+                                window.location.href="/index";
+                            }else{
+                                _this.$message({
+                                    message:'用户名或密码错误',
+                                    type:'error'
+                                });
+                            }
+                        })
                     } else {
                         console.log('error submit!!');
                         return false;

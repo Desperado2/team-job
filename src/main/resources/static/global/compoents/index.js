@@ -6,7 +6,7 @@ var index_comp = Vue.component('index-comp',{
             
                 <div style="height: 80px;width: 100%;margin-top: 30px">
                     <el-row :gutter="20">
-                        <el-col :span="4" style="text-align: center"><img src="./image/default.jpg" style="width: 60px">
+                        <el-col :span="4" style="text-align: center"><img src="./global/image/default.jpg" style="width: 60px">
                         </el-col>
                         <el-col :span="20">
                             <div >王小虎</div>
@@ -25,13 +25,13 @@ var index_comp = Vue.component('index-comp',{
                 <el-row :gutter="20">
                     <el-col :span="6">
                         <div style="text-align: center">
-                            <img src="./image/122.jpg">
+                            <img src="./global/image/122.jpg">
                             <div>Github</div>
                         </div>
                     </el-col>
                     <el-col :span="6">
                         <div style="text-align: center">
-                            <img src="./image/122.jpg">
+                            <img src="./global/image/122.jpg">
                             <div>Github</div>
                         </div>
                     </el-col>
