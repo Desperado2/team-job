@@ -3,6 +3,9 @@ html,body{
     margin: 0;
 }
 
+[v-cloak] {
+    display: none; }
+
 .index-el-side{
     width: 64px !important;
 }

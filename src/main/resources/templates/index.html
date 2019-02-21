@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <title>主页</title>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./global/element/lib/theme-chalk/index.css">
     <!-- 引入组件库 -->
     <link rel="stylesheet" href="./global/style/index.css">
     <script src="./global/echarts/echarts.common.min.js"></script>
-
 </head>
 <body>
 
-<el-container style="height: 100%;" id="app">
+<el-container style="height: 100%;" id="app" v-cloak>
     <el-aside :class="[{'index-el-side': (isCollapse == true)},{'index-el-side1':(isCollapse == false)}]" style="background-color: rgb(0,21,41)">
 
-        <el-menu :default-openeds="openIndex" default-active="activeMenuIndex" background-color="#001529" :collapse="isCollapse"
+        <el-menu :default-openeds="openIndex" :default-active="activeMenuIndex" background-color="#001529" :collapse="isCollapse"
                  text-color="#eeeeee" active-text-color="#eeeeee" unique-opened="uniqueOpened"
                  class="el-menu-vertical-demo" @select="handleSelect">
             <el-menu-item index="0" style="padding: 0;height: 60px">
@@ -107,7 +106,7 @@
 
 
 <script src="./global/vue/vue.js"></script>
-<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="./global/element/lib/index.js"></script>
 <script src="./global/compoents/index.js"></script>
 <script src="./global/compoents/aboutOurs.js"></script>
 <script src="./global/compoents/appManger.js"></script>
