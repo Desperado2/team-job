@@ -80,11 +80,11 @@
                         params.append('password', _this.form.password);
                         axios({
                             method: 'post',
-                            url: '/login',
+                            url: 'login',
                             data:params
                         }).then(function (result) {
                             if (result.data == 'success'){
-                                window.location.href="/index";
+                                window.location.href="index";
                             }else{
                                 _this.$message({
                                     message:'用户名或密码错误',
