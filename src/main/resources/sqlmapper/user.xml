@@ -8,6 +8,19 @@
         ) VALUES (#{id},#{name},#{password},#{email},#{phone},#{birthType},#{birthday},#{department},#{position},#{headUrl})
     </insert>
 
+    <update id="update" parameterType="com.desperado.teamjob.domain.User">
+        update `user`set
+                name = #{name},phone=#{phone},birth_type=#{birthType},birthday=#{birthday},department=#{department},
+                position =#{position},head_url=#{headUrl}
+       where id=#{id}
+    </update>
+
+    <update id="updatePassword" >
+        update `user`set
+                password = #{password}
+       where id=#{id}
+    </update>
+
     <select id="selectAllUser"  resultType="com.desperado.teamjob.dto.UserDto">
         select * from user;
     </select>

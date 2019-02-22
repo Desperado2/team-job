@@ -2,13 +2,16 @@ package com.desperado.teamjob.service;
 
 import com.desperado.teamjob.domain.User;
 import com.desperado.teamjob.dto.UserDto;
+import com.desperado.teamjob.vo.Result;
 
 import java.util.List;
 
 public interface UserService {
-    List<UserDto> addUser(User user);
+    Result addOrUpdateUser(User user);
 
-    List<UserDto> selectAllUser();
+    Result selectAllUser();
 
-    UserDto selectUserById(String id);
+    Result updatePassword(User user,String oldPassword,String newPassword);
+
+    Result selectUserById(String id);
 }

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./global/element/lib/theme-chalk/index.css">
     <!-- 引入组件库 -->
     <link rel="stylesheet" href="./global/style/index.css">
-    <script src="./global/echarts/echarts.common.min.js"></script>
+
 </head>
 <body>
 
@@ -66,17 +66,34 @@
 
                     </el-badge>
 
-                    <img src="./global/image/default.jpg" style="width: 24px;margin-left: 30px">
-                    <span style="font-size: 18px;margin-left: 10px">王小虎</span>
+                    <el-popover placement="bottom" width="40" trigger="hover" visible-arrow=false>
+                        <div>
+                            <a href='#'  @click="goPersonalCenter">
+                                <div height="20px" class="index-a-selected">
+                                    个人中心
+                                </div>
+                            </a>
+                            <hr>
+                            <a href='logout' >
+                                <div height="20px" class="index-a-selected">
+                                    退出登录
+                                </div>
+                            </a>
+                        </div>
+
+                        <span slot="reference">
+                            <img :src="currUsers.headUrl"  style="width: 24px;margin-left: 30px">
+                            <span style="font-size: 18px;margin-left: 10px" v-text="currUsers.name"></span>
+                        </span>
+                    </el-popover>
                 </el-col>
             </el-row>
             <div style="background-color: white;height: 140px;margin-top: 10px">
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item> <a href="#" @click="toIndex">首页</a></el-breadcrumb-item>
-                    <el-breadcrumb-item v-show="activeMenuIndex == '1-1'">工作台</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="activeMenuIndex == '1-1' || activeMenuIndex == '0'">工作台</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="activeMenuIndex == '1-2'">周报</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="activeMenuIndex == '2-1'">应用管理</el-breadcrumb-item>
-                    <el-breadcrumb-item v-show="optionsCode == 'createApp'">创建应用</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="activeMenuIndex == '2-2'">代码质量</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="activeMenuIndex == '3-1'">项目排期</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="activeMenuIndex == '4-1'">关于我们</el-breadcrumb-item>
@@ -85,27 +102,33 @@
                     <el-breadcrumb-item v-show="optionsCode == 'createApp'">创建应用</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="optionsCode == 'createProject'">创建项目</el-breadcrumb-item>
                     <el-breadcrumb-item v-show="optionsCode == 'createDemand'">创建需求</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="optionsCode == 'personalCenter'">个人中心</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="optionsCode == 'editUser'">修改信息</el-breadcrumb-item>
+                    <el-breadcrumb-item v-show="optionsCode == 'changePwd'">修改密码</el-breadcrumb-item>
                 </el-breadcrumb>
             </div>
         </el-header>
 
-        <index-comp v-show="activeMenuIndex == '1-1'"></index-comp>
-        <week-report v-show="activeMenuIndex == '1-2'"></week-report>
-        <app-manger v-show="(activeMenuIndex == '2-1' && optionsCode == '')" :options-code.sync=optionsCode></app-manger>
-        <code-sonar v-show="activeMenuIndex == '2-2'"></code-sonar>
-        <project-date v-show="(activeMenuIndex == '3-1' && optionsCode == '')" :options-code.sync=optionsCode></project-date>
-        <about-ours v-show="(activeMenuIndex == '4-1' && optionsCode == '')" :options-code.sync=optionsCode></about-ours>
-        <member-info v-show="(activeMenuIndex == '4-1' && optionsCode=='memberInfo')"></member-info>
-        <add-user v-show="(activeMenuIndex == '4-1' && optionsCode=='addUser')"></add-user>
-        <create-app v-show="(activeMenuIndex == '2-1' && optionsCode=='createApp')"></create-app>
-        <create-project v-show="(activeMenuIndex == '3-1' && optionsCode=='createProject')"></create-project>
-        <create-demand v-show="(activeMenuIndex == '3-1' && optionsCode=='createDemand')"></create-demand>
+        <index-comp v-if="activeMenuIndex == '1-1'" ></index-comp>
+        <week-report v-if="activeMenuIndex == '1-2'"></week-report>
+        <app-manger v-if="(activeMenuIndex == '2-1' && optionsCode == '')" :options-code.sync=optionsCode></app-manger>
+        <code-sonar v-if="activeMenuIndex == '2-2'"></code-sonar>
+        <project-date v-if="(activeMenuIndex == '3-1' && optionsCode == '')" :options-code.sync=optionsCode></project-date>
+        <about-ours v-if="(activeMenuIndex == '4-1' && optionsCode == '')" :options-code.sync=optionsCode :user-id.sync=userId></about-ours>
+        <member-info v-if="(activeMenuIndex == '4-1' && optionsCode=='memberInfo')" :user-id.sync=userId></member-info>
+        <add-user v-if="(activeMenuIndex == '4-1' && optionsCode=='addUser')"></add-user>
+        <create-app v-if="(activeMenuIndex == '2-1' && optionsCode=='createApp')"></create-app>
+        <create-project v-if="(activeMenuIndex == '3-1' && optionsCode=='createProject')"></create-project>
+        <create-demand v-if="(activeMenuIndex == '3-1' && optionsCode=='createDemand')"></create-demand>
+        <personal-center v-if="optionsCode=='personalCenter'" :options-code.sync=optionsCode></personal-center>
+        <edit-user v-if="optionsCode=='editUser'" :options-code.sync=optionsCode></edit-user>
+        <change-pwd v-if="optionsCode=='editPwd'" :options-code.sync=optionsCode></change-pwd>
 
     </el-container>
 </el-container>
 
-
 <script src="./global/vue/vue.js"></script>
+<script src="./global/axios/axios.min.js"></script>
 <script src="./global/element/lib/index.js"></script>
 <script src="./global/compoents/index.js"></script>
 <script src="./global/compoents/aboutOurs.js"></script>
@@ -119,6 +142,10 @@
 <script src="./global/compoents/createApp.js"></script>
 <script src="./global/compoents/createProject.js"></script>
 <script src="./global/compoents/createDemand.js"></script>
+<script src="./global/compoents/personalCenter.js"></script>
+<script src="./global/compoents/editUserData.js"></script>
+<script src="./global/compoents/changePwd.js"></script>
+<script src="./global/echarts/echarts.common.min.js"></script>
 <script>
     new Vue({
         el: '#app',
@@ -127,16 +154,55 @@
             activeMenuIndex: '1-1',
             isCollapse:false,
             uniqueOpened:true,
-            optionsCode:''
+            optionsCode:'',
+            userId:'',
+            currUsers:{
+                id:'',
+                name: '',
+                email: '',
+                password: '',
+                phone : '',
+                birthday: '',
+                birthType: '',
+                department: '',
+                position: '',
+                headUrl:''
+            }
+        },
+        created:function(){
+            let _this = this;
+            axios({
+                method: 'get',
+                url: 'users/user',
+            }).then(function (result) {
+                console.log(result.data.data.data)
+                if (result.data.success){
+                    _this.currUsers = result.data.data.data;
+                }else {
+                    _this.$message({
+                        message:result.data.msg,
+                        type:'error'
+                    });
+                }
+            });
         },
         mounted:function(){
             Bus.$on("optionsCode",(optionsCode) =>{//子组件数据改变之后传递给父组件
                 this.optionsCode = optionsCode;
             });
+            Bus.$on("userId",(userId) =>{//子组件数据改变之后传递给父组件
+                this.userId = userId;
+            });
+
         },
         methods: {
             handleClick(tab, event) {
                 console.log(tab, event);
+            },
+            goPersonalCenter:function(){
+                this.openIndex = []
+                this.optionsCode = 'personalCenter'
+                this.activeMenuIndex ='0'
             },
             toIndex:function(){
                 Vue.set(this.openIndex, 0,'1');
@@ -150,8 +216,7 @@
             },
             switchMenuStatus:function () {
                 this.isCollapse = !this.isCollapse
-            }
-
+            },
         },
         components:{
             'index-comp':index_comp,
@@ -164,7 +229,10 @@
             'add-user':add_user,
             'create-app':create_app,
             'create-project':create_project,
-            'create-demand':create_demand
+            'create-demand':create_demand,
+            'personal-center':personal_center,
+            'edit-user':edit_user,
+            'change-pwd':change_pwd
         }
     })
 </script>

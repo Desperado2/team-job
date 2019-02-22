@@ -9,4 +9,9 @@ public class PwdUtil {
         String enPassword = encoder.encode(password);
         return enPassword;
     }
+
+    public static boolean match(String password,String corrertPassword) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
+        return encoder.matches(password,corrertPassword);
+    }
 }

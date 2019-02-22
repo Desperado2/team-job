@@ -9,7 +9,7 @@ var code_sonar = Vue.component('code-sonar',{
             </div>
         </el-header>
         <el-main class="index-el-main">
-            <el-row :gutter="20" v-for="i in 6" style="margin-bottom: 20px">
+            <el-row :gutter="20" v-for="i in 6" :key="i" style="margin-bottom: 20px">
                 <el-col :span="8">
                     <el-card class="box-card">
                         <div >
@@ -85,7 +85,9 @@ var code_sonar = Vue.component('code-sonar',{
         </el-container>
     `,
     data(){
+        return{
 
+        }
     },
     methods:{
 

@@ -1,4 +1,4 @@
-var member_info = Vue.component('member-info',{
+var personal_center = Vue.component('personal-center',{
     template:`
         <el-container>
         <el-header style="height: 40px">
@@ -54,6 +54,11 @@ var member_info = Vue.component('member-info',{
                         <span v-text="user.position"></span>
                     </el-col>
                 </el-row>
+                <hr style="border: none; height: 1px; color: rgb(232, 232, 232); background-color: rgb(232, 232, 232); margin-bottom: 32px;">
+                <el-row>
+                  <el-button type="primary" @click="editData">编辑基本资料</el-button>
+                  <el-button type="success" @click="editPwd">修改密码</el-button>
+                </el-row>
             </el-card>
         </el-main>
         </el-container>
@@ -72,18 +77,19 @@ var member_info = Vue.component('member-info',{
                 position: '',
                 headUrl:''
             },
-            id : this.userId
+            typeSelect:this.optionsCode,
         }
     },
+    props:['optionsCode'],
     mounted:function(){
         let _this = this;
         axios({
             method: 'get',
-            url: 'users/'+_this.id,
+            url: 'users/user',
         }).then(function (result) {
             console.log(result)
             if (result.data.success){
-                _this.user = result.data.data;
+                _this.user = result.data.data.data;
             }else {
                 _this.$message({
                     message:result.data.msg,
@@ -92,9 +98,16 @@ var member_info = Vue.component('member-info',{
             }
         })
     },
-    props:['userId'],
-    methods:{
 
+    methods:{
+        editData:function () {
+            this.typeSelect = 'editUser'
+            Bus.$emit("optionsCode",this.typeSelect);
+        },
+        editPwd:function () {
+            this.typeSelect = 'editPwd'
+            Bus.$emit("optionsCode",this.typeSelect);
+        }
     },
 
 })

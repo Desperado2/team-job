@@ -2,19 +2,17 @@ var index_comp = Vue.component('index-comp',{
     template:`
         <el-container>
          <el-header style="height: 150px">
-            <div style="background-color: white;height: 140px;margin-top: 10px">
-            
-                <div style="height: 80px;width: 100%;margin-top: 30px">
+            <div style="height: 80px;width: 100%;margin-top: 60px">
                     <el-row :gutter="20">
-                        <el-col :span="4" style="text-align: center"><img src="./global/image/default.jpg" style="width: 60px">
+                        <el-col :span="4" style="text-align: center"><img :src="currUser.headUrl" style="width: 60px">
                         </el-col>
                         <el-col :span="20">
-                            <div >王小虎</div>
-                            <div >高级Java开发工程师 | 阿里巴巴-天猫事业部</div>
+                            <div style="font: 20px blod" v-text="currUser.name"></div>
+                            <br>
+                            <div v-text="currUser.department+' | '+currUser.position"></div>
                         </el-col>
                     </el-row>
                 </div>
-            </div>
         </el-header>
 
         <el-main class="index-el-main">
@@ -96,7 +94,7 @@ var index_comp = Vue.component('index-comp',{
                 <div slot="header" class="clearfix">
                     <span>代码提交量</span>
                 </div>
-                <div id="main" style="width: 100%;height:400px;"></div>
+                <div id="echart" style="width: 100%;height:400px;"></div>
             </el-card>
 
         </el-main>
@@ -104,44 +102,72 @@ var index_comp = Vue.component('index-comp',{
     `,
     data(){
         return{
-            activeName: 'first'
+            activeName: 'first',
+            currUser:{
+                id:'',
+                name: '',
+                email: '',
+                password: '',
+                phone : '',
+                birthday: '',
+                birthType: '',
+                department: '',
+                position: '',
+                headUrl:''
+            }
         }
     },
     methods:{
         handleClick(tab, event) {
             console.log(tab, event);
+        },
+        drawLine:function () {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('echart'));
+            // 指定图表的配置项和数据
+            myChart.setOption({
+                tooltip: {
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                xAxis: {
+                    data: ["张三", "李四", "王五", "王小虎", "李晓明", "Jack"]
+                },
+                yAxis: {
+                    axisLine: {       //y轴
+                        show: false
+                    },
+                    axisTick: {       //y轴刻度线
+                        show: false
+                    },
+                },
+                series: [{
+                    name: '代码量',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20]
+                }]
+            });
         }
     },
+    created:function(){
+        let _this = this;
+        axios({
+            method: 'get',
+            url: 'users/user',
+        }).then(function (result) {
+            console.log(result.data.data.data)
+            if (result.data.success){
+                _this.currUser = result.data.data.data;
+            }else {
+                _this.$message({
+                    message:result.data.msg,
+                    type:'error'
+                });
+            }
+        });
+    },
     mounted: function () {
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
-
-        // 指定图表的配置项和数据
-        var option = {
-            tooltip: {
-                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-                }
-            },
-            xAxis: {
-                data: ["张三", "李四", "王五", "王小虎", "李晓明", "Jack"]
-            },
-            yAxis: {
-                axisLine: {       //y轴
-                    show: false
-                },
-                axisTick: {       //y轴刻度线
-                    show: false
-                },
-            },
-            series: [{
-                name: '代码量',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-            }]
-        };
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
+        this.drawLine();
     },
 })

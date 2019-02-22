@@ -13,6 +13,10 @@ public interface UserDao {
 
     void addUser(User user);
 
+    void update(User user);
+
+    void updatePassword(@Param("id") String id,@Param("password") String password);
+
     List<UserDto> selectAllUser();
 
     UserDto selectUserById(@Param("id") String id);

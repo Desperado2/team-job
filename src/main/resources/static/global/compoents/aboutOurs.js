@@ -10,119 +10,50 @@ var abour_ours = Vue.component('about-ours',{
         </el-header>
         <el-main class="index-el-main">
             <el-card class="box-card">
-                <el-row :gutter="20">
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
+                <el-row :gutter="20" v-for="userList in users" style="margin-bottom: 50px">
+                    <el-col :span="6" v-for="user in userList">
+                        <a href="#" @click="lookUserInfo(user.id)">
                             <div style="text-align: center">
-                                <img src="./global/image/tx/czm.jpg" style="width: 100px;border-radius: 10px">
-                                <div>小陈</div>
+                                <img :src="user.headUrl" style="width: 100px;border-radius: 10px">
+                                <div v-text="user.name"></div>
                             </div>
                         </a>
                     </el-col>
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./global/image/tx/hb.jpg" style="width: 100px;border-radius: 10px">
-                            <div>大黄</div>
-                        </div>
-                        </a>
-                    </el-col>
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./global/image/tx/hj.png" style="width: 100px;border-radius: 10px">
-                            <div>大军</div>
-                        </div>
-                        </a>
-                    </el-col>
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./global/image/tx/hxj.jpg" style="width: 100px;border-radius: 10px">
-                            <div>郝建</div>
-                        </div>
-                        </a>
-                    </el-col>
+             
                 </el-row>
-                <el-row :gutter="20" style="margin-top: 50px">
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./global/image/tx/xjk.jpg" style="width: 100px;border-radius: 10px">
-                            <div>小胖</div>
-                        </div>
-                        </a>
-                    </el-col>
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./global/image/tx/zyt.jpg" style="width: 100px;border-radius: 10px">
-                            <div>大佬</div>
-                        </div>
-                        </a>
-                    </el-col>
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./image/default.jpg" style="width: 100px;border-radius: 10px">
-                            <div>小白</div>
-                        </div>
-                        </a>
-                    </el-col>
-                    <el-col :span="6">
-                        <div style="text-align: center">
-                            <img src="./global/image/default.jpg" style="width: 100px;border-radius: 10px">
-                            <div>张三</div>
-                        </div>
-                    </el-col>
-                </el-row>
-                <el-row :gutter="20" style="margin-top: 50px">
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./global/image/tx/xjk.jpg" style="width: 100px;border-radius: 10px">
-                            <div>小胖</div>
-                        </div>
-                        </a>
-                    </el-col>
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./global/image/tx/zyt.jpg" style="width: 100px;border-radius: 10px">
-                            <div>大佬</div>
-                        </div>
-                        </a>
-                    </el-col>
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./image/default.jpg" style="width: 100px;border-radius: 10px">
-                            <div>小白</div>
-                        </div>
-                        </a>
-                    </el-col>
-                    <el-col :span="6">
-                        <a href="#" @click="lookUserInfo('zz')">
-                        <div style="text-align: center">
-                            <img src="./global/image/default.jpg" style="width: 100px;border-radius: 10px">
-                            <div>张三</div>
-                        </div>
-                        </a>
-                    </el-col>
-                </el-row>
+                
             </el-card>
         </el-main>
         </el-container>
     `,
     data(){
         return{
-            typeSelect:this.optionsCode
+            typeSelect:this.optionsCode,
+            users:[]
         }
     },
-    props:['optionsCode'],
+    mounted:function(){
+        let _this = this;
+        axios({
+            method: 'get',
+            url: 'users',
+        }).then(function (result) {
+            console.log(result)
+            if (result.data.success){
+                _this.users = result.data.data;
+            }else {
+                _this.$message({
+                    message:result.data.msg,
+                    type:'error'
+                });
+            }
+        })
+    },
+    props:['optionsCode','userId'],
     methods:{
         lookUserInfo(name){
             this.typeSelect = 'memberInfo'
+            Bus.$emit("userId",name);
             Bus.$emit("optionsCode",this.typeSelect);
         },
         addUser:function () {

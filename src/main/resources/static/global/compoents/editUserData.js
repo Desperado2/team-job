@@ -1,4 +1,4 @@
-var add_user = Vue.component('add-user',{
+var edit_user = Vue.component('edit-user',{
     template:`
         <el-container>
         <el-header style="height: 40px">
@@ -21,12 +21,6 @@ var add_user = Vue.component('add-user',{
                    <el-form-item label="姓名" prop="name">
                        <el-input v-model="ruleForm.name"></el-input>
                    </el-form-item>
-                   <el-form-item label="邮箱" prop="email">
-                       <el-input v-model="ruleForm.email"></el-input>
-                   </el-form-item>
-                   <el-form-item label="初始密码" prop="password">
-                       <el-input type="password" v-model="ruleForm.password"></el-input>
-                   </el-form-item>
                    <el-form-item label="手机号" prop="phone">
                        <el-input type='tel' v-model="ruleForm.phone"></el-input>
                    </el-form-item>
@@ -46,8 +40,8 @@ var add_user = Vue.component('add-user',{
                        <el-input v-model="ruleForm.position"></el-input>
                    </el-form-item>
                    <el-form-item>
-                       <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-                       <el-button @click="resetForm('ruleForm')">重置</el-button>
+                       <el-button type="primary" @click="submitForm('ruleForm')">更新</el-button>
+                       <el-button @click="back">返回</el-button>
                    </el-form-item>
                </el-form>
            </el-card>
@@ -61,8 +55,6 @@ var add_user = Vue.component('add-user',{
             imageUrl:'',
             ruleForm: {
                 name: '',
-                email: '',
-                password: '',
                 phone : '',
                 birthday: '',
                 birthType: '',
@@ -72,11 +64,8 @@ var add_user = Vue.component('add-user',{
             },
             rules: {
                 name: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                ],
-                email: [
-                    { type:'email',required: true, message: '请填写邮箱', trigger: 'blur' }
+                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                    { min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
                 ],
                 phone: [
                     { required: true, message: '请填写手机', trigger: 'blur' }
@@ -84,20 +73,34 @@ var add_user = Vue.component('add-user',{
                 birthday: [
                     { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
                 ],
-                password: [
-                    { required: true, message: '请填写密码', trigger: 'blur' },
-                    { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
-                ],
                 birth_type: [
                     {  required: true, message: '请选择日历类型', trigger: 'change' }
                 ]
             }
         }
     },
+    mounted:function(){
+        let _this = this;
+        axios({
+            method: 'get',
+            url: 'users/user',
+        }).then(function (result) {
+            console.log(result)
+            if (result.data.success){
+                _this.ruleForm = result.data.data.data;
+                _this.imageUrl = _this.ruleForm.headUrl
+            }else {
+                _this.$message({
+                    message:result.data.msg,
+                    type:'error'
+                });
+            }
+        })
+    },
     props:['optionsCode'],
     methods:{
-        lookUserInfo(name){
-            this.typeSelect = 'addUser'
+        back(){
+            this.typeSelect = 'personalCenter'
             Bus.$emit("optionsCode",this.typeSelect);
         },
         handleAvatarSuccess(response, file, fileList) {
@@ -133,7 +136,7 @@ var add_user = Vue.component('add-user',{
                         data: _this.ruleForm
                     }).then(function (result) {
                         if (result.data.success){
-                            this.typeSelect = ''
+                            this.typeSelect = 'personalCenter'
                             Bus.$emit("optionsCode",this.typeSelect);
                         }else {
                             _this.$message({
@@ -146,9 +149,6 @@ var add_user = Vue.component('add-user',{
                     return false;
                 }
             });
-        },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
         }
     },
 
