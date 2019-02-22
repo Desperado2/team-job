@@ -13,4 +13,4 @@ sql文件位置  src/resource/static/sqlfile/team-job.sql
 http://118.24.115.208:8888/team-job/
 ## 默认用户名密码
 username ：111@qq.com  
-password ：admin
+password ：123456
