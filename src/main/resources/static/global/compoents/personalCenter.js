@@ -40,7 +40,7 @@ var personal_center = Vue.component('personal-center',{
                             <i> <img src="./global/image/rili.png" style="width: 14px"></i>
                             生日:
                         </span>
-                        <span v-text="user.birthday"></span>
+                        <span >{{user.birthType}} | {{ user.birthday | dataFormat('yyyy-MM-dd')}}</span>
                     </el-col>
                 </el-row>
                 <hr style="border: none; height: 1px; color: rgb(232, 232, 232); background-color: rgb(232, 232, 232); margin-bottom: 32px;">
@@ -87,9 +87,8 @@ var personal_center = Vue.component('personal-center',{
             method: 'get',
             url: 'users/user',
         }).then(function (result) {
-            console.log(result)
             if (result.data.success){
-                _this.user = result.data.data.data;
+                _this.user = result.data.data;
             }else {
                 _this.$message({
                     message:result.data.msg,
@@ -109,5 +108,4 @@ var personal_center = Vue.component('personal-center',{
             Bus.$emit("optionsCode",this.typeSelect);
         }
     },
-
 })

@@ -128,6 +128,7 @@
 </el-container>
 
 <script src="./global/vue/vue.js"></script>
+<script src="./global/compoents/VueUtils.js"></script>
 <script src="./global/axios/axios.min.js"></script>
 <script src="./global/element/lib/index.js"></script>
 <script src="./global/compoents/index.js"></script>
@@ -175,9 +176,8 @@
                 method: 'get',
                 url: 'users/user',
             }).then(function (result) {
-                console.log(result.data.data.data)
                 if (result.data.success){
-                    _this.currUsers = result.data.data.data;
+                    _this.currUsers = result.data.data;
                 }else {
                     _this.$message({
                         message:result.data.msg,

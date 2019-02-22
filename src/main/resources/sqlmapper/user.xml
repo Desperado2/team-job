@@ -5,7 +5,7 @@
     <insert id="addUser" parameterType="com.desperado.teamjob.domain.User">
         INSERT INTO `user`(
                 id,name,password,email,phone,birth_type,birthday,department,position,head_url,date_create,date_update
-        ) VALUES (#{id},#{name},#{password},#{email},#{phone},#{birthType},#{birthday},#{department},#{position},#{headUrl}
+        ) VALUES (#{id},#{name},#{password},#{email},#{phone},#{birthType},#{birthday},#{department},#{position},#{headUrl},
                    #{dateCreate}, #{dateUpdate})
     </insert>
 
@@ -27,7 +27,7 @@
     </select>
 
     <select id="selectUserById"  resultType="com.desperado.teamjob.dto.UserDto">
-        select id,name,email,phone,birthday,department,position,head_url from user where id=#{id};
+        select id,name,email,phone,birth_type,birthday,department,position,head_url from `user` where id=#{id};
     </select>
 
 </mapper>

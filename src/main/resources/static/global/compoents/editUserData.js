@@ -73,7 +73,7 @@ var edit_user = Vue.component('edit-user',{
                 birthday: [
                     { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
                 ],
-                birth_type: [
+                birthType: [
                     {  required: true, message: '请选择日历类型', trigger: 'change' }
                 ]
             }
@@ -85,10 +85,10 @@ var edit_user = Vue.component('edit-user',{
             method: 'get',
             url: 'users/user',
         }).then(function (result) {
-            console.log(result)
             if (result.data.success){
-                _this.ruleForm = result.data.data.data;
+                _this.ruleForm = result.data.data;
                 _this.imageUrl = _this.ruleForm.headUrl
+                _this.ruleForm.birthday = new Date(_this.ruleForm.birthday)
             }else {
                 _this.$message({
                     message:result.data.msg,

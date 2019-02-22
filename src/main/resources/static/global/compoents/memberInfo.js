@@ -40,8 +40,8 @@ var member_info = Vue.component('member-info',{
                             <i> <img src="./global/image/rili.png" style="width: 14px"></i>
                             生日:
                         </span>
-                        <span v-text="user.birthday"></span>
-                    </el-col>
+                        <span >{{user.birthType}} | {{ user.birthday | dataFormat('yyyy-MM-dd')}}</span>
+                    </el-col> 
                 </el-row>
                 <hr style="border: none; height: 1px; color: rgb(232, 232, 232); background-color: rgb(232, 232, 232); margin-bottom: 32px;">
                 <el-row style="margin-bottom: 16px">
@@ -81,7 +81,6 @@ var member_info = Vue.component('member-info',{
             method: 'get',
             url: 'users/'+_this.id,
         }).then(function (result) {
-            console.log(result)
             if (result.data.success){
                 _this.user = result.data.data;
             }else {
@@ -96,5 +95,10 @@ var member_info = Vue.component('member-info',{
     methods:{
 
     },
-
+    filters: {
+        formatDate(time) {
+            var date = new Date(time);
+            return formatDate(date, 'yyyy-MM-dd');
+        }
+    },
 })

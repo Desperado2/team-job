@@ -72,8 +72,8 @@ var add_user = Vue.component('add-user',{
             },
             rules: {
                 name: [
-                    { required: true, message: '请输入活动名称', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                    { required: true, message: '请输入姓名', trigger: 'blur' },
+                    { min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur' }
                 ],
                 email: [
                     { type:'email',required: true, message: '请填写邮箱', trigger: 'blur' }
@@ -89,7 +89,7 @@ var add_user = Vue.component('add-user',{
                     { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
                 ],
                 birth_type: [
-                    {  required: true, message: '请选择日历类型', trigger: 'change' }
+                    {  required: true, message: '请选择生日类型', trigger: 'change' }
                 ]
             }
         }

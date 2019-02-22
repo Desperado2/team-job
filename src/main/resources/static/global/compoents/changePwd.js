@@ -38,7 +38,7 @@ var change_pwd = Vue.component('change-pwd',{
                 ],
                 oldPassword: [
                     { required: true, message: '请填写新密码', trigger: 'blur' },
-                    { min: 5, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
+                    { min: 6, max: 16, message: '长度在 6 到 16 个字符', trigger: 'blur' }
                 ]
             }
         }

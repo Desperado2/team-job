@@ -106,7 +106,7 @@ public class Users {
                 .getPrincipal();
         Result result = new Result();
         Result user = userService.selectUserById(userDetails.getId());
-        result.setData(user);
+        result.setData(user.getData());
         return result;
     }
 

@@ -156,9 +156,8 @@ var index_comp = Vue.component('index-comp',{
             method: 'get',
             url: 'users/user',
         }).then(function (result) {
-            console.log(result.data.data.data)
             if (result.data.success){
-                _this.currUser = result.data.data.data;
+                _this.currUser = result.data.data;
             }else {
                 _this.$message({
                     message:result.data.msg,
