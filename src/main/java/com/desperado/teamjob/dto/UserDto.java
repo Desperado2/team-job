@@ -25,6 +25,10 @@ public class UserDto {
    private String position;
     @ApiModelProperty("用户头像路径")
    private String headUrl;
+    @ApiModelProperty("用户创建时间")
+    private Date dateCreate;
+    @ApiModelProperty("用户更新时间")
+    private Date dateUpdate;
 
     public String getId() {
         return id;
@@ -96,5 +100,21 @@ public class UserDto {
 
     public void setHeadUrl(String headUrl) {
         this.headUrl = headUrl;
+    }
+
+    public Date getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
+    }
+
+    public Date getDateUpdate() {
+        return dateUpdate;
+    }
+
+    public void setDateUpdate(Date dateUpdate) {
+        this.dateUpdate = dateUpdate;
     }
 }

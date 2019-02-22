@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +30,9 @@ public class UserServiceImpl implements UserService{
     @Override
     public Result addOrUpdateUser(User user) {
         Result result = new Result();
+        Date date = new Date();
         if(!StringUtils.isEmpty(user.getId())){
+            user.setDateUpdate(date);
             userDao.update(user);
             result.setData(user);
         }else{
@@ -41,6 +44,8 @@ public class UserServiceImpl implements UserService{
                     String id = getId();
                     user.setId(id);
                     user.setPassword(PwdUtil.encoder(user.getPassword()));
+                    user.setDateCreate(date);
+                    user.setDateUpdate(date);
                     userDao.addUser(user);
                     result.setData(user);
                 }
@@ -71,7 +76,9 @@ public class UserServiceImpl implements UserService{
     public Result updatePassword(User user, String oldPassword, String newPassword) {
         Result result = new Result();
         if(PwdUtil.match(oldPassword,user.getPassword())){
-            userDao.updatePassword(user.getId(),PwdUtil.encoder(newPassword));
+            user.setPassword(PwdUtil.encoder(newPassword));
+            user.setDateUpdate(new Date());
+            userDao.updatePassword(user);
             result.setData(user);
         }else{
             result.setSuccess(false);

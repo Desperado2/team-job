@@ -15,7 +15,7 @@ public interface UserDao {
 
     void update(User user);
 
-    void updatePassword(@Param("id") String id,@Param("password") String password);
+    void updatePassword(User user);
 
     List<UserDto> selectAllUser();
 
