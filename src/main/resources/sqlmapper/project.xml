@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.desperado.teamjob.dao.ProjectDao">
+
+    <insert id="addProject" parameterType="com.desperado.teamjob.domain.Project">
+        INSERT INTO `project`(
+                id,project_name,repository_url,document_url,database_url,coder,optioner,date_create,date_update
+        ) VALUES (#{id},#{projectName},#{repositoryUrl},#{documentUrl},#{databaseUrl},#{coder},#{optioner},#{dateCreate},#{dateUpdate})
+    </insert>
+
+    <update id="update" parameterType="com.desperado.teamjob.domain.Project">
+        update `project`set
+                project_name=#{projectName},repository_url=#{repositoryUrl},document_url=#{documentUrl},
+                database_url=#{databaseUrl},coder=#{coder},optioner=#{optioner},date_update=#{dateUpdate}
+       where id=#{id}
+    </update>
+
+    <delete id="deleteProjectById" >
+        delete from project where id = #{id}
+    </delete>
+
+    <select id="selectAllProject"  resultType="com.desperado.teamjob.domain.Project">
+        select * from project;
+    </select>
+
+    <select id="selectProjectById"  resultType="com.desperado.teamjob.domain.Project">
+        select * from `project` where id=#{id};
+    </select>
+
+    <select id="selectProjectByIds"  resultType="com.desperado.teamjob.domain.Project">
+        select * from `project` where id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>;
+    </select>
+
+</mapper>

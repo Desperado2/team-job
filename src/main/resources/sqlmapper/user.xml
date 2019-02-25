@@ -30,4 +30,11 @@
         select id,name,email,phone,birth_type,birthday,department,position,head_url from `user` where id=#{id};
     </select>
 
+    <select id="selectUserByIds"  resultType="com.desperado.teamjob.dto.UserDto">
+        select id,name,email,phone,birth_type,birthday,department,position,head_url from `user` where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>;
+    </select>
+
 </mapper>

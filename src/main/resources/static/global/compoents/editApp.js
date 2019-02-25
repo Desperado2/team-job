@@ -1,4 +1,4 @@
-var create_app = Vue.component('create-app',{
+var edit_app = Vue.component('edit-app',{
     template:`
         <el-container>
         <el-header style="height: 40px">
@@ -21,9 +21,9 @@ var create_app = Vue.component('create-app',{
                        <el-input type='tel' v-model="ruleForm.databaseUrl"></el-input>
                    </el-form-item>
                       
-                   <el-form-item label="开发人员" prop="coders">
+                   <el-form-item label="开发人员" prop="coder">
                        <el-select
-                            v-model="ruleForm.coders"
+                            v-model="ruleForm.coder"
                             multiple
                             filterable
                             allow-create
@@ -40,7 +40,7 @@ var create_app = Vue.component('create-app',{
                           </el-select>
                    </el-form-item>
                    <el-form-item>
-                       <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+                       <el-button type="primary" @click="submitForm('ruleForm')">修改</el-button>
                        <el-button @click="back">返回</el-button>
                    </el-form-item>
                </el-form>
@@ -60,7 +60,7 @@ var create_app = Vue.component('create-app',{
                 databaseUrl : '',
                 coder: [],
             },
-           users:[],
+            users:[],
             rules: {
                 projectName: [
                     { required: true, message: '请输入应用中文名称', trigger: 'blur' },
@@ -84,10 +84,26 @@ var create_app = Vue.component('create-app',{
         let _this = this;
         axios({
             method: 'get',
+            url: 'projects/'+ _this.projectId,
+        }).then(function (result) {
+            if (result.data.success){
+                _this.ruleForm = result.data.data;
+                let coders =_this.formatCoder(_this.ruleForm.coders);
+                _this.ruleForm.coders = coders;
+            }else {
+                _this.$message({
+                    message:result.data.msg,
+                    type:'error'
+                });
+            }
+        });
+        axios({
+            method: 'get',
             url: 'users/noSplit',
         }).then(function (result) {
             if (result.data.success){
                 _this.users = result.data.data;
+
             }else {
                 _this.$message({
                     message:result.data.msg,
@@ -96,12 +112,8 @@ var create_app = Vue.component('create-app',{
             }
         })
     },
-    props:['optionsCode'],
+    props:['optionsCode','projectId'],
     methods:{
-        lookUserInfo(name){
-            this.typeSelect = 'addUser'
-            Bus.$emit("optionsCode",this.typeSelect);
-        },
         editCoder:function(coders){
             let coderss = ''
             for (let coder of coders){
@@ -110,11 +122,19 @@ var create_app = Vue.component('create-app',{
             coderss = coderss.substring(0,coderss.length-1)
             return coderss
         },
+        formatCoder:function(coders){
+            let coderss = []
+            for (let coder of coders){
+                coderss.push(coder.id)
+            }
+            return coderss
+
+        },
         submitForm(formName) {
             let _this = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    _this.ruleForm.coder = _this.editCoder(_this.ruleForm.coder)
+                    _this.ruleForm.coders = _this.editCoder(_this.ruleForm.coders)
                     axios({
                         method: 'post',
                         url: 'projects',

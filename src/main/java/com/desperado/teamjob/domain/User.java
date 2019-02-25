@@ -11,7 +11,7 @@ public class User {
    private String id;
     @ApiModelProperty("用户名")
    private String name;
-    @ApiModelProperty("用户名")
+    @ApiModelProperty("邮箱")
    private String email;
     @ApiModelProperty("用户邮箱")
    private String password;

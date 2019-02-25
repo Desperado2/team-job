@@ -123,6 +123,8 @@
         <personal-center v-if="optionsCode=='personalCenter'" :options-code.sync=optionsCode></personal-center>
         <edit-user v-if="optionsCode=='editUser'" :options-code.sync=optionsCode></edit-user>
         <change-pwd v-if="optionsCode=='editPwd'" :options-code.sync=optionsCode></change-pwd>
+        <app-details v-if="optionsCode=='appDetail'" :options-code.sync=optionsCode :project-id="projectId"></app-details>
+        <edit-app v-if="optionsCode=='editApp'" :options-code.sync=optionsCode :project-id="projectId"></edit-app>
 
     </el-container>
 </el-container>
@@ -146,6 +148,8 @@
 <script src="./global/compoents/personalCenter.js"></script>
 <script src="./global/compoents/editUserData.js"></script>
 <script src="./global/compoents/changePwd.js"></script>
+<script src="./global/compoents/appDetails.js"></script>
+<script src="./global/compoents/editApp.js"></script>
 <script src="./global/echarts/echarts.common.min.js"></script>
 <script>
     new Vue({
@@ -157,6 +161,7 @@
             uniqueOpened:true,
             optionsCode:'',
             userId:'',
+            projectId:'',
             currUsers:{
                 id:'',
                 name: '',
@@ -192,6 +197,9 @@
             });
             Bus.$on("userId",(userId) =>{//子组件数据改变之后传递给父组件
                 this.userId = userId;
+            });
+            Bus.$on("projectId",(projectId) =>{//子组件数据改变之后传递给父组件
+                this.projectId = projectId;
             });
 
         },
@@ -232,7 +240,9 @@
             'create-demand':create_demand,
             'personal-center':personal_center,
             'edit-user':edit_user,
-            'change-pwd':change_pwd
+            'change-pwd':change_pwd,
+            'app-details':app_details,
+            'edit-app':edit_app
         }
     })
 </script>

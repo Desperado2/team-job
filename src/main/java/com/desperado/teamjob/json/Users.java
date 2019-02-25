@@ -83,9 +83,15 @@ public class Users {
     }
 
     @GetMapping
-    @ApiOperation(value = "查询全部")
+    @ApiOperation(value = "查询格式化后的全部")
     public Result query() {
-        return userService.selectAllUser();
+        return userService.selectAllUser(true);
+    }
+
+    @GetMapping("/noSplit")
+    @ApiOperation(value = "查询全部")
+    public Result queryNoSplit() {
+        return userService.selectAllUser(false);
     }
 
     @GetMapping("/{id}")
