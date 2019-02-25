@@ -59,12 +59,16 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Result selectAllUser() {
+    public Result selectAllUser(boolean isSplit) {
         Result result = new Result();
         try {
             List<UserDto> users = userDao.selectAllUser();
-            List<List<UserDto>> list = splitList(users);
-            result.setData(list);
+            if(isSplit){
+                List<List<UserDto>> list = splitList(users);
+                result.setData(list);
+            }else {
+                result.setData(users);
+            }
         }catch (Exception e){
             result.setSuccess(false);
             result.setMsg("异常，查询失败");

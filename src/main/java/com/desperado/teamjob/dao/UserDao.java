@@ -20,4 +20,6 @@ public interface UserDao {
     List<UserDto> selectAllUser();
 
     UserDto selectUserById(@Param("id") String id);
+
+    List<UserDto> selectUserByIds(@Param("ids") List<String> ids);
 }

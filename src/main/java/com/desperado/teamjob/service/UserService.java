@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
     Result addOrUpdateUser(User user);
 
-    Result selectAllUser();
+    Result selectAllUser(boolean isSplit);
 
     Result updatePassword(User user,String oldPassword,String newPassword);
 

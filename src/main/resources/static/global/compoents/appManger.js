@@ -13,45 +13,45 @@ var app_manager = Vue.component('app-manager',{
         <el-main class="index-el-main">
             <el-card class="box-card">
                 <div slot="header" class="clearfix">
-                    <el-button-group>
-                        <el-button autofocus="true" @click="selectItem('only_me')">只看自己</el-button>
-                        <el-button @click="selectItem('all')">全部</el-button>
-                    </el-button-group>
-
-                    <el-button style="float: right; padding: 3px 0" type="text">维护两个项目</el-button>
+                    <el-radio-group v-model="selectItem" :change="selectedItem(selectItem)">
+                      <el-radio-button label="只看自己"></el-radio-button>
+                      <el-radio-button label="全部"></el-radio-button>
+                    </el-radio-group>
+                 
+                    <el-button style="float: right; padding: 3px 0" type="text">维护{{allApps.length | numberToChinese}}个项目</el-button>
                 </div>
 
                 <el-table
-                        :data="tableData"
+                        :data="allApps"
                         style="width: 100%">
                     <el-table-column
-                            prop="app"
+                            prop="projectName"
                             label="应用"
                             width="180">
                     </el-table-column>
                     <el-table-column
-                            prop="swagger"
+                            prop="documentUrl"
                             label="swagger地址"
-                            width="180">
+                     >
                     </el-table-column>
                     <el-table-column
-                            prop="gitlab"
+                            prop="repositoryUrl"
                             label="仓库HTTP地址">
                     </el-table-column>
                     <el-table-column
-                            prop="owners"
+                            prop="coders"
                             label="拥有人">
                         <template slot-scope="scope" >
-                            <img v-for="image in scope.row.owners" :src="image" style="width: 20px;border-radius: 50%">
+                            <img v-for="user in scope.row.coders" :src="user.headUrl" style="width: 20px;border-radius: 50%">
                         </template>
                     </el-table-column>
                     <el-table-column
-                            prop="options"
+                            width="180"
                             label="操作">
                         <template slot-scope="scope">
-                            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-                            <el-button type="text" size="small">编辑</el-button>
-                            <el-button type="text" size="small">删除</el-button>
+                            <el-button @click="lookAPP(scope.row.id)" type="text" size="small">查看</el-button>
+                            <el-button type="text" size="small" @click="editAPP(scope.row.id)">编辑</el-button>
+                            <el-button type="text" size="small" @click="deleteAPP(scope.row.id)">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -61,220 +61,110 @@ var app_manager = Vue.component('app-manager',{
     `,
     data(){
         return{
-            selectedItem: 'only_me',
-            tableData:[],
-            tableData_onlyme: [{
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg'
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-            }],
-
-            tableData_all: [{
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg'
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-            },{
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg'
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-            },{
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg'
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-            },{
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg'
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg',
-                ],
-            }, {
-                app: '2016-05-02',
-                swagger: '王小虎',
-                gitlab: '上海市普陀区金沙江路 1518 弄',
-                owners:[
-                    './global/image/default.jpg',
-                    './global/image/tx/czm.jpg',
-                    './global/image/tx/hb.jpg'
-                ],
-            }],
+            selectItem: '只看自己',
+            allApps:[],
+            app_onlyme: [],
+            app_all:[],
             typeSelect:this.optionsCode,
         }
     },
-    props:['optionsCode'],
     mounted:function(){
-        this.tableData = this.tableData_onlyme
+        if(this.selectItem === '只看自己'){
+            this.findDataByUserId();
+        }else {
+            this.findData();
+        }
     },
+    props:['optionsCode','projectId'],
     methods:{
-        selectItem:function(item){
-            this.selectedItem = item
-            if(item=='only_me'){
-                this.tableData = this.tableData_onlyme
+        selectedItem:function(item){
+            if(item === '只看自己'){
+                if(this.app_onlyme.length === 0){
+                    this.findDataByUserId();
+                }
+                this.allApps = this.app_onlyme
             }else{
-                this.tableData = this.tableData_all
+                if(this.app_all.length === 0){
+                    this.findData()
+                }
+                this.allApps = this.app_all
             }
         },
+        lookAPP:function(projectId){
+            Bus.$emit("projectId",projectId);
+            Bus.$emit("optionsCode","appDetail");
+        },
+        editAPP:function(projectId){
+            Bus.$emit("projectId",projectId);
+            Bus.$emit("optionsCode","editApp");
+        },
+        deleteAPP:function(projectId){
+            let _this = this;
+            this.$confirm('此操作将删除该应用, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                axios({
+                    method: 'delete',
+                    url: 'projects/'+projectId,
+                }).then(function (result) {
+                    if (result.data.success) {
+                        _this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                    } else {
+                        _this.$message({
+                            message: result.data.msg,
+                            type: 'error'
+                        });
+                    }
+                })
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+        },
         createApp:function () {
-            this.typeSelect = 'createApp'
+            this.typeSelect = 'createApp';
             Bus.$emit("optionsCode",this.typeSelect);
+        },
+        findData:function () {
+            let _this = this;
+            axios({
+                method: 'get',
+                url: 'projects',
+            }).then(function (result) {
+                if (result.data.success){
+                    _this.app_all = result.data.data;
+                    this.allApps = this.app_all
+                }else {
+                    _this.$message({
+                        message:result.data.msg,
+                        type:'error'
+                    });
+                }
+            })
+        },
+        findDataByUserId:function () {
+            let _this = this;
+            axios({
+                method: 'get',
+                url: 'projects/user',
+            }).then(function (result) {
+                if (result.data.success) {
+                    _this.app_onlyme = result.data.data;
+                    _this.allApps =  result.data.data;
+                } else {
+                    _this.$message({
+                        message: result.data.msg,
+                        type: 'error'
+                    });
+                }
+            })
         }
     },
 
