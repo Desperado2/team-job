@@ -5,7 +5,6 @@ import com.desperado.teamjob.dao.ProjectUserDao;
 import com.desperado.teamjob.dao.UserDao;
 import com.desperado.teamjob.domain.Project;
 import com.desperado.teamjob.domain.ProjectUser;
-import com.desperado.teamjob.domain.User;
 import com.desperado.teamjob.dto.ProjectDto;
 import com.desperado.teamjob.dto.UserDto;
 import com.desperado.teamjob.utils.IdGenerator;
@@ -32,7 +31,7 @@ public class ProjectServiceImpe implements ProjectService {
     private ProjectUserDao projectUserDao;
 
     @Override
-    public Result addOrUpdateUser(Project project) {
+    public Result addOrUpdateProject(Project project) {
         Result result = new Result();
         try {
             if(!StringUtils.isEmpty(project.getId())){

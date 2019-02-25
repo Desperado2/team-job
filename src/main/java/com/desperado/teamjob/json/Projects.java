@@ -38,7 +38,7 @@ public class Projects {
     @PostMapping
     @ApiOperation(value = "添加/编辑用户")
     public Result addOrUpdateProject(@RequestBody Project project){
-        return projectService.addOrUpdateUser(project);
+        return projectService.addOrUpdateProject(project);
     }
 
     @GetMapping
