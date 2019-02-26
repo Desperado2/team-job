@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.desperado.teamjob.dao.GitCommitLogDao">
+
+    <insert id="add" parameterType="com.desperado.teamjob.domain.GitCommitLogs">
+        INSERT INTO `git_commit_logs`(
+                id,project,author,yearweek,total_add_lines,total_del_lines,commit_id,
+                date_commit,commit_comment,commit_type
+        ) VALUES
+        <foreach collection ="list" item="gitLog" index= "index" separator =",">
+        (
+            #{gitLog.id}, #{gitLog.project} ,#{gitLog.author} ,#{gitLog.yearweek} ,#{gitLog.totalAddLines},
+            #{gitLog.totalDelLines}, #{gitLog.commitId} ,#{gitLog.dateCommit} ,#{gitLog.commitComment} ,#{gitLog.commitType}
+        )
+    </foreach >
+    </insert>
+
+
+</mapper>

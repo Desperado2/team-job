@@ -92,8 +92,20 @@ var index_comp = Vue.component('index-comp',{
 
             <el-card class="box-card">
                 <div slot="header" class="clearfix">
-                    <span>代码提交量</span>
+                    <el-radio-group v-model="selectItem" :change="selectedItem(selectItem)">
+                      <el-radio-button label="代码提交量"></el-radio-button>
+                      <el-radio-button label="提交次数"></el-radio-button>
+                    </el-radio-group>
+                   <div style="float: right">
+                       <el-date-picker
+                          v-model="currWeek"
+                          type="week"
+                          format="yyyy 第 WW 周"
+                          placeholder="选择周">
+                        </el-date-picker>
+                    </div>
                 </div>
+                
                 <div id="echart" style="width: 100%;height:400px;"></div>
             </el-card>
 
@@ -114,12 +126,27 @@ var index_comp = Vue.component('index-comp',{
                 department: '',
                 position: '',
                 headUrl:''
-            }
+            },
+            selectItem: '代码提交量',
+            currWeek:''
         }
     },
     methods:{
         handleClick(tab, event) {
             console.log(tab, event);
+        },
+        selectedItem:function(item){
+            if(item === '代码提交量'){
+                if(this.app_onlyme.length === 0){
+                    this.findDataByUserId();
+                }
+                this.allApps = this.app_onlyme
+            }else{
+                if(this.app_all.length === 0){
+                    this.findData()
+                }
+                this.allApps = this.app_all
+            }
         },
         drawLine:function () {
             // 基于准备好的dom，初始化echarts实例
@@ -152,6 +179,20 @@ var index_comp = Vue.component('index-comp',{
     },
     created:function(){
         let _this = this;
+        axios({
+            method: 'get',
+            url: 'users/user',
+        }).then(function (result) {
+            if (result.data.success){
+                _this.currUser = result.data.data;
+            }else {
+                _this.$message({
+                    message:result.data.msg,
+                    type:'error'
+                });
+            }
+        });
+
         axios({
             method: 'get',
             url: 'users/user',
