@@ -3,10 +3,6 @@
  */
 package com.desperado.teamjob.domain;
 
-/**
- * @author jimmy
- * @since 2018年04月04日
- */
 public class TimeFilterParams {
 	/**
 	 * 提交日期开始 单位秒

@@ -2,10 +2,7 @@
  * 
  */
 package com.desperado.teamjob.domain.res;
-/**
- * @author jimmy
- * @since 2018年04月04日
- */
+
 public class GitCommitsSummaryModel {
 	private String author;
 	private String authorName;

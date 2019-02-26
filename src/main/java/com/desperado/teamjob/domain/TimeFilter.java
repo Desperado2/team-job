@@ -12,10 +12,7 @@ import org.eclipse.jgit.revwalk.filter.RevFilter;
 
 import java.io.IOException;
 
-/**
- * @author jimmy
- * @since 2018年04月04日
- */
+
 public class TimeFilter extends RevFilter {
 	private TimeFilterParams timeFilterParams;
 	public TimeFilter(TimeFilterParams timeFilterParams) {

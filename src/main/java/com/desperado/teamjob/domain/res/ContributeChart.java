@@ -6,10 +6,7 @@ package com.desperado.teamjob.domain.res;
 
 import io.swagger.annotations.ApiModelProperty;
 
-/**
- * @author jimmy
- * @since 2018年04月23日
- */
+
 public class ContributeChart {
 	@ApiModelProperty("作者")
 	private String author;

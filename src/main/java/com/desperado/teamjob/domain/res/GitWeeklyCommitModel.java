@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
-/**
- * @author jimmy
- * @since 2018年04月11日
- */
+
 public class GitWeeklyCommitModel {
 	@ApiModelProperty("提交信息")
 	private String commitComment;

@@ -1,16 +1,10 @@
-/**
- * 
- */
+
 package com.desperado.teamjob.domain;
 
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * 每周提交数量
- * @author jimmy
- * @since 2018年04月04日
- */
+
 public class GitWeeklyCommits implements Serializable {
 	private static final long serialVersionUID = 7440954765080019569L;
 	private String id;
