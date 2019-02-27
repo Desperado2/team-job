@@ -6,5 +6,5 @@ public interface GitLogAnalysisService {
 
     void saveOrUpdate();
 
-    Result getAll();
+     Result getWeeklyLogs(String yearweek);
 }

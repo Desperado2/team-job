@@ -1,9 +1,14 @@
 package com.desperado.teamjob.json;
 
+import com.battcn.swagger.properties.ApiDataType;
+import com.battcn.swagger.properties.ApiParamType;
 import com.desperado.teamjob.service.GitLogAnalysisService;
 import com.desperado.teamjob.vo.Result;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +24,14 @@ public class GitAnalysiss {
     @Autowired
     private GitLogAnalysisService gitLogAnalysisService;
 
-    @GetMapping
-    @ApiOperation(value = "查询全部")
-    public Result query() {
-        gitLogAnalysisService.saveOrUpdate();
-        return null;
+    @GetMapping("/{yearweek}")
+    @ApiOperation(value = "跟进周期查询全部")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "yearweek", value = "周数[20196格式]", dataType = ApiDataType.STRING, paramType = ApiParamType.PATH),
+    })
+    public Result query(@PathVariable String yearweek) {
+        Result result = gitLogAnalysisService.getWeeklyLogs(yearweek);
+        return result;
     }
 
 

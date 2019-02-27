@@ -25,6 +25,8 @@ public class User {
    private String department;
     @ApiModelProperty("用户职务")
    private String position;
+    @ApiModelProperty("git/svn仓库用户名")
+    private String repositoryUsername;
     @ApiModelProperty("用户头像路径")
    private String headUrl;
     @ApiModelProperty("用户创建时间")
@@ -102,6 +104,14 @@ public class User {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getRepositoryUsername() {
+        return repositoryUsername;
+    }
+
+    public void setRepositoryUsername(String repositoryUsername) {
+        this.repositoryUsername = repositoryUsername;
     }
 
     public String getHeadUrl() {

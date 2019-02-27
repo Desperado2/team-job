@@ -92,7 +92,7 @@ var index_comp = Vue.component('index-comp',{
 
             <el-card class="box-card">
                 <div slot="header" class="clearfix">
-                    <el-radio-group v-model="selectItem" :change="selectedItem(selectItem)">
+                    <el-radio-group v-model="selectItem" >
                       <el-radio-button label="代码提交量"></el-radio-button>
                       <el-radio-button label="提交次数"></el-radio-button>
                     </el-radio-group>
@@ -100,7 +100,7 @@ var index_comp = Vue.component('index-comp',{
                        <el-date-picker
                           v-model="currWeek"
                           type="week"
-                          format="yyyy 第 WW 周"
+                          format="yyyy 第 W 周"
                           placeholder="选择周">
                         </el-date-picker>
                     </div>
@@ -127,39 +127,77 @@ var index_comp = Vue.component('index-comp',{
                 position: '',
                 headUrl:''
             },
+            chartData :[],
             selectItem: '代码提交量',
-            currWeek:''
+            currWeek:new Date(),
+            chartSeries:[],
+            myChart:null,
         }
     },
     methods:{
         handleClick(tab, event) {
             console.log(tab, event);
         },
-        selectedItem:function(item){
-            if(item === '代码提交量'){
-                if(this.app_onlyme.length === 0){
-                    this.findDataByUserId();
-                }
-                this.allApps = this.app_onlyme
+        getSeries:function(type){
+            if(type === '代码提交量'){
+                this.chartSeries = [];
+                this.chartSeries.push({
+                    name: '增加行数',
+                    type: 'bar',
+                    data: this.chartData.addLines
+                });
+                this.chartSeries.push( {
+                    name: '删除行数',
+                    type: 'bar',
+                    data: this.chartData.delLines
+                });
             }else{
-                if(this.app_all.length === 0){
-                    this.findData()
-                }
-                this.allApps = this.app_all
+                this.chartSeries = [];
+                this.chartSeries .push({
+                    name: '提交次数',
+                    type: 'bar',
+                    data: this.chartData.commits
+                })
             }
         },
         drawLine:function () {
             // 基于准备好的dom，初始化echarts实例
-            var myChart = echarts.init(document.getElementById('echart'));
-            // 指定图表的配置项和数据
-            myChart.setOption({
+            this.myChart = echarts.init(document.getElementById('echart'));
+        },
+        getWeekStr:function (year,month,day) {
+            let date1 = new Date(year,month,day);
+            let date2 = new Date(year, '0', '1');
+            let d = Math.round((date1.valueOf() - date2.valueOf()) / 86400000);
+            return Math.ceil((d + ((date2.getDay() + 1) - 1)) / 7);
+        },
+        getChartDate:function (yearweek) {
+            let _this = this;
+            axios({
+                method: 'get',
+                url: 'gitAnalysiss/'+yearweek
+            }).then(function (result) {
+                if (result.data.success){
+                    _this.chartData = result.data.data;
+                    _this.getSeries(_this.selectItem);
+                    _this.drawLine();
+                    _this.setOption(_this.chartSeries)
+                }else {
+                    _this.$message({
+                        message:result.data.msg,
+                        type:'error'
+                    });
+                }
+            });
+        },
+        setOption:function(series){
+            this.myChart.setOption({
                 tooltip: {
                     axisPointer: {            // 坐标轴指示器，坐标轴触发有效
                         type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                     }
                 },
                 xAxis: {
-                    data: ["张三", "李四", "王五", "王小虎", "李晓明", "Jack"]
+                    data: this.chartData.users
                 },
                 yAxis: {
                     axisLine: {       //y轴
@@ -169,12 +207,26 @@ var index_comp = Vue.component('index-comp',{
                         show: false
                     },
                 },
-                series: [{
-                    name: '代码量',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
+                series:series
             });
+        }
+    },
+    watch:{
+        currWeek:function (newWeek,oldWeek) {
+            if(newWeek !== oldWeek){
+                let year = newWeek.getFullYear().toString();
+                let month = newWeek.getMonth().toString();
+                let day = newWeek.getDate().toString();
+                let yearweek = year + this.getWeekStr(year,month,day)
+                this.getChartDate(yearweek)
+            }
+        },
+        selectItem:function (newItem,oldItem) {
+            if(newItem !== oldItem){
+                this.getSeries(newItem)
+                this.myChart.clear()
+                this.setOption(this.chartSeries)
+            }
         }
     },
     created:function(){
@@ -192,22 +244,12 @@ var index_comp = Vue.component('index-comp',{
                 });
             }
         });
-
-        axios({
-            method: 'get',
-            url: 'users/user',
-        }).then(function (result) {
-            if (result.data.success){
-                _this.currUser = result.data.data;
-            }else {
-                _this.$message({
-                    message:result.data.msg,
-                    type:'error'
-                });
-            }
-        });
     },
     mounted: function () {
-        this.drawLine();
+        let year = this.currWeek.getFullYear().toString();
+        let month = this.currWeek.getMonth().toString();
+        let day = this.currWeek.getDate().toString();
+        let yearweek = year + this.getWeekStr(year,month,day)
+        this.getChartDate(yearweek)
     },
 })

@@ -131,17 +131,15 @@ public class GitLogService {
 		}
 		int delSize = 0;
 		int addSize = 0;
-		int commits = 0;
 		String author = null;
 		String email = null;
 		for (RevCommit commit : walk) {
-			commits++;
 			email = commit.getAuthorIdent().getEmailAddress();
 			author = commit.getAuthorIdent().getName();
 			GitCommitLogs gitCommitLogs = new GitCommitLogs();
 			gitCommitLogs.setId(UUID.randomUUID().toString());
 			gitCommitLogs.setProject(projectCode);
-			//gitCommitLogs.setAuthor(getRealAuthor(author));
+			gitCommitLogs.setAuthor(getRealAuthor(author,email));
 			gitCommitLogs.setCommitId(commit.getId().name());
 			gitCommitLogs.setYearweek(DateUtil.getYearWeek(new Date(commit.getCommitTime()*1000L)));
 			gitCommitLogs.setCommitComment(commit.getFullMessage());
@@ -195,12 +193,6 @@ public class GitLogService {
 			}
 		}
 		walk.close();
-		/*CommitCalc commitCalc = new CommitCalc();
-		commitCalc.setAuthor(author);
-		commitCalc.setAuthorEmail(email);
-		commitCalc.setTotalAddLines(addSize);
-		commitCalc.setTotalDelLines(delSize);
-		commitCalc.setTotalCommits(commits);*/
 		return gitCommitLogsList;
 	}
 
@@ -228,10 +220,18 @@ public class GitLogService {
 		return filterParamsList;
 	}
 
-	public List<GitCommitLogs> getWeeklyLogs(String author) {
+	private String getRealAuthor(String author,String email){
+		UserDto userDto = userDao.selectUserByRepositoryUsername(author);
+		if(userDto != null){
+			return userDto.getName();
+		}
+		 userDto = userDao.selectUserByEmail(email);
+		if(userDto != null){
+			return userDto.getName();
+		}
 		return null;
-		//return gitCommitLogsDao.getWeeklyLogs(DateUtil.getYearWeek(new Date()), author);
 	}
+
 	
 	/**
 	 * 查询提交的数量

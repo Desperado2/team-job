@@ -8,9 +8,13 @@ var create_app = Vue.component('create-app',{
            <el-card class="box-card" style="padding: 10px 20%">
                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm" >
                   
-                   <el-form-item label="中文名" prop="projectName">
+                   <el-form-item label="项目名" prop="projectName">
                        <el-input v-model="ruleForm.projectName"></el-input>
                    </el-form-item>
+                   <el-form-item label="中文名" prop="projectRealName">
+                       <el-input v-model="ruleForm.projectRealName"></el-input>
+                   </el-form-item>
+                   
                    <el-form-item label="仓库地址" prop="repositoryUrl">
                        <el-input v-model="ruleForm.repositoryUrl"></el-input>
                    </el-form-item>
@@ -20,7 +24,9 @@ var create_app = Vue.component('create-app',{
                    <el-form-item label="开发环境数据库" prop="databaseUrl">
                        <el-input type='tel' v-model="ruleForm.databaseUrl"></el-input>
                    </el-form-item>
-                      
+                    <el-form-item label="项目创建日期" prop="projectDateCreate">
+                       <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.projectDateCreate" style="width: 100%;"></el-date-picker>
+                   </el-form-item>
                    <el-form-item label="开发人员" prop="coders">
                        <el-select
                             v-model="ruleForm.coders"
@@ -54,16 +60,24 @@ var create_app = Vue.component('create-app',{
             typeSelect:this.optionsCode,
             imageUrl:'',
             ruleForm: {
+                projectRealName:'',
                 projectName: '',
                 repositoryUrl: '',
                 documentUrl: '',
                 databaseUrl : '',
+                projectDateCreate:'',
                 coder: [],
             },
            users:[],
             rules: {
-                projectName: [
+                projectDateCreate:[
+                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+                ],
+                projectRealName: [
                     { required: true, message: '请输入应用中文名称', trigger: 'blur' },
+                ],
+                projectName: [
+                    { required: true, message: '请输入应用名称', trigger: 'blur' },
                 ],
                 repositoryUrl: [
                     { required: true, message: '请填写ssh地址', trigger: 'blur' }

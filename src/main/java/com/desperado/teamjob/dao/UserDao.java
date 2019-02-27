@@ -21,5 +21,9 @@ public interface UserDao {
 
     UserDto selectUserById(@Param("id") String id);
 
+    UserDto selectUserByRepositoryUsername( String repositoryUsername);
+
+    UserDto selectUserByEmail( String email);
+
     List<UserDto> selectUserByIds(@Param("ids") List<String> ids);
 }

@@ -8,4 +8,8 @@ import java.util.List;
 @Mapper
 public interface GitCommitLogDao {
     void add(List<GitCommitLogs> gitCommitLogs);
+
+    List<GitCommitLogs> getWeeklyLogs(String yearweek);
+
+    GitCommitLogs getLogsByCommitId(String commitId);
 }

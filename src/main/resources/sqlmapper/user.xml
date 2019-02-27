@@ -4,15 +4,15 @@
 
     <insert id="addUser" parameterType="com.desperado.teamjob.domain.User">
         INSERT INTO `user`(
-                id,name,password,email,phone,birth_type,birthday,department,position,head_url,date_create,date_update
-        ) VALUES (#{id},#{name},#{password},#{email},#{phone},#{birthType},#{birthday},#{department},#{position},#{headUrl},
-                   #{dateCreate}, #{dateUpdate})
+                id,name,password,email,phone,birth_type,birthday,department,position,repository_username,head_url,date_create,date_update
+        ) VALUES (#{id},#{name},#{password},#{email},#{phone},#{birthType},#{birthday},#{department},#{position},
+                    #{repositoryUsername},#{headUrl}, #{dateCreate}, #{dateUpdate})
     </insert>
 
     <update id="update" parameterType="com.desperado.teamjob.domain.User">
         update `user`set
                 name = #{name},phone=#{phone},birth_type=#{birthType},birthday=#{birthday},department=#{department},
-                position =#{position},head_url=#{headUrl},date_update=#{dateUpdate}
+                position =#{position},repository_username=#{repositoryUsername},head_url=#{headUrl},date_update=#{dateUpdate}
        where id=#{id}
     </update>
 
@@ -28,6 +28,14 @@
 
     <select id="selectUserById"  resultType="com.desperado.teamjob.dto.UserDto">
         select id,name,email,phone,birth_type,birthday,department,position,head_url from `user` where id=#{id};
+    </select>
+
+    <select id="selectUserByRepositoryUsername"  resultType="com.desperado.teamjob.dto.UserDto">
+        select id,name,email,phone,birth_type,birthday,department,position,head_url from `user` where repository_username=#{RepositoryUsername};
+    </select>
+
+    <select id="selectUserByEmail"  resultType="com.desperado.teamjob.dto.UserDto">
+        select id,name,email,phone,birth_type,birthday,department,position,head_url from `user` where email=#{email};
     </select>
 
     <select id="selectUserByIds"  resultType="com.desperado.teamjob.dto.UserDto">

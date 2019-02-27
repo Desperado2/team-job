@@ -25,7 +25,7 @@ var app_manager = Vue.component('app-manager',{
                         :data="allApps"
                         style="width: 100%">
                     <el-table-column
-                            prop="projectName"
+                            prop="projectRealName"
                             label="应用"
                             width="180">
                     </el-table-column>
