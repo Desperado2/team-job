@@ -1,5 +1,7 @@
 package com.desperado.teamjob.utils;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,56 +23,23 @@ public class AddressUtils {
     public static String getAddresses(String content, String encodingString)
             throws UnsupportedEncodingException {
         // 这里调用pconline的接口
-        String urlStr = "http://ip.taobao.com/service/getIpInfo.php";
+        String urlStr = "http://ip-api.com/json/"+content+"?lang=zh-CN";
         // 从http://whois.pconline.com.cn取得IP所在的省市区信息
-        String returnStr = getResult(urlStr, content, encodingString);
+        String returnStr = null;
+        try {
+            returnStr = HttpUtils.doGet(urlStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (returnStr != null) {
             // 处理返回的省市区信息
-            System.out.println(returnStr);
-            String[] temp = returnStr.split(",");
-            if(temp.length<3){
-                return "0";//无效IP，局域网测试
+            JSONObject jsonObject = JSONObject.parseObject(returnStr);
+            if(jsonObject.getString("status") == "success"){
+                String country = jsonObject.getString("country");
+                String province = jsonObject.getString("regionName");
+                String city = jsonObject.getString("city");
+                return country+"-"+province+"-"+city;
             }
-            String region = (temp[5].split(":"))[1].replaceAll("\"", "");
-            region = decodeUnicode(region);// 省份
-
-            String country = "";
-            String area = "";
-            // String region = "";
-            String city = "";
-            String county = "";
-            String isp = "";
-            for (int i = 0; i < temp.length; i++) {
-                switch (i) {
-                    case 1:
-                        country = (temp[i].split(":"))[2].replaceAll("\"", "");
-                        country = decodeUnicode(country);// 国家
-                        break;
-                    case 3:
-                        area = (temp[i].split(":"))[1].replaceAll("\"", "");
-                        area = decodeUnicode(area);// 地区
-                        break;
-                    case 5:
-                        region = (temp[i].split(":"))[1].replaceAll("\"", "");
-                        region = decodeUnicode(region);// 省份
-                        break;
-                    case 7:
-                        city = (temp[i].split(":"))[1].replaceAll("\"", "");
-                        city = decodeUnicode(city);// 市区
-                        break;
-                    case 9:
-                        county = (temp[i].split(":"))[1].replaceAll("\"", "");
-                        county = decodeUnicode(county);// 地区
-                        break;
-                    case 11:
-                        isp = (temp[i].split(":"))[1].replaceAll("\"", "");
-                        isp = decodeUnicode(isp); // ISP公司
-                        break;
-                }
-            }
-
-            System.out.println(country+"="+area+"="+region+"="+city+"="+county+"="+isp);
-            return region+","+city+","+country;
         }
         return null;
     }
