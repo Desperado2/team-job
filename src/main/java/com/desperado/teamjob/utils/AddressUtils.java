@@ -34,7 +34,7 @@ public class AddressUtils {
         if (returnStr != null) {
             // 处理返回的省市区信息
             JSONObject jsonObject = JSONObject.parseObject(returnStr);
-            if(jsonObject.getString("status") == "success"){
+            if(jsonObject.getString("status").equals("success")){
                 String country = jsonObject.getString("country");
                 String province = jsonObject.getString("regionName");
                 String city = jsonObject.getString("city");
@@ -51,7 +51,7 @@ public class AddressUtils {
         String ip = "125.70.11.136";
         String address = "";
         try {
-            address = addressUtils.getAddresses("ip="+ip, "utf-8");
+            address = addressUtils.getAddresses(ip, "utf-8");
         } catch (UnsupportedEncodingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
