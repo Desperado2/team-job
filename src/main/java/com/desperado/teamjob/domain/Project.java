@@ -13,6 +13,8 @@ public class Project implements Serializable {
     @ApiModelProperty("项目id")
     private String id;
     @ApiModelProperty("项目中文名")
+    private String projectRealName;
+    @ApiModelProperty("项目名")
     private String projectName;
     @ApiModelProperty("项目仓库地址")
     private String repositoryUrl;
@@ -24,6 +26,8 @@ public class Project implements Serializable {
     private String coder;
     @ApiModelProperty("创建者")
     private String optioner;
+    @ApiModelProperty("项目创建时间")
+    private Date projectDateCreate;
     @ApiModelProperty("创建时间")
     private Date dateCreate;
     @ApiModelProperty("更新时间")
@@ -35,6 +39,14 @@ public class Project implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getProjectRealName() {
+        return projectRealName;
+    }
+
+    public void setProjectRealName(String projectRealName) {
+        this.projectRealName = projectRealName;
     }
 
     public String getProjectName() {
@@ -83,6 +95,14 @@ public class Project implements Serializable {
 
     public void setOptioner(String optioner) {
         this.optioner = optioner;
+    }
+
+    public Date getProjectDateCreate() {
+        return projectDateCreate;
+    }
+
+    public void setProjectDateCreate(Date projectDateCreate) {
+        this.projectDateCreate = projectDateCreate;
     }
 
     public Date getDateCreate() {

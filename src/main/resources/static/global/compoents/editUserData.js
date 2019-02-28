@@ -33,6 +33,9 @@ var edit_user = Vue.component('edit-user',{
                        </div>
                        <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.birthday" style="width: 100%;"></el-date-picker>
                    </el-form-item>
+                   <el-form-item label="Git/SVN账号" prop="repositoryUsername">
+                       <el-input v-model="ruleForm.repositoryUsername"></el-input>
+                   </el-form-item>
                    <el-form-item label="部门" prop="department">
                        <el-input v-model="ruleForm.department"></el-input>
                    </el-form-item>
@@ -60,6 +63,7 @@ var edit_user = Vue.component('edit-user',{
                 birthType: '',
                 department: '',
                 position: '',
+                repositoryUsername:'',
                 headUrl:''
             },
             rules: {
@@ -75,7 +79,10 @@ var edit_user = Vue.component('edit-user',{
                 ],
                 birthType: [
                     {  required: true, message: '请选择日历类型', trigger: 'change' }
-                ]
+                ],
+                repositoryUsername: [
+                    { required: true, message: 'Git/SVN账号', trigger: 'blur' }
+                ],
             }
         }
     },

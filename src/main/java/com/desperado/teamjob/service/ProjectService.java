@@ -5,7 +5,7 @@ import com.desperado.teamjob.vo.Result;
 
 public interface ProjectService {
 
-    Result addOrUpdateUser(Project project);
+    Result addOrUpdateProject(Project project);
 
 
     Result selectAllProject();

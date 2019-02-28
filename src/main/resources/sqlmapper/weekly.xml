@@ -12,6 +12,10 @@
         select * from weekly where week = #{week};
     </select>
 
+    <select id="getAllUserIdsByWeek" resultType="java.lang.String">
+        select user_id from weekly where week = #{week};
+    </select>
+
     <select id="getWeeklyById" resultType="com.desperado.teamjob.domain.Weekly">
         select * from weekly where id=#{id};
     </select>

@@ -22,7 +22,11 @@ Vue.filter('dataFormat', function (value, fmt) {
 
 Vue.filter('numberToChinese',function (value) {
     return NumberToChinese(value)
-})
+});
+
+
+
+
 
 
 function SectionToChinese(section){

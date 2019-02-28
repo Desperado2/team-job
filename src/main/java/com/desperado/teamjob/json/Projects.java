@@ -28,7 +28,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/projects")
-@Api(tags = "1.3", description = "应用管理", value = "应用管理")
+@Api(tags = "1.2", description = "应用管理", value = "应用管理")
 public class Projects {
     private static final Logger LOGGER = LoggerFactory.getLogger(Projects.class);
 
@@ -38,7 +38,7 @@ public class Projects {
     @PostMapping
     @ApiOperation(value = "添加/编辑用户")
     public Result addOrUpdateProject(@RequestBody Project project){
-        return projectService.addOrUpdateUser(project);
+        return projectService.addOrUpdateProject(project);
     }
 
     @GetMapping

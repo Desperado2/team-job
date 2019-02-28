@@ -92,7 +92,11 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.31</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.eclipse.jgit</groupId>
+            <artifactId>org.eclipse.jgit</artifactId>
+            <version>5.2.0.201812061821-r</version>
+        </dependency>
 
         <dependency>
             <groupId>mysql</groupId>

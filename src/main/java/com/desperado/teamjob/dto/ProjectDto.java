@@ -13,6 +13,8 @@ public class ProjectDto implements Serializable {
     @ApiModelProperty("项目id")
     private String id;
     @ApiModelProperty("项目中文名")
+    private String projectRealName;
+    @ApiModelProperty("项目名")
     private String projectName;
     @ApiModelProperty("项目仓库地址")
     private String repositoryUrl;
@@ -35,6 +37,14 @@ public class ProjectDto implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getProjectRealName() {
+        return projectRealName;
+    }
+
+    public void setProjectRealName(String projectRealName) {
+        this.projectRealName = projectRealName;
     }
 
     public String getProjectName() {
