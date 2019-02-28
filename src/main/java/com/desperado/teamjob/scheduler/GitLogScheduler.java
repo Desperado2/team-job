@@ -18,7 +18,7 @@ public class GitLogScheduler {
     @Autowired
     GitLogAnalysisService gitLogAnalysisService;
 
-    @Scheduled(cron="* 31 14 * * ?")
+    @Scheduled(cron="* 0 0 * * ?")
     private void process(){
         logger.info(DateUtil.dateFmt(DateUtil.DEFAULT_DATETIME_PATTERN,new Date())+"-----统计git提交记录开始");
         gitLogAnalysisService.saveOrUpdate();

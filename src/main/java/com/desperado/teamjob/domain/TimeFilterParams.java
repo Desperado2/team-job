@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.desperado.teamjob.domain;
 
 public class TimeFilterParams {

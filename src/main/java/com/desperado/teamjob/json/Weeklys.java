@@ -8,6 +8,7 @@ import com.desperado.teamjob.dto.UserDto;
 import com.desperado.teamjob.dto.WeeklyDto;
 import com.desperado.teamjob.service.UserService;
 import com.desperado.teamjob.service.WeeklyService;
+import com.desperado.teamjob.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -27,13 +28,13 @@ public class Weeklys {
 
     @PostMapping
     @ApiOperation(value = "添加周报")
-    public Weekly addUser(@RequestBody WeeklyDto weekly){
+    public Result addUser(@RequestBody WeeklyDto weekly){
         return weeklyService.addWeek(weekly);
     }
 
     @GetMapping("/{week}/all")
     @ApiOperation(value = "根据周数查询全部")
-    public List<Weekly> query(@PathVariable Integer week) {
+    public Result query(@PathVariable Integer week) {
         return weeklyService.getAllWeeklyByWeek(week);
     }
 
@@ -42,8 +43,15 @@ public class Weeklys {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户id", dataType = ApiDataType.STRING, paramType = ApiParamType.PATH),
     })
-    public Weekly get(@PathVariable String id) {
+    public Result get(@PathVariable String id) {
        return weeklyService.getWeeklyById(id);
+    }
+
+
+    @GetMapping("/commitData")
+    @ApiOperation(value = "查询周报提交情况")
+    public Result get() {
+        return weeklyService.getWeeklyReportCommitData();
     }
 
     @GetMapping("/{userId}/{week}")
@@ -52,7 +60,7 @@ public class Weeklys {
             @ApiImplicitParam(name = "userId", value = "用户id", dataType = ApiDataType.STRING, paramType = ApiParamType.PATH),
             @ApiImplicitParam(name = "week", value = "周数", dataType = ApiDataType.INT, paramType = ApiParamType.PATH),
     })
-    public Weekly get(@PathVariable String userId,@PathVariable Integer week) {
+    public Result get(@PathVariable String userId,@PathVariable Integer week) {
         return weeklyService.getWeeklyByIdAndWeek(userId,week);
     }
 

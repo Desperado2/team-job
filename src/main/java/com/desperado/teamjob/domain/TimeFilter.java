@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.desperado.teamjob.domain;
 
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;

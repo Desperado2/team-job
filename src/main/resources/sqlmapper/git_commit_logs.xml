@@ -4,12 +4,12 @@
 
     <insert id="add" parameterType="com.desperado.teamjob.domain.GitCommitLogs">
         INSERT INTO `git_commit_logs`(
-                id,project,author,yearweek,total_add_lines,total_del_lines,commit_id,
+                id,project,project_name,author,yearweek,total_add_lines,total_del_lines,commit_id,
                 date_commit,commit_comment,commit_type
         ) VALUES
         <foreach collection ="list" item="gitLog" index= "index" separator =",">
         (
-            #{gitLog.id}, #{gitLog.project} ,#{gitLog.author} ,#{gitLog.yearweek} ,#{gitLog.totalAddLines},
+            #{gitLog.id}, #{gitLog.project} ,#{gitLog.projectName},#{gitLog.author} ,#{gitLog.yearweek} ,#{gitLog.totalAddLines},
             #{gitLog.totalDelLines}, #{gitLog.commitId} ,#{gitLog.dateCommit} ,#{gitLog.commitComment} ,#{gitLog.commitType}
         )
     </foreach >
@@ -21,6 +21,14 @@
 
     <select id="getLogsByCommitId" resultType="com.desperado.teamjob.domain.GitCommitLogs">
         select * from git_commit_logs where commit_id = #{commitId};
+    </select>
+
+    <select id="getProjectNewestLog" resultType="com.desperado.teamjob.domain.GitCommitLogs">
+        SELECT * from git_commit_logs WHERE project= #{project} ORDER BY date_commit DESC LIMIT 1;
+    </select>
+
+    <select id="getLogByProjectCode" resultType="com.desperado.teamjob.domain.GitCommitLogs">
+        SELECT * from git_commit_logs WHERE project= #{project};
     </select>
 
 </mapper>

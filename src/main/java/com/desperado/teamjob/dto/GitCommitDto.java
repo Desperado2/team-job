@@ -1,10 +1,19 @@
 package com.desperado.teamjob.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
 public class GitCommitDto {
+    @ApiModelProperty("用户名")
     private String author;
+    @ApiModelProperty("用户真实名称")
     private String authorName;
+    @ApiModelProperty("添加总行数")
     private Integer totalAddLines;
+    @ApiModelProperty("删除总行数")
     private Integer totalDelLines;
+    @ApiModelProperty("提交总次数")
     private Integer totalCommits;
 
     public String getAuthor() {

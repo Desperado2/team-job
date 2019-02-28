@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class GitCommitLogs implements Serializable {
-	private static final long serialVersionUID = 2437176301471857722L;
 	private String id;
 	private String project;
+	private String projectName;
 	private String author;
 	private String yearweek;
 	private Integer totalAddLines;
@@ -28,6 +28,15 @@ public class GitCommitLogs implements Serializable {
 	public void setProject(String project) {
 		this.project = project;
 	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
 	public String getAuthor() {
 		return author;
 	}

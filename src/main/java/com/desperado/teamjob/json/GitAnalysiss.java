@@ -34,5 +34,14 @@ public class GitAnalysiss {
         return result;
     }
 
+    @GetMapping("/{projectCode}/project")
+    @ApiOperation(value = "跟进周期查询全部")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "projectCode", value = "项目code", dataType = ApiDataType.STRING, paramType = ApiParamType.PATH),
+    })
+    public Result getProject(@PathVariable String projectCode) {
+        Result result = gitLogAnalysisService.getProjectLogs(projectCode);
+        return result;
+    }
 
 }

@@ -6,6 +6,7 @@ import com.desperado.teamjob.domain.GitCommitLogs;
 import com.desperado.teamjob.domain.Project;
 import com.desperado.teamjob.dto.GitCommitChart;
 import com.desperado.teamjob.dto.GitCommitDto;
+import com.desperado.teamjob.dto.GitCommitPieChart;
 import com.desperado.teamjob.thread.GitLogService;
 import com.desperado.teamjob.utils.DateUtil;
 import com.desperado.teamjob.vo.Result;
@@ -30,8 +31,13 @@ public class GitLogAnalysisServiceImpl implements GitLogAnalysisService {
         for (Project project : projects){
             String url = project.getRepositoryUrl();
             String name = project.getProjectName();
-
+            String realName = project.getProjectRealName();
             Date projectDateCreate = project.getProjectDateCreate();
+            GitCommitLogs newestLog = gitCommitLogDao.getProjectNewestLog(name);
+            //查询最近的提交记录，如果存在，最近的提交记录时间则为创建时间，避免重复查询
+            if(newestLog != null){
+                projectDateCreate = newestLog.getDateCommit();
+            }
             //创建年
             int createYear = DateUtil.getYear(projectDateCreate);
             //本年
@@ -45,11 +51,12 @@ public class GitLogAnalysisServiceImpl implements GitLogAnalysisService {
                     weeks = 1;
                     maxWeeks = DateUtil.getMaxWeekNumOfYear(begin);
                 }
-                // 如果创建使其为本年， 则从本年第一周到现在
+                // 如果创建时间为本年， 则从本年第一周到现在
                 if(begin == year){
                     weeks = 1;
                     maxWeeks = DateUtil.getWeekOfYear(new Date());
                 }
+                //如果创建时间为本年，则从创建时间到现在
                 if(createYear == year){
                     weeks = DateUtil.getWeekOfYear(projectDateCreate);
                     maxWeeks = DateUtil.getWeekOfYear(new Date());
@@ -59,7 +66,7 @@ public class GitLogAnalysisServiceImpl implements GitLogAnalysisService {
                     Date lastDayOfWeek = DateUtil.getLastDayOfWeek(begin, i);
                     int submitDateFrom = (int) (firstDayOfWeek.getTime()/1000);
                     int submitDateTo = (int) (lastDayOfWeek.getTime()/1000);
-                    List<GitCommitLogs> gitCommitLogs = gitLogService.listAllLinesByTime(url, name, submitDateFrom, submitDateTo);
+                    List<GitCommitLogs> gitCommitLogs = gitLogService.listAllLinesByTime(url, name, realName,submitDateFrom, submitDateTo);
                     if(gitCommitLogs != null && gitCommitLogs.size() > 0){
                         addLogs(gitCommitLogs);
                     }
@@ -75,6 +82,17 @@ public class GitLogAnalysisServiceImpl implements GitLogAnalysisService {
         Map<String, List<GitCommitLogs>> logsUserMap = logsUserMap(logsList);
         List<GitCommitDto> dealLogs = dealLogs(logsUserMap);
         GitCommitChart commitChart = getGitCommitChart(dealLogs);
+        result.setData(commitChart);
+        return result;
+    }
+
+    @Override
+    public Result getProjectLogs(String project) {
+        Result result = new Result();
+        List<GitCommitLogs> logsList = gitCommitLogDao.getLogByProjectCode(project);
+        Map<String, List<GitCommitLogs>> logsUserMap = logsUserMap(logsList);
+        List<GitCommitDto> dealLogs = dealLogs(logsUserMap);
+        Map<String, List<GitCommitPieChart>> commitChart = getGitCommitPieChart(dealLogs);
         result.setData(commitChart);
         return result;
     }
@@ -136,6 +154,35 @@ public class GitLogAnalysisServiceImpl implements GitLogAnalysisService {
         gitCommitChart.setDelLines(delLines);
         gitCommitChart.setCommits(commits);
         return gitCommitChart;
+    }
+
+
+    private Map<String,List<GitCommitPieChart>> getGitCommitPieChart(List<GitCommitDto> dealLogs){
+        List<GitCommitPieChart> addList = new ArrayList<>();
+        List<GitCommitPieChart> delList = new ArrayList<>();
+        List<GitCommitPieChart> commitList = new ArrayList<>();
+        GitCommitPieChart gitCommitPieChart = null;
+        for (GitCommitDto gitCommitDto : dealLogs){
+            gitCommitPieChart = new GitCommitPieChart();
+            gitCommitPieChart.setName(gitCommitDto.getAuthorName());
+            gitCommitPieChart.setValue(gitCommitDto.getTotalAddLines());
+            addList.add(gitCommitPieChart);
+
+            gitCommitPieChart = new GitCommitPieChart();
+            gitCommitPieChart.setName(gitCommitDto.getAuthorName());
+            gitCommitPieChart.setValue(gitCommitDto.getTotalDelLines());
+            delList.add(gitCommitPieChart);
+
+            gitCommitPieChart = new GitCommitPieChart();
+            gitCommitPieChart.setName(gitCommitDto.getAuthorName());
+            gitCommitPieChart.setValue(gitCommitDto.getTotalCommits());
+            commitList.add(gitCommitPieChart);
+        }
+        Map<String,List<GitCommitPieChart>> map = new HashMap<>();
+        map.put("add",addList);
+        map.put("del",delList);
+        map.put("commit",commitList);
+        return map;
     }
 
 

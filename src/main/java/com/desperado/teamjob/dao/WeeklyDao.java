@@ -13,6 +13,8 @@ public interface WeeklyDao {
 
     List<Weekly> getAllWeeklyByWeek(@Param("week") Integer week);
 
+    List<String> getAllUserIdsByWeek(@Param("week") Integer week);
+
     Weekly getWeeklyById(@Param("id") String id);
 
     Weekly getWeeklyByIdAndWeek(@Param("userId") String userId,@Param("week") Integer week);

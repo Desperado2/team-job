@@ -12,4 +12,8 @@ public interface GitCommitLogDao {
     List<GitCommitLogs> getWeeklyLogs(String yearweek);
 
     GitCommitLogs getLogsByCommitId(String commitId);
+
+    GitCommitLogs getProjectNewestLog(String project);
+
+    List<GitCommitLogs> getLogByProjectCode(String project);
 }

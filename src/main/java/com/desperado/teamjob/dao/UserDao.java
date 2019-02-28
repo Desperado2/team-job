@@ -26,4 +26,6 @@ public interface UserDao {
     UserDto selectUserByEmail( String email);
 
     List<UserDto> selectUserByIds(@Param("ids") List<String> ids);
+
+    List<UserDto> selectUserWithoutIds(@Param("ids") List<String> ids);
 }
