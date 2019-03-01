@@ -205,6 +205,8 @@ public class GitLogAnalysisServiceImpl implements GitLogAnalysisService {
                 realLogs.add(logs);
             }
         }
-        gitCommitLogDao.add(realLogs);
+        if(realLogs.size() > 0){
+            gitCommitLogDao.add(realLogs);
+        }
     }
 }
