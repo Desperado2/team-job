@@ -14,15 +14,18 @@ var app_details = Vue.component('app-details',{
                    <el-form-item label="仓库地址" prop="repositoryUrl">
                        <span v-text="ruleForm.repositoryUrl"></span>
                    </el-form-item>
+                   <el-form-item label="仓库类型" prop="repositoryTypeName">
+                       <span v-text="ruleForm.repositoryTypeName"></span>
+                   </el-form-item>
                    <el-form-item label="文档地址" prop="documentUrl">
                        <span  v-text="ruleForm.documentUrl"></span>
                    </el-form-item>
                    <el-form-item label="开发环境数据库" prop="databaseUrl">
                        <span  v-text="ruleForm.databaseUrl"></span>
                    </el-form-item>
-                   <el-form-item label="开发人员" prop="coders">
+                   <el-form-item label="开发人员" prop="coderList">
                     <el-table
-                        :data="ruleForm.coders"
+                        :data="ruleForm.coderList"
                         style="width: 100%">
                     <el-table-column
                             prop="headUrl"
@@ -67,9 +70,10 @@ var app_details = Vue.component('app-details',{
             ruleForm: {
                 projectName: '',
                 repositoryUrl: '',
+                repositoryTypeName:'',
                 documentUrl: '',
                 databaseUrl : '',
-                coders: [],
+                coderList: [],
             },
             projectId:this.projectId,
         }

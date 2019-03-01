@@ -466,6 +466,20 @@ public class DateUtil {
 		return calendar.getTime();
 	}
 
+	/***
+	 * hour小时以后，负数代表之前
+	 *
+	 * @param date
+	 * @param hour
+	 * @return
+	 */
+	public static Date addHours(Date date, int hour) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.HOUR_OF_DAY, hour);
+		return calendar.getTime();
+	}
+
 	/**
 	 * 获取去年最后一秒
 	 *

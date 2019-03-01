@@ -74,7 +74,7 @@
                                 </div>
                             </a>
                             <hr>
-                            <a href='logout' >
+                            <a href='#' @click="logout" >
                                 <div height="20px" class="index-a-selected">
                                     退出登录
                                 </div>
@@ -224,6 +224,15 @@
             },
             switchMenuStatus:function () {
                 this.isCollapse = !this.isCollapse
+            },
+            logout() {
+                axios({
+                    method: 'get',
+                    url: 'logout',
+                    data:''
+                }).then(function (result) {
+                    window.location.href="login";
+                })
             },
         },
         components:{

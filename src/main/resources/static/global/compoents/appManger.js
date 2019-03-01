@@ -39,10 +39,15 @@ var app_manager = Vue.component('app-manager',{
                             label="仓库HTTP地址">
                     </el-table-column>
                     <el-table-column
+                            prop="repositoryTypeName"
+                            label="仓库类型"
+                            width="100">
+                    </el-table-column>
+                    <el-table-column
                             prop="coders"
                             label="拥有人">
                         <template slot-scope="scope" >
-                            <img v-for="user in scope.row.coders" :src="user.headUrl" style="width: 20px;border-radius: 50%">
+                            <img v-for="user in scope.row.coderList" :src="user.headUrl" style="width: 20px;border-radius: 50%">
                         </template>
                     </el-table-column>
                     <el-table-column

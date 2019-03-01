@@ -18,6 +18,16 @@ var create_app = Vue.component('create-app',{
                    <el-form-item label="仓库地址" prop="repositoryUrl">
                        <el-input v-model="ruleForm.repositoryUrl"></el-input>
                    </el-form-item>
+                   <el-form-item label="仓库类型" prop="repositoryType">
+                       <el-select v-model="ruleForm.repositoryType" placeholder="请选择仓库类型">
+                                    <el-option
+                                      v-for="item in responTypes"
+                                      :key="item.value"
+                                      :label="item.name"
+                                      :value="item.value"
+                                      >
+                                    </el-option>
+                   </el-form-item>
                    <el-form-item label="文档地址" prop="documentUrl">
                        <el-input  v-model="ruleForm.documentUrl"></el-input>
                    </el-form-item>
@@ -68,13 +78,20 @@ var create_app = Vue.component('create-app',{
                 projectDateCreate:'',
                 coder: [],
             },
-           users:[],
+            responTypes:[
+                {name:'Git',value:1},
+                {name:'Svn',value:0}
+            ],
+            users:[],
             rules: {
                 projectDateCreate:[
                     { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
                 ],
                 projectRealName: [
                     { required: true, message: '请输入应用中文名称', trigger: 'blur' },
+                ],
+                repositoryType: [
+                    { required: true, message: '请选择仓库类型', trigger: 'change' },
                 ],
                 projectName: [
                     { required: true, message: '请输入应用名称', trigger: 'blur' },

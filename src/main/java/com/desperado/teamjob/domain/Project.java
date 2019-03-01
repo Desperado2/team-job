@@ -1,5 +1,6 @@
 package com.desperado.teamjob.domain;
 
+import com.desperado.teamjob.enums.RepositoryType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.util.StringUtils;
@@ -16,6 +17,8 @@ public class Project implements Serializable {
     private String projectRealName;
     @ApiModelProperty("项目名")
     private String projectName;
+    @ApiModelProperty("项目仓库类型")
+    private Integer repositoryType;
     @ApiModelProperty("项目仓库地址")
     private String repositoryUrl;
     @ApiModelProperty("项目文档地址")
@@ -23,7 +26,7 @@ public class Project implements Serializable {
     @ApiModelProperty("线上数据库地址")
     private String databaseUrl;
     @ApiModelProperty("开发者")
-    private String coder;
+    private String coders;
     @ApiModelProperty("创建者")
     private String optioner;
     @ApiModelProperty("项目创建时间")
@@ -48,6 +51,15 @@ public class Project implements Serializable {
     public void setProjectRealName(String projectRealName) {
         this.projectRealName = projectRealName;
     }
+
+    public Integer getRepositoryType() {
+        return repositoryType;
+    }
+
+    public void setRepositoryType(Integer repositoryType) {
+        this.repositoryType = repositoryType;
+    }
+
 
     public String getProjectName() {
         return projectName;
@@ -81,12 +93,12 @@ public class Project implements Serializable {
         this.databaseUrl = databaseUrl;
     }
 
-    public String getCoder() {
-        return coder;
+    public String getCoders() {
+        return coders;
     }
 
-    public void setCoder(String coder) {
-        this.coder = coder;
+    public void setCoders(String coders) {
+        this.coders = coders;
     }
 
     public String getOptioner() {

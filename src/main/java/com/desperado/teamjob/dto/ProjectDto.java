@@ -1,6 +1,7 @@
 package com.desperado.teamjob.dto;
 
 import com.desperado.teamjob.domain.User;
+import com.desperado.teamjob.enums.RepositoryType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -18,14 +19,20 @@ public class ProjectDto implements Serializable {
     private String projectName;
     @ApiModelProperty("项目仓库地址")
     private String repositoryUrl;
+    @ApiModelProperty("项目仓库类型名称")
+    private String repositoryTypeName;
+    @ApiModelProperty("项目仓库类型")
+    private Integer repositoryType;
     @ApiModelProperty("项目文档地址")
     private String documentUrl;
     @ApiModelProperty("线上数据库地址")
     private String databaseUrl;
     @ApiModelProperty("开发者")
-    private List<UserDto> coders;
+    private List<UserDto> coderList;
     @ApiModelProperty("创建者")
     private String optioner;
+    @ApiModelProperty("项目创建时间")
+    private Date projectDateCreate;
     @ApiModelProperty("创建时间")
     private Date dateCreate;
     @ApiModelProperty("更新时间")
@@ -55,6 +62,25 @@ public class ProjectDto implements Serializable {
         this.projectName = projectName;
     }
 
+    public Integer getRepositoryType() {
+        return repositoryType;
+    }
+
+    public void setRepositoryType(Integer repositoryType) {
+        this.repositoryType = repositoryType;
+    }
+    public String getRepositoryTypeName() {
+        if(repositoryType == RepositoryType.SVN.getCode()){
+            return "Svn";
+        }else if(repositoryType == RepositoryType.GIT.getCode()){
+            return "Git";
+        }
+        return "unKnow";
+    }
+
+    public void setRepositoryTypeName(String repositoryTypeName) {
+        this.repositoryTypeName = repositoryTypeName;
+    }
     public String getRepositoryUrl() {
         return repositoryUrl;
     }
@@ -79,12 +105,20 @@ public class ProjectDto implements Serializable {
         this.databaseUrl = databaseUrl;
     }
 
-    public List<UserDto> getCoders() {
-        return coders;
+    public List<UserDto> getCoderList() {
+        return coderList;
     }
 
-    public void setCoders(List<UserDto> coders) {
-        this.coders = coders;
+    public void setCoderList(List<UserDto> coderList) {
+        this.coderList = coderList;
+    }
+
+    public Date getProjectDateCreate() {
+        return projectDateCreate;
+    }
+
+    public void setProjectDateCreate(Date projectDateCreate) {
+        this.projectDateCreate = projectDateCreate;
     }
 
     public String getOptioner() {

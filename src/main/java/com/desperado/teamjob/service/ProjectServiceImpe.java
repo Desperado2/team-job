@@ -37,7 +37,7 @@ public class ProjectServiceImpe implements ProjectService {
             if(!StringUtils.isEmpty(project.getId())){
                 project.setDateUpdate(new Date());
                 projectUserDao.deleteByProjectId(project.getId());
-                insertProjectUser(project.getId(),project.getCoder());
+                insertProjectUser(project.getId(),project.getCoders());
                 projectDao.update(project);
             }else{
                 Date date = new Date();
@@ -46,7 +46,7 @@ public class ProjectServiceImpe implements ProjectService {
                 project.setDateCreate(date);
                 project.setDateUpdate(date);
                 project.setOptioner(UserUtils.getUser().getId());
-                insertProjectUser(id,project.getCoder());
+                insertProjectUser(id,project.getCoders());
                 projectDao.addProject(project);
             }
             result.setData(project);
@@ -62,15 +62,20 @@ public class ProjectServiceImpe implements ProjectService {
     public Result selectAllProject() {
         Result result = new Result();
         List<Project> projects = projectDao.selectAllProject();
+        List<ProjectDto> projectDtos = copyProject(projects);
+        result.setData(projectDtos);
+        return result;
+    }
+
+    private List<ProjectDto> copyProject(List<Project> projects){
         List<ProjectDto> projectDtos = new ArrayList<>();
         for (Project project : projects){
             ProjectDto projectDto = new ProjectDto();
             BeanUtils.copyProperties(project,projectDto);
-            projectDto.setCoders(queryUsers(project.getCoder()));
+            projectDto.setCoderList(queryUsers(project.getCoders()));
             projectDtos.add(projectDto);
         }
-        result.setData(projectDtos);
-        return result;
+        return projectDtos;
     }
 
     @Override
@@ -79,7 +84,7 @@ public class ProjectServiceImpe implements ProjectService {
         Project projects = projectDao.selectProjectById(id);
         ProjectDto projectDto = new ProjectDto();
         BeanUtils.copyProperties(projects,projectDto);
-        projectDto.setCoders(queryUsers(projects.getCoder()));
+        projectDto.setCoderList(queryUsers(projects.getCoders()));
         result.setData(projectDto);
         return result;
     }
@@ -94,13 +99,7 @@ public class ProjectServiceImpe implements ProjectService {
             return result;
         }
         List<Project> projects = projectDao.selectProjectByIds(projectIds);
-        List<ProjectDto> projectDtos = new ArrayList<>();
-        for (Project project : projects){
-            ProjectDto projectDto = new ProjectDto();
-            BeanUtils.copyProperties(project,projectDto);
-            projectDto.setCoders(queryUsers(project.getCoder()));
-            projectDtos.add(projectDto);
-        }
+        List<ProjectDto> projectDtos = copyProject(projects);
         result.setData(projectDtos);
         return result;
     }

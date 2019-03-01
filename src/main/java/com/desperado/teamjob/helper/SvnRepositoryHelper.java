@@ -1,7 +1,7 @@
 package com.desperado.teamjob.helper;
 
 
-import com.desperado.teamjob.config.GitContentsConfig;
+import com.desperado.teamjob.config.SvnContensConfig;
 import com.desperado.teamjob.thread.RepositoryOperation;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.MergeResult.MergeStatus;
@@ -19,8 +19,6 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -28,26 +26,26 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class RepositoryHelper {
+public class SvnRepositoryHelper {
 
 
-	private static Logger logger = LoggerFactory.getLogger(RepositoryHelper.class);
+	private static Logger logger = LoggerFactory.getLogger(SvnRepositoryHelper.class);
 
-	public static Repository openJGitRepository(String gitUrl,String targetPath) throws IOException {
-		//String path = getGitRepoDir(gitUrl);
-		File f = new File(targetPath + "/.git");
+	public static Repository openSvnRepository(String svnUrl, SvnContensConfig contensConfig) throws IOException {
+		File f = new File(contensConfig.getTargetPath() + "/.git");
 		final boolean isNewRepo = !f.exists();
 		if(isNewRepo) {
 			try {
-				RepositoryOperation.cloneWithAuthentication(gitUrl,targetPath);
+				RepositoryOperation.cloneSVNWithAuthentication(svnUrl,contensConfig);
 			} catch (GitAPIException e) {
 				logger.error("openJGitRepository-->{},", e);
 			}
 		}
+
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 		Repository repo =  builder
 				.readEnvironment()
-				.findGitDir(new File(getGitRepoDir(gitUrl)))
+				.findGitDir(new File(getGitRepoDir(svnUrl)))
 				.build();
 		if(!isNewRepo) {
 			gitPull(repo);

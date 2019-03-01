@@ -33,7 +33,9 @@ import java.util.Map;
 
 
 public class GitOperation {
+
 	private static Logger logger = LoggerFactory.getLogger(GitOperation.class);
+
 	public static String commitAll(String gitUrl) throws NoFilepatternException, GitAPIException, IOException {
 		// prepare a new test-repository
 		try (Repository repository = RepositoryHelper.createNewRepository(gitUrl);) {
@@ -66,8 +68,8 @@ public class GitOperation {
 		return null;
 	}
 
-	public static List<Ref> listBranch(boolean isListAllBranch, String gitUrl) throws IOException, GitAPIException {
-		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl)) {
+	public static List<Ref> listBranch(boolean isListAllBranch, String gitUrl,String targetPath) throws IOException, GitAPIException {
+		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl,targetPath)) {
 			logger.info("Listing local branches:");
 			try (Git git = new Git(repository)) {
 				if (isListAllBranch) {
@@ -79,9 +81,9 @@ public class GitOperation {
 		}
 	}
 
-	public static String fetchRemoteBranchWithPrune(String remoteUrl)
+	public static String fetchRemoteBranchWithPrune(String remoteUrl,String targetPath)
 			throws IOException, InvalidRemoteException, TransportException, GitAPIException {
-		try (Repository repository = RepositoryHelper.openJGitRepository(remoteUrl);) {
+		try (Repository repository = RepositoryHelper.openJGitRepository(remoteUrl,targetPath);) {
 			try (Git git = new Git(repository);) {
 				logger.info("Starting fetch");
 				FetchResult result = git.fetch().setCheckFetchedObjects(true).call();
@@ -90,8 +92,8 @@ public class GitOperation {
 		}
 	}
 
-	public static String listNotes(String gitUrl) throws GitAPIException, MissingObjectException, IOException {
-		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl)) {
+	public static String listNotes(String gitUrl,String targetPath) throws GitAPIException, MissingObjectException, IOException {
+		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl,targetPath)) {
 			try (Git git = new Git(repository)) {
 				List<Note> call = git.notesList().call();
 				logger.info("Listing " + call.size() + " notes");
@@ -130,9 +132,9 @@ public class GitOperation {
 		}
 	}
 
-	public static void showBranchDiff(String gitUrl, String branchA, String branchB) throws IOException, RefAlreadyExistsException, RefNotFoundException,
+	public static void showBranchDiff(String gitUrl, String branchA, String branchB,String targetPath) throws IOException, RefAlreadyExistsException, RefNotFoundException,
             InvalidRefNameException, GitAPIException {
-		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl)) {
+		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl,targetPath)) {
 			try (Git git = new Git(repository)) {
 				if (repository.exactRef("refs/heads/" + branchB) == null) {
 					// first we need to ensure that the remote branch is visible
@@ -154,9 +156,9 @@ public class GitOperation {
 		}
 	}
 	
-	public static String showCommitDiff(String gitUrl, String oldCommit, String newCommit) throws IOException, RefAlreadyExistsException, RefNotFoundException,
+	public static String showCommitDiff(String gitUrl, String oldCommit, String newCommit,String targetPath) throws IOException, RefAlreadyExistsException, RefNotFoundException,
             InvalidRefNameException, GitAPIException {
-		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl)) {
+		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl,targetPath)) {
 			try (Git git = new Git(repository)) {
 				return listDiff(repository, git, oldCommit, newCommit);
 			}
@@ -198,8 +200,8 @@ public class GitOperation {
 		}
     }
 	
-	public static void showLogs(String gitUrl) throws Exception {
-		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl)) {
+	public static void showLogs(String gitUrl,String targetPath) throws Exception {
+		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl,targetPath)) {
 			try (Git git = new Git(repository)) {
 				Iterable<RevCommit> logs = git.log().call();
 				int count = 0;
@@ -270,8 +272,8 @@ public class GitOperation {
 		}
 	}
 
-	public static void pull(String gitUrl) throws Exception {
-		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl)) {
+	public static void pull(String gitUrl,String targetPath) throws Exception {
+		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl,targetPath)) {
 			try (Git git = new Git(repository)) {
 				PullResult pullResult = git.pull().call();
 				pullResult.getFetchedFrom();
@@ -279,8 +281,8 @@ public class GitOperation {
 		}
 	}
 
-	public static void showStatus(String gitUrl) throws NoWorkTreeException, GitAPIException, IOException {
-		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl)) {
+	public static void showStatus(String gitUrl,String targetPath) throws NoWorkTreeException, GitAPIException, IOException {
+		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl,targetPath)) {
 			try (Git git = new Git(repository)) {
 				Status status = git.status().call();
 				logger.info("Added: " + status.getAdded());
@@ -333,8 +335,8 @@ public class GitOperation {
         }
     }
 
-	public static void getUserConfig(String gitUrl) throws IOException {
-		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl)) {
+	public static void getUserConfig(String gitUrl,String targetPath) throws IOException {
+		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl,targetPath)) {
 			Config config = repository.getConfig();
 			String name = config.getString("user", null, "name");
 			String email = config.getString("user", null, "email");

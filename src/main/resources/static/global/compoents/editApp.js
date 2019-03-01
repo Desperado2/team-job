@@ -17,6 +17,17 @@ var edit_app = Vue.component('edit-app',{
                    <el-form-item label="仓库地址" prop="repositoryUrl">
                        <el-input v-model="ruleForm.repositoryUrl"></el-input>
                    </el-form-item>
+                   <el-form-item label="仓库类型" prop="repositoryType">
+                       <el-select v-model="ruleForm.repositoryType" placeholder="请选择仓库类型">
+                            <el-option
+                              v-for="item in responTypes"
+                              :key="item.value"
+                              :label="item.name"
+                              :value="item.value"
+                              >
+                            </el-option>
+                       </el-select>
+                   </el-form-item>
                    <el-form-item label="文档地址" prop="documentUrl">
                        <el-input  v-model="ruleForm.documentUrl"></el-input>
                    </el-form-item>
@@ -24,11 +35,11 @@ var edit_app = Vue.component('edit-app',{
                        <el-input type='tel' v-model="ruleForm.databaseUrl"></el-input>
                    </el-form-item>
                      <el-form-item label="项目创建日期" prop="projectDateCreate">
-                       <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.projectDateCreate" style="width: 100%;"></el-date-picker>
+                       <el-date-picker :clearable="false" type="date" placeholder="选择日期" v-model="ruleForm.projectDateCreate" style="width: 100%;"></el-date-picker>
                    </el-form-item>
-                   <el-form-item label="开发人员" prop="coder">
+                   <el-form-item label="开发人员" prop="coderList">
                        <el-select
-                            v-model="ruleForm.coder"
+                            v-model="ruleForm.coderList"
                             multiple
                             filterable
                             allow-create
@@ -62,18 +73,23 @@ var edit_app = Vue.component('edit-app',{
                 projectRealName:'',
                 projectName: '',
                 repositoryUrl: '',
+                repositoryType:'',
                 documentUrl: '',
                 databaseUrl : '',
-                projectDateCreate:'',
-                coder: [],
+                projectDateCreate:null,
+                coderList: [],
             },
             users:[],
+            responTypes:[
+                {name:'Git',value:1},
+                {name:'Svn',value:0}
+            ],
             rules: {
-                projectDateCreate:[
-                    { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-                ],
                 projectRealName: [
                     { required: true, message: '请输入应用中文名称', trigger: 'blur' },
+                ],
+                repositoryType: [
+                    { required: true, message: '请选择仓库类型', trigger: 'change' },
                 ],
                 projectName: [
                     { required: true, message: '请输入应用中文名称', trigger: 'blur' },
@@ -87,7 +103,7 @@ var edit_app = Vue.component('edit-app',{
                 databaseUrl: [
                     {  required: true, message: '请填写数据库', trigger: 'blur' }
                 ],
-                coder: [
+                coderList: [
                     { required: true, message: '请填写开发人员', trigger: 'change' },
                 ]
             }
@@ -101,8 +117,8 @@ var edit_app = Vue.component('edit-app',{
         }).then(function (result) {
             if (result.data.success){
                 _this.ruleForm = result.data.data;
-                let coders =_this.formatCoder(_this.ruleForm.coders);
-                _this.ruleForm.coders = coders;
+                let coders =_this.formatCoder(_this.ruleForm.coderList);
+                _this.ruleForm.coderList = coders;
             }else {
                 _this.$message({
                     message:result.data.msg,
@@ -141,13 +157,12 @@ var edit_app = Vue.component('edit-app',{
                 coderss.push(coder.id)
             }
             return coderss
-
         },
         submitForm(formName) {
             let _this = this
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    _this.ruleForm.coders = _this.editCoder(_this.ruleForm.coders)
+                    _this.ruleForm.coders = _this.editCoder(_this.ruleForm.coderList)
                     axios({
                         method: 'post',
                         url: 'projects',

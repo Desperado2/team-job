@@ -7,7 +7,9 @@ import com.desperado.teamjob.domain.Project;
 import com.desperado.teamjob.dto.GitCommitChart;
 import com.desperado.teamjob.dto.GitCommitDto;
 import com.desperado.teamjob.dto.GitCommitPieChart;
+import com.desperado.teamjob.enums.RepositoryType;
 import com.desperado.teamjob.thread.GitLogService;
+import com.desperado.teamjob.thread.SvnLogService;
 import com.desperado.teamjob.utils.DateUtil;
 import com.desperado.teamjob.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class GitLogAnalysisServiceImpl implements GitLogAnalysisService {
 
     @Autowired
     private GitLogService gitLogService;
+    @Autowired
+    private SvnLogService svnLogService;
     @Autowired
     private ProjectDao projectDao;
     @Autowired
@@ -66,7 +70,13 @@ public class GitLogAnalysisServiceImpl implements GitLogAnalysisService {
                     Date lastDayOfWeek = DateUtil.getLastDayOfWeek(begin, i);
                     int submitDateFrom = (int) (firstDayOfWeek.getTime()/1000);
                     int submitDateTo = (int) (lastDayOfWeek.getTime()/1000);
-                    List<GitCommitLogs> gitCommitLogs = gitLogService.listAllLinesByTime(url, name, realName,submitDateFrom, submitDateTo);
+                    List<GitCommitLogs> gitCommitLogs = null;
+                    if(project.getRepositoryType() == RepositoryType.GIT.getCode()){
+                        gitCommitLogs = gitLogService.listAllLinesByTime(url, name, realName,submitDateFrom, submitDateTo);
+                    }
+                    if(project.getRepositoryType() == RepositoryType.SVN.getCode()){
+                        gitCommitLogs = svnLogService.listAllLinesByTime(project,firstDayOfWeek, lastDayOfWeek);
+                    }
                     if(gitCommitLogs != null && gitCommitLogs.size() > 0){
                         addLogs(gitCommitLogs);
                     }

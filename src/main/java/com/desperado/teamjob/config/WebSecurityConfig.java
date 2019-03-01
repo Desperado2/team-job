@@ -77,6 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 }catch (Exception e){
                     LOGGER.info("LOGOUT EXCEPTION , e : " + e.getMessage());
                 }
+                httpServletResponse.sendRedirect("login");
             }
         };
     }

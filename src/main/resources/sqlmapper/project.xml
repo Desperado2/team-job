@@ -4,14 +4,14 @@
 
     <insert id="addProject" parameterType="com.desperado.teamjob.domain.Project">
         INSERT INTO `project`(
-                id,project_real_name,project_name,repository_url,document_url,database_url,coder,optioner,project_date_create,date_create,date_update
-        ) VALUES (#{id},#{projectRealName},#{projectName},#{repositoryUrl},#{documentUrl},#{databaseUrl},#{coder},#{optioner},#{projectDateCreate},#{dateCreate},#{dateUpdate})
+                id,project_real_name,project_name,repository_type,repository_url,document_url,database_url,coders,optioner,project_date_create,date_create,date_update
+        ) VALUES (#{id},#{projectRealName},#{projectName},#{repositoryType},#{repositoryUrl},#{documentUrl},#{databaseUrl},#{coders},#{optioner},#{projectDateCreate},#{dateCreate},#{dateUpdate})
     </insert>
 
     <update id="update" parameterType="com.desperado.teamjob.domain.Project">
-        update `project`set project_real_name= #{projectRealName},
+        update `project`set project_real_name= #{projectRealName}, repository_type = #{repositoryType},
                 project_name=#{projectName},repository_url=#{repositoryUrl},document_url=#{documentUrl},
-                database_url=#{databaseUrl},coder=#{coder},optioner=#{optioner},
+                database_url=#{databaseUrl},coders=#{coders},optioner=#{optioner},
                 project_date_create=#{projectDateCreate},date_update=#{dateUpdate}
        where id=#{id}
     </update>

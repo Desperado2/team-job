@@ -2,6 +2,8 @@
 package com.desperado.teamjob.thread;
 
 import com.alibaba.fastjson.JSON;
+import com.desperado.teamjob.config.GitContentsConfig;
+import com.desperado.teamjob.config.SvnContensConfig;
 import com.desperado.teamjob.dao.UserDao;
 import com.desperado.teamjob.domain.*;
 import com.desperado.teamjob.dto.UserDto;
@@ -43,9 +45,11 @@ public class GitLogService {
 
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private GitContentsConfig gitContentsConfig;
 
 	public List<GitCommitLogs> listAllLinesByTime(String gitUrl, String projectCode,String projectName, Integer submitDateFrom, Integer submitDateTo) {
-		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl)) {
+		try (Repository repository = RepositoryHelper.openJGitRepository(gitUrl,gitContentsConfig.getBasePath())) {
 			try (Git git = new Git(repository)) {
 				TimeFilterParams timeFilterParams = new TimeFilterParams(submitDateFrom, submitDateTo);
 				List<GitCommitLogs> gitCommitLogs = filterLines(repository, git, new TimeFilter(timeFilterParams), projectCode,projectName);
