@@ -23,30 +23,35 @@ var create_project = Vue.component('create-project',{
                        </el-select>
                    </el-form-item>
                    <el-form-item label="项目属性" prop="projectProperty">
-                       <el-select v-model="ruleForm.projectLevel" placeholder="请选择项目属性">
+                       <el-select v-model="ruleForm.projectProperty" placeholder="请选择项目属性">
                           <el-option label="新建项目" value="新建项目"></el-option>
                           <el-option label="版本迭代" value="版本迭代"></el-option>
                           <el-option label="技术优化" value="技术优化"></el-option>
                        </el-select>
                    </el-form-item>
-                    <el-form-item label="需求文地址" prop="projectPrd">
-                       <el-input type='tel' v-model="ruleForm.projectPrd"></el-input>
+                    <el-form-item label="需求文档地址" prop="projectPrd">
+                       <el-input v-model="ruleForm.projectPrd"></el-input>
                    </el-form-item>
-                   <el-form-item label="后端人员" prop="projectEnd">
-                       <el-select
-                            v-model="ruleForm.projectEnd"
+                  <el-form-item>
+                        <el-select
+                            v-model="ruleForm.groupMembers"
                             multiple
                             filterable
                             allow-create
                             default-first-option
-                            placeholder="请选择开发人员">
+                            placeholder="请选择本团队开发人员">
                             <el-option
-                              v-for="item in options5"
-                              :key="item.value"
-                              :label="item.label"
-                              :value="item.value">
+                              v-for="user in users"
+                              :key="user.id"
+                              :label="user.name"
+                              :value="user.id">
+                              <span style="float: left"><img :src="user.headUrl" style="width: 20px;border-radius: 50%"></span>
+                               <span >{{ user.name }}</span>
                             </el-option>
                           </el-select>
+                    </el-form-item> 
+                   <el-form-item label="服务端开发" prop="projectServer">
+                       <el-input type='tel' v-model="ruleForm.projectServer"></el-input>
                    </el-form-item>
                     <el-form-item label="客户端/前端" prop="projectFront">
                        <el-input type='tel' v-model="ruleForm.projectFront"></el-input>
@@ -72,18 +77,18 @@ var create_project = Vue.component('create-project',{
                    <el-form-item label="生产环境" prop="produceDate">
                         <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.produceDate" style="width: 100%;"></el-date-picker>
                    </el-form-item>
-                   <el-form-item label="备注" prop="remark">
-                       <el-input type='tel' v-model="ruleForm.remark"></el-input>
+                   <el-form-item label="备注" prop="content">
+                       <el-input type="textarea" rows="4"  v-model="ruleForm.content"></el-input>
                    </el-form-item>
                    <el-form-item>
                        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-                       <el-button @click="resetForm('ruleForm')">重置</el-button>
+                       <el-button @click="back">返回</el-button>
                    </el-form-item>
                </el-form>
            </el-card>
 
        </el-main>
-        </el-container>
+      </el-container>
     `,
     data(){
         return{
@@ -106,16 +111,7 @@ var create_project = Vue.component('create-project',{
                 produceDate:'',
                 remark:''
             },
-            options5: [{
-                value: 'HTML',
-                label: 'HTML'
-            }, {
-                value: 'CSS',
-                label: 'CSS'
-            }, {
-                value: 'JavaScript',
-                label: 'JavaScript'
-            }],
+            users:[],
             rules: {
                 projectName: [
                     { required: true, message: '请输入应用中文名称', trigger: 'blur' },
@@ -132,10 +128,12 @@ var create_project = Vue.component('create-project',{
                 projectPrd: [
                     {  required: true, message: '请填写需求文档地址', trigger: 'blur' }
                 ],
-                projectEnd: [
-                    { required: true, message: '请填写后端开发人员', trigger: 'change' },
+                groupMembers: [
+                    { required: true, message: '请选择本团队开发人员', trigger: 'change' },
                 ],
-                projectFront: [
+                projectServer: [
+                    {  required: true, message: '请填写服务端开发人员', trigger: 'blur' }
+                ],projectFront: [
                     {  required: true, message: '请填写前端开发人员', trigger: 'blur' }
                 ],
                 projectTester: [
@@ -162,20 +160,63 @@ var create_project = Vue.component('create-project',{
             }
         }
     },
+    props:['optionsCode'],
+    mounted:function(){
+        let _this = this;
+        axios({
+            method: 'get',
+            url: 'users/noSplit',
+        }).then(function (result) {
+            if (result.data.success){
+                _this.users = result.data.data;
+            }else {
+                _this.$message({
+                    message:result.data.msg,
+                    type:'error'
+                });
+            }
+        })
+    },
     methods:{
+        editCoder:function(coders){
+            console.log(coders);
+            let coderss = '';
+            for (let coder of coders){
+                coderss += coder+","
+            }
+            coderss = coderss.substring(0,coderss.length-1)
+            return coderss
+        },
         submitForm(formName) {
+            let _this = this;
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    alert('submit!');
+                    _this.ruleForm.groupMembers = _this.editCoder(_this.ruleForm.groupMembers);
+                    axios({
+                        method: 'post',
+                        url: 'projectTemplates',
+                        data: _this.ruleForm
+                    }).then(function (result) {
+                        if (result.data.success){
+                            this.typeSelect = '';
+                            Bus.$emit("optionsCode",this.typeSelect);
+                        }else {
+                            _this.$message({
+                                message:result.data.msg,
+                                type:'error'
+                            });
+                        }
+                    })
                 } else {
                     console.log('error submit!!');
                     return false;
                 }
             });
         },
-        resetForm(formName) {
-            this.$refs[formName].resetFields();
-        }
+        back(){
+            this.typeSelect = '';
+            Bus.$emit("optionsCode",this.typeSelect);
+        },
     },
 
 })

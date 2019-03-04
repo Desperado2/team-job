@@ -37,12 +37,32 @@ module.exports =
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -60,48 +80,43 @@ module.exports =
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 378);
+/******/ 	return __webpack_require__(__webpack_require__.s = 56);
 /******/ })
 /************************************************************************/
 /******/ ({
 
 /***/ 0:
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return normalizeComponent; });
 /* globals __VUE_SSR_CONTEXT__ */
 
-// IMPORTANT: Do NOT use ES2015 features in this file.
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
 // This module is a runtime utility for cleaner component module output and will
 // be included in the final webpack user bundle.
 
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
   functionalTemplate,
   injectStyles,
   scopeId,
-  moduleIdentifier /* server only */
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
 ) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
   // Vue.extend constructor export interop
   var options = typeof scriptExports === 'function'
     ? scriptExports.options
     : scriptExports
 
   // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
     options._compiled = true
   }
 
@@ -112,7 +127,7 @@ module.exports = function normalizeComponent (
 
   // scopedId
   if (scopeId) {
-    options._scopeId = scopeId
+    options._scopeId = 'data-v-' + scopeId
   }
 
   var hook
@@ -140,34 +155,32 @@ module.exports = function normalizeComponent (
     // never gets called
     options._ssrRegister = hook
   } else if (injectStyles) {
-    hook = injectStyles
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
   }
 
   if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
+    if (options.functional) {
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
       // register for functioal component in vue file
+      var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
-        return existing(h, context)
+        return originalRender(h, context)
       }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
     }
   }
 
   return {
-    esModule: esModule,
     exports: scriptExports,
     options: options
   }
@@ -176,17 +189,10 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 1:
+/***/ 10:
 /***/ (function(module, exports) {
 
-module.exports = require("element-ui/lib/mixins/emitter");
-
-/***/ }),
-
-/***/ 15:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/button");
+module.exports = require("element-ui/lib/mixins/migrating");
 
 /***/ }),
 
@@ -197,372 +203,333 @@ module.exports = require("element-ui/lib/checkbox");
 
 /***/ }),
 
-/***/ 378:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 18:
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-exports.__esModule = true;
-
-var _main = __webpack_require__(379);
-
-var _main2 = _interopRequireDefault(_main);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/* istanbul ignore next */
-_main2.default.install = function (Vue) {
-  Vue.component(_main2.default.name, _main2.default);
-};
-
-exports.default = _main2.default;
+module.exports = require("element-ui/lib/button");
 
 /***/ }),
 
-/***/ 379:
+/***/ 3:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/mixins/emitter");
+
+/***/ }),
+
+/***/ 35:
+/***/ (function(module, exports) {
+
+module.exports = require("element-ui/lib/checkbox-group");
+
+/***/ }),
+
+/***/ 56:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__ = __webpack_require__(380);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_b373c452_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_main_vue__ = __webpack_require__(384);
-var normalizeComponent = __webpack_require__(0)
-/* script */
+__webpack_require__.r(__webpack_exports__);
 
-/* template */
-
-/* template functional */
-  var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_main_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_b373c452_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_main_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-
-/***/ 380:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _button = __webpack_require__(15);
-
-var _button2 = _interopRequireDefault(_button);
-
-var _emitter = __webpack_require__(1);
-
-var _emitter2 = _interopRequireDefault(_emitter);
-
-var _locale = __webpack_require__(5);
-
-var _locale2 = _interopRequireDefault(_locale);
-
-var _transferPanel = __webpack_require__(381);
-
-var _transferPanel2 = _interopRequireDefault(_transferPanel);
-
-var _migrating = __webpack_require__(8);
-
-var _migrating2 = _interopRequireDefault(_migrating);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  name: 'ElTransfer',
-
-  mixins: [_emitter2.default, _locale2.default, _migrating2.default],
-
-  components: {
-    TransferPanel: _transferPanel2.default,
-    ElButton: _button2.default
-  },
-
-  props: {
-    data: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    titles: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    buttonTexts: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    filterPlaceholder: {
-      type: String,
-      default: ''
-    },
-    filterMethod: Function,
-    leftDefaultChecked: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    rightDefaultChecked: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    renderContent: Function,
-    value: {
-      type: Array,
-      default: function _default() {
-        return [];
-      }
-    },
-    format: {
-      type: Object,
-      default: function _default() {
-        return {};
-      }
-    },
-    filterable: Boolean,
-    props: {
-      type: Object,
-      default: function _default() {
-        return {
-          label: 'label',
-          key: 'key',
-          disabled: 'disabled'
-        };
-      }
-    },
-    targetOrder: {
-      type: String,
-      default: 'original'
-    }
-  },
-
-  data: function data() {
-    return {
-      leftChecked: [],
-      rightChecked: []
-    };
-  },
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./packages/transfer/src/main.vue?vue&type=template&id=5c654dd8&
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "el-transfer" },
+    [
+      _c(
+        "transfer-panel",
+        _vm._b(
+          {
+            ref: "leftPanel",
+            attrs: {
+              data: _vm.sourceData,
+              title: _vm.titles[0] || _vm.t("el.transfer.titles.0"),
+              "default-checked": _vm.leftDefaultChecked,
+              placeholder:
+                _vm.filterPlaceholder || _vm.t("el.transfer.filterPlaceholder")
+            },
+            on: { "checked-change": _vm.onSourceCheckedChange }
+          },
+          "transfer-panel",
+          _vm.$props,
+          false
+        ),
+        [_vm._t("left-footer")],
+        2
+      ),
+      _c(
+        "div",
+        { staticClass: "el-transfer__buttons" },
+        [
+          _c(
+            "el-button",
+            {
+              class: [
+                "el-transfer__button",
+                _vm.hasButtonTexts ? "is-with-texts" : ""
+              ],
+              attrs: {
+                type: "primary",
+                disabled: _vm.rightChecked.length === 0
+              },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.addToLeft($event)
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "el-icon-arrow-left" }),
+              _vm.buttonTexts[0] !== undefined
+                ? _c("span", [_vm._v(_vm._s(_vm.buttonTexts[0]))])
+                : _vm._e()
+            ]
+          ),
+          _c(
+            "el-button",
+            {
+              class: [
+                "el-transfer__button",
+                _vm.hasButtonTexts ? "is-with-texts" : ""
+              ],
+              attrs: {
+                type: "primary",
+                disabled: _vm.leftChecked.length === 0
+              },
+              nativeOn: {
+                click: function($event) {
+                  return _vm.addToRight($event)
+                }
+              }
+            },
+            [
+              _vm.buttonTexts[1] !== undefined
+                ? _c("span", [_vm._v(_vm._s(_vm.buttonTexts[1]))])
+                : _vm._e(),
+              _c("i", { staticClass: "el-icon-arrow-right" })
+            ]
+          )
+        ],
+        1
+      ),
+      _c(
+        "transfer-panel",
+        _vm._b(
+          {
+            ref: "rightPanel",
+            attrs: {
+              data: _vm.targetData,
+              title: _vm.titles[1] || _vm.t("el.transfer.titles.1"),
+              "default-checked": _vm.rightDefaultChecked,
+              placeholder:
+                _vm.filterPlaceholder || _vm.t("el.transfer.filterPlaceholder")
+            },
+            on: { "checked-change": _vm.onTargetCheckedChange }
+          },
+          "transfer-panel",
+          _vm.$props,
+          false
+        ),
+        [_vm._t("right-footer")],
+        2
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
 
 
-  computed: {
-    dataObj: function dataObj() {
-      var key = this.props.key;
-      return this.data.reduce(function (o, cur) {
-        return (o[cur[key]] = cur) && o;
-      }, {});
-    },
-    sourceData: function sourceData() {
-      var _this = this;
+// CONCATENATED MODULE: ./packages/transfer/src/main.vue?vue&type=template&id=5c654dd8&
 
-      return this.data.filter(function (item) {
-        return _this.value.indexOf(item[_this.props.key]) === -1;
-      });
-    },
-    targetData: function targetData() {
-      var _this2 = this;
+// EXTERNAL MODULE: external "element-ui/lib/button"
+var button_ = __webpack_require__(18);
+var button_default = /*#__PURE__*/__webpack_require__.n(button_);
 
-      return this.targetOrder === 'original' ? this.data.filter(function (item) {
-        return _this2.value.indexOf(item[_this2.props.key]) > -1;
-      }) : this.value.map(function (key) {
-        return _this2.dataObj[key];
-      });
-    },
-    hasButtonTexts: function hasButtonTexts() {
-      return this.buttonTexts.length === 2;
-    }
-  },
+// EXTERNAL MODULE: external "element-ui/lib/mixins/emitter"
+var emitter_ = __webpack_require__(3);
+var emitter_default = /*#__PURE__*/__webpack_require__.n(emitter_);
 
-  watch: {
-    value: function value(val) {
-      this.dispatch('ElFormItem', 'el.form.change', val);
-    }
-  },
+// EXTERNAL MODULE: external "element-ui/lib/mixins/locale"
+var locale_ = __webpack_require__(7);
+var locale_default = /*#__PURE__*/__webpack_require__.n(locale_);
 
-  methods: {
-    getMigratingConfig: function getMigratingConfig() {
-      return {
-        props: {
-          'footer-format': 'footer-format is renamed to format.'
-        }
-      };
-    },
-    onSourceCheckedChange: function onSourceCheckedChange(val, movedKeys) {
-      this.leftChecked = val;
-      if (movedKeys === undefined) return;
-      this.$emit('left-check-change', val, movedKeys);
-    },
-    onTargetCheckedChange: function onTargetCheckedChange(val, movedKeys) {
-      this.rightChecked = val;
-      if (movedKeys === undefined) return;
-      this.$emit('right-check-change', val, movedKeys);
-    },
-    addToLeft: function addToLeft() {
-      var currentValue = this.value.slice();
-      this.rightChecked.forEach(function (item) {
-        var index = currentValue.indexOf(item);
-        if (index > -1) {
-          currentValue.splice(index, 1);
-        }
-      });
-      this.$emit('input', currentValue);
-      this.$emit('change', currentValue, 'left', this.rightChecked);
-    },
-    addToRight: function addToRight() {
-      var _this3 = this;
-
-      var currentValue = this.value.slice();
-      var itemsToBeMoved = [];
-      var key = this.props.key;
-      this.data.forEach(function (item) {
-        var itemKey = item[key];
-        if (_this3.leftChecked.indexOf(itemKey) > -1 && _this3.value.indexOf(itemKey) === -1) {
-          itemsToBeMoved.push(itemKey);
-        }
-      });
-      currentValue = this.targetOrder === 'unshift' ? itemsToBeMoved.concat(currentValue) : currentValue.concat(itemsToBeMoved);
-      this.$emit('input', currentValue);
-      this.$emit('change', currentValue, 'right', this.leftChecked);
-    },
-    clearQuery: function clearQuery(which) {
-      if (which === 'left') {
-        this.$refs.leftPanel.query = '';
-      } else if (which === 'right') {
-        this.$refs.rightPanel.query = '';
-      }
-    }
-  }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/***/ }),
-
-/***/ 381:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_transfer_panel_vue__ = __webpack_require__(382);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_transfer_panel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_transfer_panel_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4f62a5c0_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_transfer_panel_vue__ = __webpack_require__(383);
-var normalizeComponent = __webpack_require__(0)
-/* script */
-
-/* template */
-
-/* template functional */
-  var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_transfer_panel_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4f62a5c0_hasScoped_false_preserveWhitespace_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_transfer_panel_vue__["a" /* default */],
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-
-/***/ 382:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./packages/transfer/src/transfer-panel.vue?vue&type=template&id=2ddab8bd&
+var transfer_panelvue_type_template_id_2ddab8bd_render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "el-transfer-panel" }, [
+    _c(
+      "p",
+      { staticClass: "el-transfer-panel__header" },
+      [
+        _c(
+          "el-checkbox",
+          {
+            attrs: { indeterminate: _vm.isIndeterminate },
+            on: { change: _vm.handleAllCheckedChange },
+            model: {
+              value: _vm.allChecked,
+              callback: function($$v) {
+                _vm.allChecked = $$v
+              },
+              expression: "allChecked"
+            }
+          },
+          [
+            _vm._v("\n      " + _vm._s(_vm.title) + "\n      "),
+            _c("span", [_vm._v(_vm._s(_vm.checkedSummary))])
+          ]
+        )
+      ],
+      1
+    ),
+    _c(
+      "div",
+      {
+        class: [
+          "el-transfer-panel__body",
+          _vm.hasFooter ? "is-with-footer" : ""
+        ]
+      },
+      [
+        _vm.filterable
+          ? _c(
+              "el-input",
+              {
+                staticClass: "el-transfer-panel__filter",
+                attrs: { size: "small", placeholder: _vm.placeholder },
+                nativeOn: {
+                  mouseenter: function($event) {
+                    _vm.inputHover = true
+                  },
+                  mouseleave: function($event) {
+                    _vm.inputHover = false
+                  }
+                },
+                model: {
+                  value: _vm.query,
+                  callback: function($$v) {
+                    _vm.query = $$v
+                  },
+                  expression: "query"
+                }
+              },
+              [
+                _c("i", {
+                  class: ["el-input__icon", "el-icon-" + _vm.inputIcon],
+                  attrs: { slot: "prefix" },
+                  on: { click: _vm.clearQuery },
+                  slot: "prefix"
+                })
+              ]
+            )
+          : _vm._e(),
+        _c(
+          "el-checkbox-group",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.hasNoMatch && _vm.data.length > 0,
+                expression: "!hasNoMatch && data.length > 0"
+              }
+            ],
+            staticClass: "el-transfer-panel__list",
+            class: { "is-filterable": _vm.filterable },
+            model: {
+              value: _vm.checked,
+              callback: function($$v) {
+                _vm.checked = $$v
+              },
+              expression: "checked"
+            }
+          },
+          _vm._l(_vm.filteredData, function(item) {
+            return _c(
+              "el-checkbox",
+              {
+                key: item[_vm.keyProp],
+                staticClass: "el-transfer-panel__item",
+                attrs: {
+                  label: item[_vm.keyProp],
+                  disabled: item[_vm.disabledProp]
+                }
+              },
+              [_c("option-content", { attrs: { option: item } })],
+              1
+            )
+          }),
+          1
+        ),
+        _c(
+          "p",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.hasNoMatch,
+                expression: "hasNoMatch"
+              }
+            ],
+            staticClass: "el-transfer-panel__empty"
+          },
+          [_vm._v(_vm._s(_vm.t("el.transfer.noMatch")))]
+        ),
+        _c(
+          "p",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.data.length === 0 && !_vm.hasNoMatch,
+                expression: "data.length === 0 && !hasNoMatch"
+              }
+            ],
+            staticClass: "el-transfer-panel__empty"
+          },
+          [_vm._v(_vm._s(_vm.t("el.transfer.noData")))]
+        )
+      ],
+      1
+    ),
+    _vm.hasFooter
+      ? _c(
+          "p",
+          { staticClass: "el-transfer-panel__footer" },
+          [_vm._t("default")],
+          2
+        )
+      : _vm._e()
+  ])
+}
+var transfer_panelvue_type_template_id_2ddab8bd_staticRenderFns = []
+transfer_panelvue_type_template_id_2ddab8bd_render._withStripped = true
 
 
-exports.__esModule = true;
+// CONCATENATED MODULE: ./packages/transfer/src/transfer-panel.vue?vue&type=template&id=2ddab8bd&
 
-var _checkboxGroup = __webpack_require__(40);
+// EXTERNAL MODULE: external "element-ui/lib/checkbox-group"
+var checkbox_group_ = __webpack_require__(35);
+var checkbox_group_default = /*#__PURE__*/__webpack_require__.n(checkbox_group_);
 
-var _checkboxGroup2 = _interopRequireDefault(_checkboxGroup);
+// EXTERNAL MODULE: external "element-ui/lib/checkbox"
+var checkbox_ = __webpack_require__(16);
+var checkbox_default = /*#__PURE__*/__webpack_require__.n(checkbox_);
 
-var _checkbox = __webpack_require__(16);
+// EXTERNAL MODULE: external "element-ui/lib/input"
+var input_ = __webpack_require__(9);
+var input_default = /*#__PURE__*/__webpack_require__.n(input_);
 
-var _checkbox2 = _interopRequireDefault(_checkbox);
-
-var _input = __webpack_require__(6);
-
-var _input2 = _interopRequireDefault(_input);
-
-var _locale = __webpack_require__(5);
-
-var _locale2 = _interopRequireDefault(_locale);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./packages/transfer/src/transfer-panel.vue?vue&type=script&lang=js&
 //
 //
 //
@@ -617,17 +584,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 
-exports.default = {
-  mixins: [_locale2.default],
+
+
+
+
+
+/* harmony default export */ var transfer_panelvue_type_script_lang_js_ = ({
+  mixins: [locale_default.a],
 
   name: 'ElTransferPanel',
 
   componentName: 'ElTransferPanel',
 
   components: {
-    ElCheckboxGroup: _checkboxGroup2.default,
-    ElCheckbox: _checkbox2.default,
-    ElInput: _input2.default,
+    ElCheckboxGroup: checkbox_group_default.a,
+    ElCheckbox: checkbox_default.a,
+    ElInput: input_default.a,
     OptionContent: {
       props: {
         option: Object
@@ -644,11 +616,7 @@ exports.default = {
         };
         var panel = getParent(this);
         var transfer = panel.$parent || panel;
-        return panel.renderContent ? panel.renderContent(h, this.option) : transfer.$scopedSlots.default ? transfer.$scopedSlots.default({ option: this.option }) : h(
-          'span',
-          null,
-          [this.option[panel.labelProp] || this.option[panel.keyProp]]
-        );
+        return panel.renderContent ? panel.renderContent(h, this.option) : transfer.$scopedSlots.default ? transfer.$scopedSlots.default({ option: this.option }) : h('span', [this.option[panel.labelProp] || this.option[panel.keyProp]]);
       }
     }
   },
@@ -818,57 +786,318 @@ exports.default = {
       }
     }
   }
+});
+// CONCATENATED MODULE: ./packages/transfer/src/transfer-panel.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_transfer_panelvue_type_script_lang_js_ = (transfer_panelvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+var componentNormalizer = __webpack_require__(0);
+
+// CONCATENATED MODULE: ./packages/transfer/src/transfer-panel.vue
+
+
+
+
+
+/* normalize component */
+
+var component = Object(componentNormalizer["a" /* default */])(
+  src_transfer_panelvue_type_script_lang_js_,
+  transfer_panelvue_type_template_id_2ddab8bd_render,
+  transfer_panelvue_type_template_id_2ddab8bd_staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "packages/transfer/src/transfer-panel.vue"
+/* harmony default export */ var transfer_panel = (component.exports);
+// EXTERNAL MODULE: external "element-ui/lib/mixins/migrating"
+var migrating_ = __webpack_require__(10);
+var migrating_default = /*#__PURE__*/__webpack_require__.n(migrating_);
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./packages/transfer/src/main.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ var mainvue_type_script_lang_js_ = ({
+  name: 'ElTransfer',
+
+  mixins: [emitter_default.a, locale_default.a, migrating_default.a],
+
+  components: {
+    TransferPanel: transfer_panel,
+    ElButton: button_default.a
+  },
+
+  props: {
+    data: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    titles: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    buttonTexts: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    filterPlaceholder: {
+      type: String,
+      default: ''
+    },
+    filterMethod: Function,
+    leftDefaultChecked: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    rightDefaultChecked: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    renderContent: Function,
+    value: {
+      type: Array,
+      default: function _default() {
+        return [];
+      }
+    },
+    format: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    },
+    filterable: Boolean,
+    props: {
+      type: Object,
+      default: function _default() {
+        return {
+          label: 'label',
+          key: 'key',
+          disabled: 'disabled'
+        };
+      }
+    },
+    targetOrder: {
+      type: String,
+      default: 'original'
+    }
+  },
+
+  data: function data() {
+    return {
+      leftChecked: [],
+      rightChecked: []
+    };
+  },
+
+
+  computed: {
+    dataObj: function dataObj() {
+      var key = this.props.key;
+      return this.data.reduce(function (o, cur) {
+        return (o[cur[key]] = cur) && o;
+      }, {});
+    },
+    sourceData: function sourceData() {
+      var _this = this;
+
+      return this.data.filter(function (item) {
+        return _this.value.indexOf(item[_this.props.key]) === -1;
+      });
+    },
+    targetData: function targetData() {
+      var _this2 = this;
+
+      if (this.targetOrder === 'original') {
+        return this.data.filter(function (item) {
+          return _this2.value.indexOf(item[_this2.props.key]) > -1;
+        });
+      } else {
+        return this.value.reduce(function (arr, cur) {
+          var val = _this2.dataObj[cur];
+          if (val) {
+            arr.push(val);
+          }
+          return arr;
+        }, []);
+      }
+    },
+    hasButtonTexts: function hasButtonTexts() {
+      return this.buttonTexts.length === 2;
+    }
+  },
+
+  watch: {
+    value: function value(val) {
+      this.dispatch('ElFormItem', 'el.form.change', val);
+    }
+  },
+
+  methods: {
+    getMigratingConfig: function getMigratingConfig() {
+      return {
+        props: {
+          'footer-format': 'footer-format is renamed to format.'
+        }
+      };
+    },
+    onSourceCheckedChange: function onSourceCheckedChange(val, movedKeys) {
+      this.leftChecked = val;
+      if (movedKeys === undefined) return;
+      this.$emit('left-check-change', val, movedKeys);
+    },
+    onTargetCheckedChange: function onTargetCheckedChange(val, movedKeys) {
+      this.rightChecked = val;
+      if (movedKeys === undefined) return;
+      this.$emit('right-check-change', val, movedKeys);
+    },
+    addToLeft: function addToLeft() {
+      var currentValue = this.value.slice();
+      this.rightChecked.forEach(function (item) {
+        var index = currentValue.indexOf(item);
+        if (index > -1) {
+          currentValue.splice(index, 1);
+        }
+      });
+      this.$emit('input', currentValue);
+      this.$emit('change', currentValue, 'left', this.rightChecked);
+    },
+    addToRight: function addToRight() {
+      var _this3 = this;
+
+      var currentValue = this.value.slice();
+      var itemsToBeMoved = [];
+      var key = this.props.key;
+      this.data.forEach(function (item) {
+        var itemKey = item[key];
+        if (_this3.leftChecked.indexOf(itemKey) > -1 && _this3.value.indexOf(itemKey) === -1) {
+          itemsToBeMoved.push(itemKey);
+        }
+      });
+      currentValue = this.targetOrder === 'unshift' ? itemsToBeMoved.concat(currentValue) : currentValue.concat(itemsToBeMoved);
+      this.$emit('input', currentValue);
+      this.$emit('change', currentValue, 'right', this.leftChecked);
+    },
+    clearQuery: function clearQuery(which) {
+      if (which === 'left') {
+        this.$refs.leftPanel.query = '';
+      } else if (which === 'right') {
+        this.$refs.rightPanel.query = '';
+      }
+    }
+  }
+});
+// CONCATENATED MODULE: ./packages/transfer/src/main.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_mainvue_type_script_lang_js_ = (mainvue_type_script_lang_js_); 
+// CONCATENATED MODULE: ./packages/transfer/src/main.vue
+
+
+
+
+
+/* normalize component */
+
+var main_component = Object(componentNormalizer["a" /* default */])(
+  src_mainvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var main_api; }
+main_component.options.__file = "packages/transfer/src/main.vue"
+/* harmony default export */ var main = (main_component.exports);
+// CONCATENATED MODULE: ./packages/transfer/index.js
+
+
+/* istanbul ignore next */
+main.install = function (Vue) {
+  Vue.component(main.name, main);
 };
 
-/***/ }),
-
-/***/ 383:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"el-transfer-panel"},[_c('p',{staticClass:"el-transfer-panel__header"},[_c('el-checkbox',{attrs:{"indeterminate":_vm.isIndeterminate},on:{"change":_vm.handleAllCheckedChange},model:{value:(_vm.allChecked),callback:function ($$v) {_vm.allChecked=$$v},expression:"allChecked"}},[_vm._v("\n      "+_vm._s(_vm.title)+"\n      "),_c('span',[_vm._v(_vm._s(_vm.checkedSummary))])])],1),_c('div',{class:['el-transfer-panel__body', _vm.hasFooter ? 'is-with-footer' : '']},[(_vm.filterable)?_c('el-input',{staticClass:"el-transfer-panel__filter",attrs:{"size":"small","placeholder":_vm.placeholder},nativeOn:{"mouseenter":function($event){_vm.inputHover = true},"mouseleave":function($event){_vm.inputHover = false}},model:{value:(_vm.query),callback:function ($$v) {_vm.query=$$v},expression:"query"}},[_c('i',{class:['el-input__icon', 'el-icon-' + _vm.inputIcon],attrs:{"slot":"prefix"},on:{"click":_vm.clearQuery},slot:"prefix"})]):_vm._e(),_c('el-checkbox-group',{directives:[{name:"show",rawName:"v-show",value:(!_vm.hasNoMatch && _vm.data.length > 0),expression:"!hasNoMatch && data.length > 0"}],staticClass:"el-transfer-panel__list",class:{ 'is-filterable': _vm.filterable },model:{value:(_vm.checked),callback:function ($$v) {_vm.checked=$$v},expression:"checked"}},_vm._l((_vm.filteredData),function(item){return _c('el-checkbox',{key:item[_vm.keyProp],staticClass:"el-transfer-panel__item",attrs:{"label":item[_vm.keyProp],"disabled":item[_vm.disabledProp]}},[_c('option-content',{attrs:{"option":item}})],1)})),_c('p',{directives:[{name:"show",rawName:"v-show",value:(_vm.hasNoMatch),expression:"hasNoMatch"}],staticClass:"el-transfer-panel__empty"},[_vm._v(_vm._s(_vm.t('el.transfer.noMatch')))]),_c('p',{directives:[{name:"show",rawName:"v-show",value:(_vm.data.length === 0 && !_vm.hasNoMatch),expression:"data.length === 0 && !hasNoMatch"}],staticClass:"el-transfer-panel__empty"},[_vm._v(_vm._s(_vm.t('el.transfer.noData')))])],1),(_vm.hasFooter)?_c('p',{staticClass:"el-transfer-panel__footer"},[_vm._t("default")],2):_vm._e()])}
-var staticRenderFns = []
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
+/* harmony default export */ var transfer = __webpack_exports__["default"] = (main);
 
 /***/ }),
 
-/***/ 384:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"el-transfer"},[_c('transfer-panel',_vm._b({ref:"leftPanel",attrs:{"data":_vm.sourceData,"title":_vm.titles[0] || _vm.t('el.transfer.titles.0'),"default-checked":_vm.leftDefaultChecked,"placeholder":_vm.filterPlaceholder || _vm.t('el.transfer.filterPlaceholder')},on:{"checked-change":_vm.onSourceCheckedChange}},'transfer-panel',_vm.$props,false),[_vm._t("left-footer")],2),_c('div',{staticClass:"el-transfer__buttons"},[_c('el-button',{class:['el-transfer__button', _vm.hasButtonTexts ? 'is-with-texts' : ''],attrs:{"type":"primary","disabled":_vm.rightChecked.length === 0},nativeOn:{"click":function($event){_vm.addToLeft($event)}}},[_c('i',{staticClass:"el-icon-arrow-left"}),(_vm.buttonTexts[0] !== undefined)?_c('span',[_vm._v(_vm._s(_vm.buttonTexts[0]))]):_vm._e()]),_c('el-button',{class:['el-transfer__button', _vm.hasButtonTexts ? 'is-with-texts' : ''],attrs:{"type":"primary","disabled":_vm.leftChecked.length === 0},nativeOn:{"click":function($event){_vm.addToRight($event)}}},[(_vm.buttonTexts[1] !== undefined)?_c('span',[_vm._v(_vm._s(_vm.buttonTexts[1]))]):_vm._e(),_c('i',{staticClass:"el-icon-arrow-right"})])],1),_c('transfer-panel',_vm._b({ref:"rightPanel",attrs:{"data":_vm.targetData,"title":_vm.titles[1] || _vm.t('el.transfer.titles.1'),"default-checked":_vm.rightDefaultChecked,"placeholder":_vm.filterPlaceholder || _vm.t('el.transfer.filterPlaceholder')},on:{"checked-change":_vm.onTargetCheckedChange}},'transfer-panel',_vm.$props,false),[_vm._t("right-footer")],2)],1)}
-var staticRenderFns = []
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-
-/***/ }),
-
-/***/ 40:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/checkbox-group");
-
-/***/ }),
-
-/***/ 5:
+/***/ 7:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/mixins/locale");
 
 /***/ }),
 
-/***/ 6:
+/***/ 9:
 /***/ (function(module, exports) {
 
 module.exports = require("element-ui/lib/input");
-
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, exports) {
-
-module.exports = require("element-ui/lib/mixins/migrating");
 
 /***/ })
 

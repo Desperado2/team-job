@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.desperado.teamjob.dao.ProjectTemplateDao">
+
+    <insert id="add" parameterType="com.desperado.teamjob.domain.ProjectTemplate">
+        INSERT INTO `project_template`(
+        `id`,
+        `project_name`,
+        `project_manger`,
+        `project_level`,
+        `project_property`,
+        `project_prd`,
+        `group_members`,
+        `project_server`,
+        `project_front`,
+        `project_tester`,
+        `interface_review`,
+        `case_review`,
+        `interface_test`,
+        `all_test` ,
+        `pre_date` ,
+        `product_date` ,
+        `content`,
+        `remark`,
+        `create_date`,
+        `update_date`,
+        `owner` ,
+        `group`
+        ) VALUES(
+           #{id},#{projectName},#{projectManger},#{projectLevel},#{projectProperty},#{projectPrd},#{groupMembers},#{projectServer},
+           #{projectFront},#{projectTester},#{interfaceReview},#{caseReview},#{interfaceTest},#{allTest},#{preDate},#{productDate},
+           #{content},#{remark},#{createDate},#{updateDate},#{owner},#{group}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.desperado.teamjob.domain.ProjectTemplate">
+        update project_template set
+        `project_name` = #{projectName},
+        `project_manger`=#{projectManager},
+        `project_level`=#{projectLevel},
+        `project_property`=#{projectProperty},
+        `project_prd`=#{projectPrd},
+        `group_members`=#{groupMembers},
+        `project_server`=#{prohjectServer},
+        `project_front`=#{projectFront},
+        `project_tester`=#{projectTester},
+        `interface_review`=#{interfaceReview},
+        `case_review`=#{caseReview},
+        `interface_test`=#{interfaceTest},
+        `all_test`=#{allTest} ,
+        `pre_date`=#{preDate} ,
+        `product_date`=#{productDate} ,
+        `content`=#{content},
+        `remark`=#{remark},
+        `create_date`=#{createDate},
+        `update_date`=#{updateDate},
+        `owner`=#{owner} ,
+        `group`=#{group}
+        where id = #{id};
+    </update>
+
+    <select id="getAllProjectDate" resultType="com.desperado.teamjob.domain.ProjectTemplate">
+        select * from project_template ;
+    </select>
+
+    <select id="getProjectDateById" resultType="com.desperado.teamjob.domain.ProjectTemplate">
+        SELECT * from project_template WHERE id= #{id};
+    </select>
+
+</mapper>

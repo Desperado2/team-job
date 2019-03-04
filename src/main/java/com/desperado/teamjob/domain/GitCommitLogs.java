@@ -15,6 +15,7 @@ public class GitCommitLogs implements Serializable {
 	private Date dateCommit;
 	private String commitComment;
 	private int commitType;
+	private String group;
 
 	public String getId() {
 		return id;

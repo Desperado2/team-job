@@ -35,6 +35,7 @@ public class Project implements Serializable {
     private Date dateCreate;
     @ApiModelProperty("更新时间")
     private Date dateUpdate;
+    private String group;
 
     public String getId() {
         return id;

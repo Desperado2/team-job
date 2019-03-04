@@ -19,10 +19,10 @@ exports.default = {
       startTime: 'Aloitusaika',
       endDate: 'Lopetuspäivä',
       endTime: 'Lopetusaika',
-      prevYear: 'Previous Year', // to be translated
-      nextYear: 'Next Year', // to be translated
-      prevMonth: 'Previous Month', // to be translated
-      nextMonth: 'Next Month', // to be translated
+      prevYear: 'Edellinen vuosi',
+      nextYear: 'Seuraava vuosi',
+      prevMonth: 'Edellinen kuukausi',
+      nextMonth: 'Seuraava kuukausi',
       year: '',
       month1: 'tammikuu',
       month2: 'helmikuu',
@@ -47,18 +47,18 @@ exports.default = {
         sat: 'la'
       },
       months: {
-        jan: 'tam',
-        feb: 'hel',
-        mar: 'maa',
-        apr: 'huh',
-        may: 'tou',
-        jun: 'kes',
-        jul: 'hei',
+        jan: 'tammi',
+        feb: 'helmi',
+        mar: 'maalis',
+        apr: 'huhti',
+        may: 'touko',
+        jun: 'kesä',
+        jul: 'heinä',
         aug: 'elo',
-        sep: 'syy',
-        oct: 'lok',
-        nov: 'mar',
-        dec: 'jou'
+        sep: 'syys',
+        oct: 'loka',
+        nov: 'marras',
+        dec: 'joulu'
       }
     },
     select: {
@@ -85,7 +85,7 @@ exports.default = {
       error: 'Virheellinen syöte'
     },
     upload: {
-      deleteTip: 'press delete to remove', // to be translated
+      deleteTip: 'Poista Delete-näppäimellä',
       delete: 'Poista',
       preview: 'Esikatsele',
       continue: 'Jatka'
@@ -95,7 +95,7 @@ exports.default = {
       confirmFilter: 'Vahvista',
       resetFilter: 'Tyhjennä',
       clearFilter: 'Kaikki',
-      sumText: 'Sum' // to be translated
+      sumText: 'Summa'
     },
     tree: {
       emptyText: 'Ei tietoja'
@@ -103,10 +103,10 @@ exports.default = {
     transfer: {
       noMatch: 'Ei vastaavia tietoja',
       noData: 'Ei tietoja',
-      titles: ['List 1', 'List 2'], // to be translated
-      filterPlaceholder: 'Enter keyword', // to be translated
-      noCheckedFormat: '{total} items', // to be translated
-      hasCheckedFormat: '{checked}/{total} checked' // to be translated
+      titles: ['Luettelo 1', 'Luettelo 2'],
+      filterPlaceholder: 'Syötä hakusana',
+      noCheckedFormat: '{total} kohdetta',
+      hasCheckedFormat: '{checked}/{total} valittu'
     }
   }
 };

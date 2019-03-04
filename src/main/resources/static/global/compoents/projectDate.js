@@ -13,60 +13,68 @@ var project_date = Vue.component('project-date',{
             </div>
         </el-header>
         <el-main class="index-el-main">
-            <el-card class="box-card" style="margin-bottom: 20px">
-                <div slot="header" class="clearfix">
-                    <span>客户管理系统</span>
-                    <el-button style="float: right; " type="success" @click="next(0)" plain>下一步</el-button>
-                    <el-button style="float: right; " type="success" plain>编辑</el-button>
-                </div>
-                <el-steps :active="actives[0]" align-center finish-status="success">
-                    <el-step title="需求评审" description="2019-02-18"></el-step>
-                    <el-step title="接口评审" description="2019-02-28"></el-step>
-                    <el-step title="测试" description="2019-03-23"></el-step>
-                    <el-step title="预发" description="2019-04-28"></el-step>
-                    <el-step title="发布" description="2019-05-28"></el-step>
-                </el-steps>
-            </el-card>
-
-            <el-card class="box-card" style="margin-bottom: 20px">
-                <div slot="header" class="clearfix">
-                    <span>订单管理系统</span>
-                    <el-button style="float: right; " type="success" @click="next(1)" plain>下一步</el-button>
-                    <el-button style="float: right; " type="success"  plain>编辑</el-button>
-                </div>
-                <el-steps :active="actives[1]" align-center finish-status="success">
-                    <el-step title="需求评审" description="2019-02-18"></el-step>
-                    <el-step title="接口评审" description="2019-02-28"></el-step>
-                    <el-step title="测试" description="2019-03-23"></el-step>
-                    <el-step title="预发" description="2019-04-28"></el-step>
-                    <el-step title="发布" description="2019-05-28"></el-step>
-                </el-steps>
-            </el-card>
-
-            <el-card class="box-card" style="margin-bottom: 20px">
-                <div slot="header" class="clearfix">
-                    <span>客户营销系统</span>
-                    <el-button style="float: right; " type="success" @click="next(2)" plain>下一步</el-button>
-                    <el-button style="float: right; " type="success" plain>编辑</el-button>
-                </div>
-                <el-steps :active="actives[2]" align-center finish-status="success">
-                    <el-step title="需求评审" description="2019-02-18"></el-step>
-                    <el-step title="接口评审" description="2019-02-28"></el-step>
-                    <el-step title="测试" description="2019-03-23"></el-step>
-                    <el-step title="预发" description="2019-04-28"></el-step>
-                    <el-step title="发布" description="2019-05-28"></el-step>
-                </el-steps>
-            </el-card>
+            <div style="margin-bottom: 20px" v-for="template in templates">
+                <el-card class="box-card">
+                    <div slot="header" class="clearfix">
+                        <span v-text="template.projectName"></span>
+                        <el-button style="float: right; padding: 3px 0" type="text" @click="projectDelay(template.id)">项目延期</el-button>
+                        <el-button style="float: right; padding: 3px 0" type="text" @click="editTemplate(template.id)">编辑</el-button>
+                        <el-button style="float: right; padding: 3px 0" type="text">发送到邮件</el-button>
+                        <el-tooltip  placement="top" effect="light">
+                             <div slot="content">
+                                <div style="height: 20px">产品经理: {{template.projectManger}}</div>
+                                <div style="height: 20px">项目经理: {{template.owner}}</div>
+                                <div style="height: 20px">本组开发: {{template.groupMembers}}</div>
+                                <div style="height: 20px">后端开发: {{template.projectServer}}</div>
+                                <div style="height: 20px">前端开发: {{template.projectFront}}</div>
+                                <div style="height: 20px">测试人员: {{template.projectTester}}</div>
+                            </div>
+                            <el-button style="float: right; padding: 3px 0" type="text" icon="el-icon-warning">全部参与人员</el-button>
+                        </el-tooltip>
+                    </div>
+                    <div style="" style="padding-left: 0;padding-right: 0">
+                        <el-steps :active="actives[0]" align-center finish-status="success">
+                        <el-step title="需求评审" :description="template.caseReview | dataFormat('yyyy-MM-dd')"></el-step>
+                        <el-step title="接口评审" :description="template.interfaceTest  | dataFormat('yyyy-MM-dd')"></el-step>
+                        <el-step title="测试" :description="template.allTest  | dataFormat('yyyy-MM-dd')"></el-step>
+                        <el-step title="预发" :description="template.preDate  | dataFormat('yyyy-MM-dd')"></el-step>
+                        <el-step title="发布" :description="template.produceDate  | dataFormat('yyyy-MM-dd')"></el-step>
+                    </el-steps>
+                    </div>
+                    <hr style="border: none; height: 1px; color: #ebeef5; background-color: #ebeef5;">
+                    <div style="text-align: center">
+                        <a href="#" @click="details(template.id)">查看项目详情</a>
+                    </div>
+                </el-card>
+            </div>
+            
         </el-main>
 
-        </el-container>
+    </el-container>
     `,
     data(){
         return{
-            actives: [3,1,4]
+            actives: [3],
+            templates:[]
         }
     },
     props:['optionsCode'],
+    mounted:function(){
+        let _this = this;
+        axios({
+            method: 'get',
+            url: 'projectTemplates',
+        }).then(function (result) {
+            if (result.data.success){
+                _this.templates = result.data.data;
+            }else {
+                _this.$message({
+                    message:result.data.msg,
+                    type:'error'
+                });
+            }
+        })
+    },
     methods:{
         createProject:function(type){
             if (type == 'pro'){
@@ -75,6 +83,18 @@ var project_date = Vue.component('project-date',{
                 this.typeSelect = 'createDemand'
             }
             Bus.$emit("optionsCode",this.typeSelect);
+        },
+        editTemplate:function(templateId){
+            Bus.$emit("templateId",templateId);
+            Bus.$emit("optionsCode","editProject");
+        },
+        details:function(templateId){
+            Bus.$emit("templateId",templateId);
+            Bus.$emit("optionsCode","projectDelayInfo");
+        },
+        projectDelay:function(templateId){
+            Bus.$emit("templateId",templateId);
+            Bus.$emit("optionsCode","projectDelay");
         },
         next:function(item) {
             if (this.actives[item]++ > 4) {

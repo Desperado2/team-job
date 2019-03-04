@@ -36,7 +36,7 @@ exports.default = {
       month10: 'October',
       month11: 'November',
       month12: 'December',
-      // week: 'week',
+      week: 'week',
       weeks: {
         sun: 'Sun',
         mon: 'Mon',

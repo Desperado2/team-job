@@ -10,6 +10,7 @@ public class LoginRecord {
     private String address;
     private Date loginTime;
     private Date logoutTime;
+    private String group;
 
     public int getId() {
         return id;

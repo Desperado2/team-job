@@ -33,6 +33,7 @@ public class User {
     private Date dateCreate;
     @ApiModelProperty("用户更新时间")
     private Date dateUpdate;
+    private String group;
 
     public String getId() {
         return id;

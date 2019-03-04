@@ -125,6 +125,9 @@
         <change-pwd v-if="optionsCode=='editPwd'" :options-code.sync=optionsCode></change-pwd>
         <app-details v-if="optionsCode=='appDetail'" :options-code.sync=optionsCode :project-id="projectId"></app-details>
         <edit-app v-if="optionsCode=='editApp'" :options-code.sync=optionsCode :project-id="projectId"></edit-app>
+        <edit-project v-if="optionsCode=='editProject'" :options-code.sync=optionsCode :template-id="templateId"></edit-project>
+        <delay-project v-if="optionsCode=='projectDelay'" :options-code.sync=optionsCode :template-id="templateId"></delay-project>
+        <delay-project-info v-if="optionsCode=='projectDelayInfo'" :options-code.sync=optionsCode :template-id="templateId"></delay-project-info>
 
     </el-container>
 </el-container>
@@ -150,6 +153,9 @@
 <script src="./global/compoents/changePwd.js"></script>
 <script src="./global/compoents/appDetails.js"></script>
 <script src="./global/compoents/editApp.js"></script>
+<script src="./global/compoents/editProject.js"></script>
+<script src="./global/compoents/delayProject.js"></script>
+<script src="./global/compoents/delayProjectInfo.js"></script>
 <script src="./global/echarts/echarts.common.min.js"></script>
 <script>
     new Vue({
@@ -162,6 +168,7 @@
             optionsCode:'',
             userId:'',
             projectId:'',
+            templateId:'',
             currUsers:{
                 id:'',
                 name: '',
@@ -200,6 +207,9 @@
             });
             Bus.$on("projectId",(projectId) =>{//子组件数据改变之后传递给父组件
                 this.projectId = projectId;
+            });
+            Bus.$on("templateId",(templateId) =>{//子组件数据改变之后传递给父组件
+                this.templateId = templateId;
             });
 
         },
@@ -251,7 +261,10 @@
             'edit-user':edit_user,
             'change-pwd':change_pwd,
             'app-details':app_details,
-            'edit-app':edit_app
+            'edit-app':edit_app,
+            'edit-project':edit_project,
+            'delay-project':delay_project,
+            'delay-project-info':delay_project_info
         }
     })
 </script>

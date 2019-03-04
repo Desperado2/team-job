@@ -8,10 +8,10 @@ var edit_app = Vue.component('edit-app',{
            <el-card class="box-card" style="padding: 10px 20%">
                <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="150px" class="demo-ruleForm" >
                   
-                   <el-form-item label="中文名" prop="projectName">
+                   <el-form-item label="应用名称" prop="projectName">
                        <el-input v-model="ruleForm.projectName"></el-input>
                    </el-form-item>
-                   <el-form-item label="中文名" prop="projectRealName">
+                   <el-form-item label="中文名称" prop="projectRealName">
                        <el-input v-model="ruleForm.projectRealName"></el-input>
                    </el-form-item>
                    <el-form-item label="仓库地址" prop="repositoryUrl">
