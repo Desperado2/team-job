@@ -13,7 +13,7 @@ public class Weekly implements Serializable {
     @ApiModelProperty("用户id")
     private String userId;
     @ApiModelProperty("周数")
-    private Integer week;
+    private String week;
     @ApiModelProperty("本周工作")
     private String thisWeekReport;
     @ApiModelProperty("下周工作")
@@ -42,11 +42,11 @@ public class Weekly implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getWeek() {
+    public String getWeek() {
         return week;
     }
 
-    public void setWeek(Integer week) {
+    public void setWeek(String week) {
         this.week = week;
     }
 

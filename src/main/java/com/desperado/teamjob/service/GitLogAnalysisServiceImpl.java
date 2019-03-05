@@ -11,6 +11,7 @@ import com.desperado.teamjob.enums.RepositoryType;
 import com.desperado.teamjob.thread.GitLogService;
 import com.desperado.teamjob.thread.SvnLogService;
 import com.desperado.teamjob.utils.DateUtil;
+import com.desperado.teamjob.utils.UserUtils;
 import com.desperado.teamjob.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,6 +107,22 @@ public class GitLogAnalysisServiceImpl implements GitLogAnalysisService {
         result.setData(commitChart);
         return result;
     }
+
+    @Override
+    public Result lastWeekCommitLogs() {
+        String yearWeek = DateUtil.getYearWeek(new Date());
+        String username = UserUtils.getUser().getName();
+        List<GitCommitLogs> logs = gitCommitLogDao.getWeeklyLogsByAuthor(username, yearWeek);
+        StringBuilder sb = new StringBuilder();
+        for (GitCommitLogs log:logs){
+            sb.append(log.getCommitComment()).append("\n");
+        }
+        Result result = new Result();
+        result.setData(sb.toString());
+        return result;
+    }
+
+
 
     private Map<String,List<GitCommitLogs>> logsUserMap(List<GitCommitLogs> logsList){
         Map<String,List<GitCommitLogs>> map = new HashMap<>();

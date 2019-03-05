@@ -34,8 +34,9 @@ var project_date = Vue.component('project-date',{
                     </div>
                     <div style="" style="padding-left: 0;padding-right: 0">
                         <el-steps :active="actives[0]" align-center finish-status="success">
+                        <el-step title="接口评审" :description="template.interfaceReview  | dataFormat('yyyy-MM-dd')"></el-step>
                         <el-step title="需求评审" :description="template.caseReview | dataFormat('yyyy-MM-dd')"></el-step>
-                        <el-step title="接口评审" :description="template.interfaceTest  | dataFormat('yyyy-MM-dd')"></el-step>
+                        <el-step title="接口提测" :description="template.interfaceTest | dataFormat('yyyy-MM-dd')"></el-step>
                         <el-step title="测试" :description="template.allTest  | dataFormat('yyyy-MM-dd')"></el-step>
                         <el-step title="预发" :description="template.preDate  | dataFormat('yyyy-MM-dd')"></el-step>
                         <el-step title="发布" :description="template.produceDate  | dataFormat('yyyy-MM-dd')"></el-step>

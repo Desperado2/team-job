@@ -93,7 +93,6 @@ var create_project = Vue.component('create-project',{
     data(){
         return{
             typeSelect:this.optionsCode,
-            imageUrl:'',
             ruleForm: {
                 projectName: '',
                 projectManger: '',

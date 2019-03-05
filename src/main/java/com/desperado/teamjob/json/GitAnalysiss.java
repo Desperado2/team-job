@@ -41,6 +41,15 @@ public class GitAnalysiss {
         return result;
     }
 
+
+    @GetMapping("/lastWeekCommitLogs")
+    @ApiOperation(value = "查询上周的提交记录")
+    public Result queryLastWeekCommitLogs() {
+        Result result = gitLogAnalysisService.lastWeekCommitLogs();
+        return result;
+    }
+
+
     @GetMapping("/{projectCode}/project")
     @ApiOperation(value = "跟进周期查询全部")
     @ApiImplicitParams({

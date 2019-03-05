@@ -11,11 +11,13 @@ public interface WeeklyDao {
 
     void addWeek(Weekly weekly);
 
-    List<Weekly> getAllWeeklyByWeek(@Param("week") Integer week);
+    void updateWeek(Weekly weekly);
 
-    List<String> getAllUserIdsByWeek(@Param("week") Integer week);
+    List<Weekly> getAllWeeklyByWeek(@Param("week") String week);
+
+    List<String> getAllUserIdsByWeek(@Param("week") String week);
 
     Weekly getWeeklyById(@Param("id") String id);
 
-    Weekly getWeeklyByIdAndWeek(@Param("userId") String userId,@Param("week") Integer week);
+    Weekly getWeeklyByIdAndWeek(@Param("userId") String userId,@Param("week") String week);
 }

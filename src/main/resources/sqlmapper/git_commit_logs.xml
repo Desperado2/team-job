@@ -31,4 +31,8 @@
         SELECT * from git_commit_logs WHERE project= #{project};
     </select>
 
+    <select id="getWeeklyLogsByAuthor" resultType="com.desperado.teamjob.domain.GitCommitLogs">
+        SELECT * from git_commit_logs WHERE yearweek= #{yearweek} and author=#{username};
+    </select>
+
 </mapper>

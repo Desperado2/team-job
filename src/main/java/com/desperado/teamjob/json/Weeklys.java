@@ -8,6 +8,7 @@ import com.desperado.teamjob.dto.UserDto;
 import com.desperado.teamjob.dto.WeeklyDto;
 import com.desperado.teamjob.service.UserService;
 import com.desperado.teamjob.service.WeeklyService;
+import com.desperado.teamjob.utils.DateUtil;
 import com.desperado.teamjob.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -16,6 +17,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -28,13 +30,13 @@ public class Weeklys {
 
     @PostMapping
     @ApiOperation(value = "添加周报")
-    public Result addUser(@RequestBody WeeklyDto weekly){
-        return weeklyService.addWeek(weekly);
+    public Result addUser(@RequestBody Weekly weekly){
+        return weeklyService.addOrUpdateWeeklyReport(weekly);
     }
 
     @GetMapping("/{week}/all")
     @ApiOperation(value = "根据周数查询全部")
-    public Result query(@PathVariable Integer week) {
+    public Result query(@PathVariable String week) {
         return weeklyService.getAllWeeklyByWeek(week);
     }
 
@@ -58,10 +60,23 @@ public class Weeklys {
     @ApiOperation(value = "用户id和周数查询")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userId", value = "用户id", dataType = ApiDataType.STRING, paramType = ApiParamType.PATH),
-            @ApiImplicitParam(name = "week", value = "周数", dataType = ApiDataType.INT, paramType = ApiParamType.PATH),
+            @ApiImplicitParam(name = "week", value = "周数", dataType = ApiDataType.STRING, paramType = ApiParamType.PATH),
     })
-    public Result get(@PathVariable String userId,@PathVariable Integer week) {
+    public Result get(@PathVariable String userId,@PathVariable String week) {
         return weeklyService.getWeeklyByIdAndWeek(userId,week);
     }
 
+    @GetMapping("/lastWeekReport")
+    @ApiOperation(value = "查询上周周报")
+    public Result getLastWeekReport() {
+        String week = DateUtil.getYearWeek(DateUtil.addDay(new Date(),-7));
+        return weeklyService.getWeeklyByWeek(week);
+    }
+
+    @GetMapping("/currWeekReport")
+    @ApiOperation(value = "查询本周周报")
+    public Result getCurrWeekReport() {
+        String week = DateUtil.getYearWeek(new Date());
+        return weeklyService.getWeeklyByWeek(week);
+    }
 }

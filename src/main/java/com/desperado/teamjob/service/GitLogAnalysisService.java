@@ -9,4 +9,6 @@ public interface GitLogAnalysisService {
      Result getWeeklyLogs(String yearweek);
 
      Result getProjectLogs(String project);
+
+     Result lastWeekCommitLogs();
 }

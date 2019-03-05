@@ -8,6 +8,13 @@
         ) VALUES (#{id},#{userId},#{week},#{thisWeekReport},#{nextWeekReport},#{feeling},#{dateCreate},#{dateUpdate})
     </insert>
 
+    <update id="updateWeek" parameterType="com.desperado.teamjob.domain.Weekly">
+        update  `weekly` set
+                user_id=#{userId},week=#{week},this_week_report=#{thisWeekReport},
+                next_week_report=#{nextWeekReport},feeling =#{feeling},date_update=#{dateUpdate}
+        where id=#{id}
+    </update>
+
     <select id="getAllWeeklyByWeek" resultType="com.desperado.teamjob.domain.Weekly">
         select * from weekly where week = #{week};
     </select>
@@ -21,7 +28,7 @@
     </select>
 
     <select id="getWeeklyByIdAndWeek"  resultType="com.desperado.teamjob.domain.Weekly">
-        select * from weekly where id=#{id} and week = #{week};
+        select * from weekly where user_id=#{userId} and week = #{week};
     </select>
 
 </mapper>
