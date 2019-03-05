@@ -190,8 +190,8 @@ var edit_project = Vue.component('edit-project',{
         },
         formatCoder:function(coders) {
             let coderss = [];
-            for (let coder of coders) {
-                coderss.push(coder.id)
+            for (let coder of coders.split(',')) {
+                coderss.push(coder)
             }
             return coderss
         },

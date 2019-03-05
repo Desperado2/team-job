@@ -108,19 +108,10 @@ var delay_project = Vue.component('delay-project',{
         })
     },
     methods:{
-        editCoder:function(coders){
-            let coderss = '';
-            for (let coder of coders){
-                coderss += coder+","
-            }
-            coderss = coderss.substring(0,coderss.length-1)
-            return coderss
-        },
         submitForm(formName) {
             let _this = this;
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    _this.ruleForm.groupMembers = _this.editCoder(_this.ruleForm.groupMembers);
                     axios({
                         method: 'post',
                         url: 'projectTemplates',
