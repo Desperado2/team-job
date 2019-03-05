@@ -44,6 +44,15 @@ public class ProjectTemplates {
         return projectTemplateService.getProjectDateById(id);
     }
 
+    @GetMapping("/{id}/sendMail")
+    @ApiOperation(value = "发送邮件通知")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "主键id", dataType = ApiDataType.STRING, paramType = ApiParamType.PATH),
+    })
+    public Result sendMail(@PathVariable String id) {
+        return projectTemplateService.sendMail(id);
+    }
+
 
     @GetMapping("/{id}/details")
     @ApiOperation(value = "查询详情")

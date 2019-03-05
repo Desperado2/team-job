@@ -36,12 +36,12 @@
     <update id="update" parameterType="com.desperado.teamjob.domain.ProjectTemplate">
         update project_template set
         `project_name` = #{projectName},
-        `project_manger`=#{projectManager},
+        `project_manger`=#{projectManger},
         `project_level`=#{projectLevel},
         `project_property`=#{projectProperty},
         `project_prd`=#{projectPrd},
         `group_members`=#{groupMembers},
-        `project_server`=#{prohjectServer},
+        `project_server`=#{projectServer},
         `project_front`=#{projectFront},
         `project_tester`=#{projectTester},
         `interface_review`=#{interfaceReview},

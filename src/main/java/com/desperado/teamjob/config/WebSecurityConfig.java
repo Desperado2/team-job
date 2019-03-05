@@ -90,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 User userDetails = (User) authentication.getPrincipal();
                 String ipAddress = IpUtils.getIpAddr(request);
                 String browserType = request.getHeader("Browser-Type");
-                logger.info("USER : " + userDetails.getEmail() + " LOGIN SUCCESS !  ");
+                LOGGER.info("USER : " + userDetails.getEmail() + " LOGIN SUCCESS !  ");
                 LOGGER.info("USER IP : " + IpUtils.getIpAddr(request));
                 LOGGER.info("USER Browser Type : " + request.getHeader("Browser-Type"));
                 ExecutorService service = Executors.newFixedThreadPool(5);

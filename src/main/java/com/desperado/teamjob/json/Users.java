@@ -42,8 +42,9 @@ public class Users {
 
     @PostMapping
     @ApiOperation(value = "添加/编辑用户")
-    public Result addOrUpdateUser(@RequestBody User user){
-        return userService.addOrUpdateUser(user);
+    public Result addOrUpdateUser(HttpServletRequest request,@RequestBody User user){
+
+        return userService.addOrUpdateUser(request,user);
     }
 
     @PostMapping("/editPwd")

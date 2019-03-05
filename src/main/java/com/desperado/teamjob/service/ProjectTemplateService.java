@@ -12,4 +12,6 @@ public interface ProjectTemplateService {
     Result getProjectDateById(String id);
 
     Result getDetailById(String id);
+
+    Result sendMail(String id);
 }

@@ -22,6 +22,8 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
     private ProjectTemplateDao projectTemplateDao;
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private MailService mailService;
 
     @Override
     public Result addOrUpdate(ProjectTemplate projectTemplate) {
@@ -77,6 +79,17 @@ public class ProjectTemplateServiceImpl implements ProjectTemplateService {
         resultMap.put("dateLines",lines);
         result.setData(resultMap);
         return result;
+    }
+
+    @Override
+    public Result sendMail(String id) {
+        ProjectTemplate projectDate = projectTemplateDao.getProjectDateById(id);
+        String groupMembers = projectDate.getGroupMembers();
+        for (String userId : groupMembers.split(",")){
+            UserDto userDto = userDao.selectUserById(userId);
+            mailService.sendTemplateMail(userDto.getEmail(),"项目排期通知",projectDate);
+        }
+        return new Result();
     }
 
 

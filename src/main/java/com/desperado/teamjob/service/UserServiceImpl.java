@@ -13,10 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
@@ -27,8 +30,11 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
-    public Result addOrUpdateUser(User user) {
+    public Result addOrUpdateUser(HttpServletRequest request,User user) {
         Result result = new Result();
         Date date = new Date();
         if(!StringUtils.isEmpty(user.getId())){
@@ -41,13 +47,26 @@ public class UserServiceImpl implements UserService{
                     result.setSuccess(false);
                     result.setMsg("email已存在");
                 }else{
+                    String password = user.getPassword();
                     String id = getId();
                     user.setId(id);
-                    user.setPassword(PwdUtil.encoder(user.getPassword()));
+                    user.setPassword(PwdUtil.encoder(password));
                     user.setDateCreate(date);
                     user.setDateUpdate(date);
                     userDao.addUser(user);
                     result.setData(user);
+
+                    ExecutorService service = Executors.newFixedThreadPool(5);
+                    service.execute(() -> {
+                        System.out.println(request.getRequestURI()+request.getServletPath());;
+                        String url = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append("尊敬的").append(user.getName()).append(":").append("\n\n");
+                        stringBuilder.append("恭喜注册成功").append("\n\n");
+                        stringBuilder.append("登录账户:").append(user.getEmail()).append("\n\n");
+                        stringBuilder.append("登录密码:").append(password).append("\n\n");
+                        stringBuilder.append("登录地址:").append(url);
+                        mailService.sendSimpleMail(user.getEmail(),"注册成功",stringBuilder.toString());});
                 }
             }catch (Exception e){
                 result.setSuccess(false);
@@ -134,7 +153,7 @@ public class UserServiceImpl implements UserService{
         List<UserDto> dtoList = new ArrayList<>();
             for (int i= 0; i< userDtos.size(); i++){
                 dtoList.add(userDtos.get(i));
-                if((i+1) % 3 == 0){
+                if((i+1) % 4 == 0){
                     list.add(dtoList);
                     dtoList = new ArrayList<>();
                 }

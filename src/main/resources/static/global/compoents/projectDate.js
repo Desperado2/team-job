@@ -19,7 +19,7 @@ var project_date = Vue.component('project-date',{
                         <span v-text="template.projectName"></span>
                         <el-button style="float: right; padding: 3px 0" type="text" @click="projectDelay(template.id)">项目延期</el-button>
                         <el-button style="float: right; padding: 3px 0" type="text" @click="editTemplate(template.id)">编辑</el-button>
-                        <el-button style="float: right; padding: 3px 0" type="text">发送到邮件</el-button>
+                        <el-button style="float: right; padding: 3px 0" type="text" @click="sendMail(template.id)">发送到邮件</el-button>
                         <el-tooltip  placement="top" effect="light">
                              <div slot="content">
                                 <div style="height: 20px">产品经理: {{template.projectManger}}</div>
@@ -88,6 +88,18 @@ var project_date = Vue.component('project-date',{
         editTemplate:function(templateId){
             Bus.$emit("templateId",templateId);
             Bus.$emit("optionsCode","editProject");
+        },
+        sendMail:function(templateId){
+            let _this = this;
+            axios({
+                method: 'get',
+                url: 'projectTemplates/'+templateId+"/sendMail",
+            }).then(function (result) {
+                _this.$message({
+                    message:result.data.msg,
+                    type:'success'
+                });
+            })
         },
         details:function(templateId){
             Bus.$emit("templateId",templateId);
