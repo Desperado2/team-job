@@ -45,7 +45,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.authorizeRequests().
-                antMatchers("/global/**","/*.ico").permitAll().anyRequest().authenticated()
+                antMatchers("/global/**","/druid/**").permitAll().anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll().successHandler(loginSuccessHandler())
                 .and().logout().logoutSuccessUrl("/login")
                 .permitAll().invalidateHttpSession(true)

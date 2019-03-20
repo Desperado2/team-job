@@ -68,24 +68,16 @@
         <!--alibaba-->
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.24</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>tools</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>jconsole</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.13</version>
         </dependency>
+
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.31</version>
         </dependency>
+
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
@@ -108,12 +100,14 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>javax.el</groupId>
             <artifactId>javax.el-api</artifactId>
