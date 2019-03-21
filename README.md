@@ -91,3 +91,6 @@ http://118.24.115.208:8888/team-job/
 ## 默认用户名密码
 username ：111@qq.com  
 password ：123456
+
+## swagger文档地址
+http://localhost:8080/team-job/swagger-ui.html
