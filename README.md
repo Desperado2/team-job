@@ -87,10 +87,10 @@ test 测试分支
 sql文件位置  src/resource/static/sqlfile/team-job.sql
 
 ## 在线访问地址
-http://118.24.115.208:8888/team-job/
+http://7r6y89.natappfree.cc/team-job/
 ## 默认用户名密码
 username ：111@qq.com  
 password ：123456
 
 ## swagger文档地址
-http://118.24.115.208:8888/team-job/swagger-ui.html
+http://7r6y89.natappfree.cc/team-job/swagger-ui.html
